@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zero.jxauapp"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0"
+    android:debuggable="true" >
 
     <uses-sdk
         android:minSdkVersion="8" />
@@ -69,6 +70,15 @@
         <activity android:name="com.zero.jxauapp.CommonPhoneAct">
         </activity>
         <activity android:name="com.zero.jxauapp.GoOutAct"></activity>
+        <service  
+            android:name="com.baidu.location.f"  
+            android:enabled="true"  
+            android:permission="android.permission.BAIDU_LOCATION_SERVICE"  
+            android:process=":remote" >  
+            <intent-filter>  
+                <action android:name="com.baidu.location.service_v2.4" />  
+            </intent-filter>  
+        </service>  
     </application>
 
 </manifest>

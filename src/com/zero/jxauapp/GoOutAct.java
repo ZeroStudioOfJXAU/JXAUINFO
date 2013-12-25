@@ -13,15 +13,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
-
 /**
  * Title: GoOutAct Description:³öÐÐÒ³Ãæ
  * 
  * @date 2013-12-19
  */
-
 public class GoOutAct extends Activity {
-
+	
 	private TextView goOutTextView;
 	// Update data in main thread
 	public Handler handler = new Handler() {
