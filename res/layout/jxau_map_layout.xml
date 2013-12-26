@@ -102,12 +102,42 @@
                 android:text="步行搜索" />
         </LinearLayout>
     </LinearLayout>
-
-    <com.baidu.mapapi.map.MapView
+    
+	<RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent" >
+        <com.baidu.mapapi.map.MapView
         android:id="@+id/bmapsView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:clickable="true" >
-    </com.baidu.mapapi.map.MapView>
-
+    	</com.baidu.mapapi.map.MapView>
+	    <LinearLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_marginBottom="10dip"
+	        android:layout_alignWithParentIfMissing="false"
+	        android:layout_centerHorizontal="true"
+	        android:layout_centerVertical="false" >
+		
+			 <Button
+			     android:id="@+id/pre"
+			     android:layout_width="fill_parent"
+			     android:layout_height="fill_parent"
+			     android:layout_weight="1.0"
+			     android:background="@drawable/map_pre_node"
+			     android:layout_marginLeft="2dip"
+			     android:layout_marginRight="2dip" />
+			 <Button
+			     android:id="@+id/next"
+			     android:layout_width="fill_parent"
+			     android:layout_height="fill_parent"
+			     android:layout_weight="1.0"
+			     android:background="@drawable/map_next_node"
+			     android:layout_marginLeft="2dip"
+			     android:layout_marginRight="2dip" />
+	
+	    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

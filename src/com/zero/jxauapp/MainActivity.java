@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,33 +30,24 @@ import com.zero.goOut.GoOutInfo;
  */   
 public class MainActivity extends SlidingFragmentActivity implements
 		OnClickListener {
-	// 侧边栏按钮
-	private ImageButton sideMenuExtendBtn;
-	// 地图ImageButton
-	private ImageButton mapImageBtn;
-	// 出行ImageButton
-	private ImageButton gooutImageBtn;
+	
+	private ImageButton sideMenuExtendBtn;// 侧边栏按钮
+	private ImageButton mapImageBtn;// 地图ImageButton
+	private ImageButton gooutImageBtn;// 出行ImageButton
+	private ImageButton phoneImageBtn;//常用电话ImageButton
 	private Fragment mContent;
-	// 出行服务，弹出菜单
-	private PopupWindow mPopupWindow;
+	
+	private PopupWindow mPopupWindow;// 出行服务，弹出菜单
 	// popupWindows对话框中的控件
-	//农大，单选按钮
-	private RadioButton nongDaRadioBtn;
-	//财大，单选按钮
-	private RadioButton caiDaRadioBtn;
-	//下罗，单选按钮
-	private RadioButton xiaLuoRadioBtn;
-	//240复选框
-	private CheckBox line240CheckBox;
-	//704复选框
-	private CheckBox line704CheckBox;
-	//到达按钮
-	private Button arrivelBtn;
-	//出发按钮
-	private Button setOffBtn;
-	//出行服务的视图，用来找到组件
-	private View popupView;
-
+	private RadioButton nongDaRadioBtn;//农大，单选按钮
+	private RadioButton caiDaRadioBtn;//财大，单选按钮
+	private RadioButton xiaLuoRadioBtn;//下罗，单选按钮
+	private CheckBox line240CheckBox;//240复选框
+	private CheckBox line704CheckBox;//704复选框
+	private Button arrivelBtn;//到达按钮
+	private Button setOffBtn;//出发按钮
+	private View popupView;//出行服务的视图，用来找到组件
+	PhoneNumberFragment listFragment;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -82,6 +74,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 		mPopupWindow.setOutsideTouchable(true);
 		mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),
 				(Bitmap) null));
+		listFragment= new PhoneNumberFragment();
 	}
 	/**
 	 * 初始化滑动菜单
@@ -115,8 +108,9 @@ public class MainActivity extends SlidingFragmentActivity implements
 		sideMenuExtendBtn = (ImageButton) findViewById(R.id.side_menu_extend_btn);
 		mapImageBtn = (ImageButton) findViewById(R.id.map_imageBtn);
 		gooutImageBtn = (ImageButton) findViewById(R.id.goout_imageBtn);
-
+		phoneImageBtn=(ImageButton) findViewById(R.id.phone_imageBtn);
 		mapImageBtn.setOnClickListener(this);
+		phoneImageBtn.setOnClickListener(this);
 		sideMenuExtendBtn.setOnClickListener(this);
 		gooutImageBtn.setOnClickListener(this);
 	}
@@ -181,14 +175,17 @@ public class MainActivity extends SlidingFragmentActivity implements
 			}else if(ItemId==R.id.arrive_btn){
 				dir=false;
 			}
-			
+			  
+			mPopupWindow.dismiss();
 			GoOutInfo info=new GoOutInfo(currentLocation,line,dir);
-			Intent intent = new Intent();  
-			Bundle bundle = new Bundle();  
-			bundle.putSerializable("GoOutInfo", info);  
-			intent.putExtras(bundle);  
-			intent.setClass(MainActivity.this, GoOutAct.class);
-			startActivity(intent);
+			BusTrackFragment busFragment=new BusTrackFragment();  
+	        Bundle busBundle=new Bundle();  
+	        busBundle.putSerializable("BUSTRACKINFO", info);  
+	        //向detailFragment传入参数  
+	        busFragment.setArguments(busBundle);
+	        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+	        fragmentTransaction.addToBackStack(null);
+			fragmentTransaction.add(android.R.id.content, busFragment).commit(); 
 		}
 	}
 	
@@ -209,11 +206,21 @@ public class MainActivity extends SlidingFragmentActivity implements
 			 mPopupWindow.showAsDropDown(v);
 			 runPopWindow();
 			break;
+		case R.id.phone_imageBtn:
+			//切换到常用电话页面
+			FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+			if(listFragment.isAdded()){
+				fragmentTransaction.show(listFragment).commit();
+			}else{
+				fragmentTransaction.addToBackStack(null);
+				fragmentTransaction.add(android.R.id.content, listFragment).commit(); 
+			}
+	         break;
 		default:
 			break;
 		}
 	}
-
+	
 	/**
 	 * 切换Fragment，也是切换视图的内容。
 	 * 可以将Activity 优化为Fragment...

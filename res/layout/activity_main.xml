@@ -5,12 +5,16 @@
     android:layout_height="fill_parent"
     android:background="@drawable/main_bg_1"
     android:orientation="vertical" >
-
+    <LinearLayout
+	    android:id="@+id/fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+    </LinearLayout>
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/top_bar" >
-
         <ImageButton
             android:id="@+id/side_menu_extend_btn"
             android:layout_width="wrap_content"
@@ -31,7 +35,7 @@
             android:textColor="#ffffff"
             android:textSize="24sp" />
     </RelativeLayout>
-
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,8 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:layout_marginTop="5dip"
             android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             android:src="@drawable/images" />
 
         <TextView
@@ -55,6 +59,6 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-	 <include android:id="@+id/included1"
+	<include android:id="@+id/included1"
               layout="@layout/activity_main_table_layout" /> 
 </LinearLayout>

@@ -17,8 +17,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import android.util.Log;
-
 class HtmlDeal {
 	public static String GetContentFromUrl(String url) {
 		String result = "";

@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -33,10 +34,14 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.Ground;
 import com.baidu.mapapi.map.GroundOverlay;
+import com.baidu.mapapi.map.LocationData;
 import com.baidu.mapapi.map.MKEvent;
 import com.baidu.mapapi.map.MKMapTouchListener;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationOverlay;
+import com.baidu.mapapi.map.PopupClickListener;
+import com.baidu.mapapi.map.PopupOverlay;
 import com.baidu.mapapi.map.RouteOverlay;
 import com.baidu.mapapi.map.TextOverlay;
 import com.baidu.mapapi.map.TransitOverlay;
@@ -46,6 +51,7 @@ import com.baidu.mapapi.search.MKDrivingRouteResult;
 import com.baidu.mapapi.search.MKPlanNode;
 import com.baidu.mapapi.search.MKPoiInfo;
 import com.baidu.mapapi.search.MKPoiResult;
+import com.baidu.mapapi.search.MKRoute;
 import com.baidu.mapapi.search.MKSearch;
 import com.baidu.mapapi.search.MKSearchListener;
 import com.baidu.mapapi.search.MKShareUrlResult;
@@ -53,6 +59,7 @@ import com.baidu.mapapi.search.MKSuggestionResult;
 import com.baidu.mapapi.search.MKTransitRouteResult;
 import com.baidu.mapapi.search.MKWalkingRouteResult;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
+import com.zero.map.BMapUtil;
 import com.zero.map.CustomGround;
 import com.zero.map.CustomItem;
 import com.zero.map.CustomOverlay;
@@ -89,6 +96,9 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 	RouteOverlay routeOverlay = null;  //线路图层
 	TransitOverlay transitOverlay = null;//公交图层
 	
+	MyLocationOverlay myLocationOverlay = null;//定位图层
+	LocationData locData = null;//位置数据
+	
 	ArrayAdapter<String> adapter;//自动补全监听器
 	Map<String,GeoPoint> map= new HashMap<String,GeoPoint>();//存放从xml文件中添加的补全数据
 	//表示输入框的状态
@@ -103,8 +113,19 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 	private static final int UPDATE_TIME = 100000;//定时定位的时间间隔。单位毫秒
 	//是否响应屏幕点击
 	private boolean enClickAble=false;
-	//百度地图的key
+	
+	//浏览路线节点相关
+	private View viewCache = null;
+    private TextView  popupText = null;//泡泡view
+    int searchType = -1;//记录搜索的类型，区分驾车/步行和公交
+    int nodeIndex = -2;//节点索引,供浏览节点时使用
+    MKRoute route = null;//保存驾车/步行路线数据的变量，供浏览节点时使用
+  	Button mBtnPre = null;//上一个节点
+  	Button mBtnNext = null;//下一个节点
+  	private PopupOverlay   pop  = null;//弹出泡泡图层，浏览节点时使用
+   //百度地图的key
 	private final String baiDuMapKey="lVHeadDQWp9Y18FdCmbORMZs";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -142,10 +163,11 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 		mbtnLoc = (Button) findViewById(R.id.auto_loc_button);
 		mBtnHit = (Button) findViewById(R.id.screen_hit_btn);
 		routeBtn = (Button) findViewById(R.id.map_route_btn);
-		
+	
 		//线路按钮，添加监听，单击显示线路规划对话框
 		routeBtn.setOnClickListener(this);
 		//为定位按钮添加监听
+		locData = new LocationData();
 		mbtnLoc.setOnClickListener(this);
 		mBtnHit.setOnClickListener(this);
 		//为搜索按钮添加监听器
@@ -156,12 +178,16 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 		initLocationService();
 		InfoFromAssetsXML();
 		initAutoCompleteTextView();
+		initNode();
 	}
 	
 	MKMapTouchListener MymapTouchListener=new MKMapTouchListener(){
 		@Override
 		public void onMapClick(GeoPoint point){
 			// 在此处理地图点击事件
+			if ( pop != null ){
+				  pop.hidePop();
+			  }
 			if(enClickAble){
 				editEnd.setText("地图上的点");
 				routeEndPoint = point;
@@ -242,8 +268,18 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 		option.setProdName("com.zero.jaxuapp"); // 设置产品线名称
 		option.setScanSpan(UPDATE_TIME); // 设置定时定位的时间间隔。单位毫秒
 		locationClient.setLocOption(option);
-
+		
+		//定位图层初始化
+		myLocationOverlay = new MyLocationOverlay(mMapView);
+		//设置定位数据
+	    myLocationOverlay.setData(locData);
+	    //添加定位图层
+		mMapView.getOverlays().add(myLocationOverlay);
+		myLocationOverlay.enableCompass();
+		//修改定位数据后刷新图层生效
+		mMapView.refresh();
 		// 注册位置监听器
+		
 		locationClient.registerLocationListener(new BDLocationListener() {
 
 			@Override
@@ -252,10 +288,21 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 				if (location == null) {
 					return;
 				}
-				routeStartPoint=new GeoPoint((int)(location.getLatitude()* 1E6),(int)(location.getLongitude()* 1E6));
-				editStart.setText("当前位置");
-				//
-				Toast.makeText(jxauMapAct.this, "定位成功",
+				  locData.latitude = location.getLatitude();
+		          locData.longitude = location.getLongitude();
+		           //如果不显示定位精度圈，将accuracy赋值为0即可
+		          locData.accuracy = location.getRadius();
+		            // 此处可以设置 locData的方向信息, 如果定位 SDK 未返回方向信息，用户可以自己实现罗盘功能添加方向信息。
+		          locData.direction = location.getDerect();
+		            //更新定位数据
+		          myLocationOverlay.setData(locData);
+		          mMapView.getController().animateTo(new GeoPoint((int)(locData.latitude* 1e6), (int)(locData.longitude *  1e6)));
+		            //更新图层数据执行刷新后生效
+		          mMapView.refresh();
+				  routeStartPoint=new GeoPoint((int)(location.getLatitude()* 1E6),(int)(location.getLongitude()* 1E6));
+				  editStart.setText("当前位置");
+				  //
+				  Toast.makeText(jxauMapAct.this, "定位成功",
 						Toast.LENGTH_SHORT).show();
 			}
 			@Override
@@ -328,6 +375,11 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 	 * @param way表示查询的方式
 	 */
 	public void searchRoute(int way){
+		route = null;
+		routeOverlay = null;
+		transitOverlay = null; 
+		mBtnPre.setVisibility(View.INVISIBLE);
+		mBtnNext.setVisibility(View.INVISIBLE);
 		// 发起搜索
 		String start=editStart.getText().toString().trim();
 		MKPlanNode stNode = new MKPlanNode();
@@ -412,6 +464,7 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 						.show();
 				return;
 			}
+			searchType = 0;
 			routeOverlay = new RouteOverlay(jxauMapAct.this, mMapView);
 			routeOverlay.setData(res.getPlan(0).getRoute(0));
 			// 清除其他图层
@@ -427,6 +480,11 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 					routeOverlay.getLonSpanE6());
 			// 移动地图到起点
 			mMapView.getController().animateTo(res.getStart().pt);
+			route = res.getPlan(0).getRoute(0);
+		    //重置路线节点索引，节点浏览时使用
+		    nodeIndex = -1;
+		    mBtnPre.setVisibility(View.VISIBLE);
+			mBtnNext.setVisibility(View.VISIBLE);
 		}
 
 		public void onGetTransitRouteResult(MKTransitRouteResult res, int error) {
@@ -441,7 +499,7 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 						.show();
 				return;
 			}
-
+			searchType = 1;
 			transitOverlay = new TransitOverlay(jxauMapAct.this, mMapView);
 			// 此处仅展示一个方案作为示例
 			transitOverlay.setData(res.getPlan(0));
@@ -458,7 +516,11 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 					transitOverlay.getLonSpanE6());
 			// 移动地图到起点
 			mMapView.getController().animateTo(res.getStart().pt);
-			// 重置路线节点索引，节点浏览时使用
+		    //重置路线节点索引，节点浏览时使用
+			nodeIndex = 0;
+		    mBtnPre.setVisibility(View.VISIBLE);
+			mBtnNext.setVisibility(View.VISIBLE);
+			
 		}
 		
 		public void onGetWalkingRouteResult(MKWalkingRouteResult res, int error) {
@@ -475,6 +537,7 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 						.show();
 				return;
 			}
+			searchType = 2;
 			routeOverlay = new RouteOverlay(jxauMapAct.this, mMapView);
 			// 此处仅展示一个方案作为示例
 			routeOverlay.setData(res.getPlan(0).getRoute(0));
@@ -492,6 +555,11 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 			// 移动地图到起点
 			mMapView.getController().animateTo(res.getStart().pt);
 			// 将路线数据保存给全局变量
+		    route = res.getPlan(0).getRoute(0);
+		    //重置路线节点索引，节点浏览时使用
+		    nodeIndex = -1;
+		    mBtnPre.setVisibility(View.VISIBLE);
+			mBtnNext.setVisibility(View.VISIBLE);
 		}
 
 		public void onGetAddrResult(MKAddrInfo res, int error) {
@@ -519,7 +587,110 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 			// TODO Auto-generated method stub
 		}
 	};
+	OnClickListener nodeClickListener = new OnClickListener(){
+		public void onClick(View v) {
+			//浏览路线节点
+			nodeClick(v);
+		}
+ };
+ 
+ /**
+	 * 节点浏览
+	 * @param v
+	 */
+
 	
+	public void initNode(){
+		mBtnPre = (Button)findViewById(R.id.pre);
+    mBtnNext = (Button)findViewById(R.id.next);
+    mBtnPre.setVisibility(View.INVISIBLE);
+	mBtnNext.setVisibility(View.INVISIBLE);
+	mBtnPre.setOnClickListener(nodeClickListener);
+    mBtnNext.setOnClickListener(nodeClickListener);
+    createPaopao();
+	}
+	/**
+    * 创建弹出泡泡图层
+    */
+  public void createPaopao(){
+	
+    //泡泡点击响应回调
+    PopupClickListener popListener = new PopupClickListener(){
+		@Override
+		public void onClickedPopup(int index) {
+			Log.v("click", "clickapoapo");
+		}
+    };
+    pop = new PopupOverlay(mMapView,popListener);
+}
+	public void nodeClick(View v){
+		 viewCache = getLayoutInflater().inflate(R.layout.custom_text_view, null);
+     popupText =(TextView) viewCache.findViewById(R.id.textcache);
+		if (searchType == 0 || searchType == 2){
+			//驾车、步行使用的数据结构相同，因此类型为驾车或步行，节点浏览方法相同
+			if (nodeIndex < -1 || route == null || nodeIndex >= route.getNumSteps())
+				return;
+			
+			//上一个节点
+			if (mBtnPre.equals(v) && nodeIndex > 0){
+				//索引减
+				nodeIndex--;
+				//移动到指定索引的坐标
+				mMapView.getController().animateTo(route.getStep(nodeIndex).getPoint());
+				//弹出泡泡
+				popupText.setBackgroundResource(R.drawable.map_popup);
+				popupText.setText(route.getStep(nodeIndex).getContent());
+				pop.showPopup(BMapUtil.getBitmapFromView(popupText),
+						route.getStep(nodeIndex).getPoint(),
+						5);
+			}
+			//下一个节点
+			if (mBtnNext.equals(v) && nodeIndex < (route.getNumSteps()-1)){
+				//索引加
+				nodeIndex++;
+				//移动到指定索引的坐标
+				mMapView.getController().animateTo(route.getStep(nodeIndex).getPoint());
+				//弹出泡泡
+				popupText.setBackgroundResource(R.drawable.map_popup);
+				popupText.setText(route.getStep(nodeIndex).getContent());
+				pop.showPopup(BMapUtil.getBitmapFromView(popupText),
+						route.getStep(nodeIndex).getPoint(),
+						5);
+			}
+		}
+		if (searchType == 1){
+			//公交换乘使用的数据结构与其他不同，因此单独处理节点浏览
+			if (nodeIndex < -1 || transitOverlay == null || nodeIndex >= transitOverlay.getAllItem().size())
+				return;
+			
+			//上一个节点
+			if (mBtnPre.equals(v) && nodeIndex > 1){
+				//索引减
+				nodeIndex--;
+				//移动到指定索引的坐标
+				mMapView.getController().animateTo(transitOverlay.getItem(nodeIndex).getPoint());
+				//弹出泡泡
+				popupText.setBackgroundResource(R.drawable.map_popup);
+				popupText.setText(transitOverlay.getItem(nodeIndex).getTitle());
+				pop.showPopup(BMapUtil.getBitmapFromView(popupText),
+						transitOverlay.getItem(nodeIndex).getPoint(),
+						5);
+			}
+			//下一个节点
+			if (mBtnNext.equals(v) && nodeIndex < (transitOverlay.getAllItem().size()-2)){
+				//索引加
+				nodeIndex++;
+				//移动到指定索引的坐标
+				mMapView.getController().animateTo(transitOverlay.getItem(nodeIndex).getPoint());
+				//弹出泡泡
+				popupText.setBackgroundResource(R.drawable.map_popup);
+				popupText.setText(transitOverlay.getItem(nodeIndex).getTitle());
+				pop.showPopup(BMapUtil.getBitmapFromView(popupText),
+						transitOverlay.getItem(nodeIndex).getPoint(),
+						5);
+			}
+		}
+	}
 	/**
 	 * 读取xml中的文件，用于模糊匹配用户输入
 	 */
@@ -647,6 +818,9 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 	@Override
 	protected void onDestroy() {
 		mMapView.destroy();
+		mSearch.destory();
+		if (locationClient != null)
+			locationClient.stop();
 		if (mBMapManager != null) {
 			mBMapManager.destroy();
 			mBMapManager = null;
@@ -671,4 +845,17 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 		}
 		super.onResume();
 	}
+	 @Override
+	 protected void onSaveInstanceState(Bundle outState) {
+	    	super.onSaveInstanceState(outState);
+	    	mMapView.onSaveInstanceState(outState);
+	    	
+	    }
+	    
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    	super.onRestoreInstanceState(savedInstanceState);
+    	mMapView.onRestoreInstanceState(savedInstanceState);
+    }
+	 
 }

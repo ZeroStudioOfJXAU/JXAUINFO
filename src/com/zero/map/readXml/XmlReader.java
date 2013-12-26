@@ -13,7 +13,7 @@ import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.zero.map.CustomGround;
 import com.zero.map.CustomItem;
 
- /**   
+ /**
  * Title: XmlReader
  * Description:用来读取存储地图覆盖点的xml文件
  * @author DaiS
@@ -133,6 +133,11 @@ public class XmlReader {
 		return grounds;
 	}
 	
+	/**
+	 * 用来获取校园Map<名称，坐标>信息，用于查找线路是自动匹配
+	 * @param xpp
+	 * @return
+	 */
 	public static HashMap<String,GeoPoint> getPointDB(XmlPullParser xpp){
 		
 		try {
