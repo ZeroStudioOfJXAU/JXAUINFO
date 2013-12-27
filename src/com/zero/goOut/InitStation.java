@@ -22,10 +22,21 @@ class InitStation extends AsyncTask<Void, Void, List<String>> {
 		String info = HtmlDeal.GetContentFromUrl(url);
 		String mainInfo = HtmlDeal.getDivContentByJsoup_station(info);
 		List<String> list = SolveCase(mainInfo);
-		if (list.isEmpty())
-			return null;
-		// 移除相同的字串
-		removeDuplicate(list);
+		if (!list.isEmpty()){
+			// 移除相同的字串
+			removeDuplicate(list);
+		}
+		// 得到页码数
+		int pages = HtmlDeal.getPages(info);
+		for(int i=2; i <= pages; i++)
+		{
+			String url2 = "http://mybus.jx139.com/StationLineQuery?station="
+					+ station + "&page="+i+"&";		
+			String info2 = HtmlDeal.GetContentFromUrl(url2);
+			String mainInfo2 = HtmlDeal.getDivContentByJsoup_station(info2);
+			list.addAll(SolveCase(mainInfo2));
+			removeDuplicate(list);
+		}
 		return list;
 	}
 
