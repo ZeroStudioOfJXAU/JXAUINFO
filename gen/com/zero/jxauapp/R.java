@@ -8,9 +8,13 @@
 package com.zero.jxauapp;
 
 public final class R {
+    public static final class anim {
+        public static final int menu_bottombar_in=0x7f040000;
+        public static final int menu_bottombar_out=0x7f040001;
+    }
     public static final class array {
-        public static final int numbers=0x7f060000;
-        public static final int side_menu_item_array=0x7f060001;
+        public static final int numbers=0x7f070000;
+        public static final int side_menu_item_array=0x7f070001;
     }
     public static final class attr {
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
@@ -132,11 +136,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f050000;
-        public static final int activity_vertical_margin=0x7f050001;
-        public static final int list_padding=0x7f050003;
-        public static final int shadow_width=0x7f050004;
-        public static final int slid_menu_offset=0x7f050002;
+        public static final int activity_horizontal_margin=0x7f060000;
+        public static final int activity_vertical_margin=0x7f060001;
+        public static final int list_padding=0x7f060003;
+        public static final int shadow_width=0x7f060004;
+        public static final int slid_menu_offset=0x7f060002;
     }
     public static final class drawable {
         public static final int baidumap_ico=0x7f020000;
@@ -164,91 +168,106 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int map_popup_middle=0x7f020016;
         public static final int map_popup_side=0x7f020017;
         public static final int map_pre_node=0x7f020018;
-        public static final int side_menu_extend=0x7f020019;
-        public static final int side_menu_extend_1=0x7f02001a;
-        public static final int side_menu_extend_bg=0x7f02001b;
-        public static final int slid_menu_shadow=0x7f02001c;
-        public static final int ss=0x7f02001d;
-        public static final int stadium=0x7f02001e;
-        public static final int textviewborder=0x7f02001f;
-        public static final int titlebar_lightgray_bg=0x7f020020;
-        public static final int top_bar=0x7f020021;
-        public static final int top_bar_1=0x7f020022;
+        public static final int mk_pop=0x7f020019;
+        public static final int mk_popup=0x7f02001a;
+        public static final int mk_popup_down=0x7f02001b;
+        public static final int mk_popup_left=0x7f02001c;
+        public static final int mk_popup_middle=0x7f02001d;
+        public static final int mk_popup_right=0x7f02001e;
+        public static final int mk_popup_side=0x7f02001f;
+        public static final int mk_pre_=0x7f020020;
+        public static final int side_menu_extend=0x7f020021;
+        public static final int side_menu_extend_1=0x7f020022;
+        public static final int side_menu_extend_bg=0x7f020023;
+        public static final int slid_menu_shadow=0x7f020024;
+        public static final int ss=0x7f020025;
+        public static final int stadium=0x7f020026;
+        public static final int textviewborder=0x7f020027;
+        public static final int titlebar_lightgray_bg=0x7f020028;
+        public static final int top_bar=0x7f020029;
+        public static final int top_bar_1=0x7f02002a;
     }
     public static final class id {
-        public static final int action_settings=0x7f040048;
-        public static final int arrive_btn=0x7f040046;
-        public static final int auto_loc_button=0x7f04002f;
-        public static final int bmapsView=0x7f040038;
-        public static final int bus_track_ListView=0x7f040021;
-        public static final int content_frame=0x7f040027;
-        public static final int current_location_radioBtn1=0x7f04003e;
-        public static final int current_location_radioBtn2=0x7f04003f;
-        public static final int current_location_radioBtn3=0x7f040040;
-        public static final int current_location_radiogroup=0x7f04003d;
-        public static final int current_location_textView=0x7f04003c;
-        public static final int detail_params1_tv=0x7f040024;
-        public static final int detail_params2_tv=0x7f040026;
-        public static final int detail_project1_tv=0x7f040023;
-        public static final int detail_project2_tv=0x7f040025;
-        public static final int drive_btn=0x7f040035;
-        public static final int end_ACTextView=0x7f040034;
-        public static final int fragment=0x7f040006;
-        public static final int fullscreen=0x7f040003;
-        public static final int goout_imageBtn=0x7f040010;
-        public static final int included1=0x7f04000b;
-        public static final int layout_main=0x7f040005;
-        public static final int left=0x7f040000;
-        public static final int line240_checkBox=0x7f040043;
-        public static final int line704_checkBox=0x7f040044;
-        public static final int main_TextView1=0x7f040008;
-        public static final int main_imageView1=0x7f040009;
-        public static final int main_imageView5=0x7f040015;
-        public static final int main_imageView6=0x7f040018;
-        public static final int main_imageView7=0x7f04001a;
-        public static final int main_imageView8=0x7f04001d;
-        public static final int main_imageView9=0x7f04001f;
-        public static final int main_tableRow1=0x7f04000c;
-        public static final int main_textView10=0x7f04001e;
-        public static final int main_textView2=0x7f04000a;
-        public static final int main_textView3=0x7f04000d;
-        public static final int main_textView4=0x7f04000f;
-        public static final int main_textView5=0x7f040012;
-        public static final int main_textView6=0x7f040014;
-        public static final int main_textView7=0x7f040017;
-        public static final int main_textView8=0x7f040019;
-        public static final int main_textView9=0x7f04001c;
-        public static final int map_imageBtn=0x7f04000e;
-        public static final int map_linear_layout=0x7f04002e;
-        public static final int map_route_btn=0x7f04002d;
-        public static final int margin=0x7f040002;
-        public static final int menu_frame=0x7f04003b;
-        public static final int next=0x7f04003a;
-        public static final int phone_imageBtn=0x7f040013;
-        public static final int popdown=0x7f04002b;
-        public static final int popinfo=0x7f040029;
-        public static final int popleft=0x7f040028;
-        public static final int popright=0x7f04002c;
-        public static final int pre=0x7f040039;
-        public static final int radioButton1=0x7f040041;
-        public static final int relativeLayout1=0x7f040022;
-        public static final int right=0x7f040001;
-        public static final int route_textView1=0x7f040030;
-        public static final int route_textView2=0x7f040033;
-        public static final int screen_hit_btn=0x7f040032;
-        public static final int selected_view=0x7f040004;
-        public static final int set_off_btn=0x7f040045;
-        public static final int side_menu_extend_btn=0x7f040007;
-        public static final int slidingmenumain=0x7f040047;
-        public static final int start_ACTextView=0x7f040031;
-        public static final int tableRow2=0x7f040011;
-        public static final int tableRow3=0x7f040016;
-        public static final int tableRow4=0x7f04001b;
-        public static final int textView1=0x7f040020;
-        public static final int textView2=0x7f040042;
-        public static final int textcache=0x7f04002a;
-        public static final int transit_btn=0x7f040036;
-        public static final int walk_btn=0x7f040037;
+        public static final int action_settings=0x7f05004f;
+        public static final int arrive_btn=0x7f05004b;
+        public static final int auto_loc_button=0x7f050030;
+        public static final int bmapsView=0x7f050039;
+        public static final int bus_track_ListView=0x7f050021;
+        public static final int content_frame=0x7f050027;
+        public static final int current_location_radioBtn1=0x7f050043;
+        public static final int current_location_radioBtn2=0x7f050044;
+        public static final int current_location_radioBtn3=0x7f050045;
+        public static final int current_location_radiogroup=0x7f050042;
+        public static final int current_location_textView=0x7f050041;
+        public static final int detail_params1_tv=0x7f050024;
+        public static final int detail_params2_tv=0x7f050026;
+        public static final int detail_project1_tv=0x7f050023;
+        public static final int detail_project2_tv=0x7f050025;
+        public static final int drive_btn=0x7f050036;
+        public static final int end_ACTextView=0x7f050035;
+        public static final int etPWD=0x7f05003f;
+        public static final int etuserName=0x7f05003d;
+        public static final int fragment=0x7f050006;
+        public static final int fullscreen=0x7f050003;
+        public static final int go_out_textView=0x7f05002d;
+        public static final int goout_imageBtn=0x7f050010;
+        public static final int included1=0x7f05000b;
+        public static final int layout_main=0x7f050005;
+        public static final int left=0x7f050000;
+        public static final int line240_checkBox=0x7f050048;
+        public static final int line704_checkBox=0x7f050049;
+        public static final int main_TextView1=0x7f050008;
+        public static final int main_imageView1=0x7f050009;
+        public static final int main_imageView5=0x7f050015;
+        public static final int main_imageView6=0x7f050018;
+        public static final int main_imageView7=0x7f05001a;
+        public static final int main_imageView8=0x7f05001d;
+        public static final int main_imageView9=0x7f05001f;
+        public static final int main_tableRow1=0x7f05000c;
+        public static final int main_textView10=0x7f05001e;
+        public static final int main_textView2=0x7f05000a;
+        public static final int main_textView3=0x7f05000d;
+        public static final int main_textView4=0x7f05000f;
+        public static final int main_textView5=0x7f050012;
+        public static final int main_textView6=0x7f050014;
+        public static final int main_textView7=0x7f050017;
+        public static final int main_textView8=0x7f050019;
+        public static final int main_textView9=0x7f05001c;
+        public static final int map_imageBtn=0x7f05000e;
+        public static final int map_linear_layout=0x7f05002f;
+        public static final int map_route_btn=0x7f05002e;
+        public static final int margin=0x7f050002;
+        public static final int menu_frame=0x7f050040;
+        public static final int next=0x7f05003b;
+        public static final int phone_imageBtn=0x7f050013;
+        public static final int popdown=0x7f05002b;
+        public static final int popinfo=0x7f050029;
+        public static final int popleft=0x7f050028;
+        public static final int popright=0x7f05002c;
+        public static final int pre=0x7f05003a;
+        public static final int radioButton1=0x7f050046;
+        public static final int relativeLayout1=0x7f050022;
+        public static final int right=0x7f050001;
+        public static final int route_end=0x7f05004d;
+        public static final int route_start=0x7f05004c;
+        public static final int route_textView1=0x7f050031;
+        public static final int route_textView2=0x7f050034;
+        public static final int screen_hit_btn=0x7f050033;
+        public static final int selected_view=0x7f050004;
+        public static final int set_off_btn=0x7f05004a;
+        public static final int side_menu_extend_btn=0x7f050007;
+        public static final int slidingmenumain=0x7f05004e;
+        public static final int start_ACTextView=0x7f050032;
+        public static final int tableRow2=0x7f050011;
+        public static final int tableRow3=0x7f050016;
+        public static final int tableRow4=0x7f05001b;
+        public static final int textView1=0x7f050020;
+        public static final int textView2=0x7f050047;
+        public static final int textcache=0x7f05002a;
+        public static final int transit_btn=0x7f050037;
+        public static final int tvPWD=0x7f05003e;
+        public static final int tvuserName=0x7f05003c;
+        public static final int walk_btn=0x7f050038;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -257,20 +276,23 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int bus_track_unit=0x7f030003;
         public static final int content_frame=0x7f030004;
         public static final int custom_text_view=0x7f030005;
-        public static final int jxau_map_layout=0x7f030006;
-        public static final int list=0x7f030007;
-        public static final int menu_frame=0x7f030008;
-        public static final int phone_list=0x7f030009;
-        public static final int pop_menu=0x7f03000a;
-        public static final int slidingmenumain=0x7f03000b;
+        public static final int go_out_layout=0x7f030006;
+        public static final int jxau_map_layout=0x7f030007;
+        public static final int list=0x7f030008;
+        public static final int login_layout=0x7f030009;
+        public static final int menu_frame=0x7f03000a;
+        public static final int phone_list=0x7f03000b;
+        public static final int pop_menu=0x7f03000c;
+        public static final int routeplan=0x7f03000d;
+        public static final int slidingmenumain=0x7f03000e;
     }
     public static final class menu {
-        public static final int main=0x7f090000;
+        public static final int main=0x7f0a0000;
     }
     public static final class string {
-        public static final int action_settings=0x7f070001;
-        public static final int app_name=0x7f070000;
-        public static final int hello_world=0x7f070002;
+        public static final int action_settings=0x7f080001;
+        public static final int app_name=0x7f080000;
+        public static final int hello_world=0x7f080002;
     }
     public static final class style {
         /** 
@@ -294,11 +316,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f080000;
+        public static final int AppBaseTheme=0x7f090000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f080001;
+        public static final int AppTheme=0x7f090001;
     }
     public static final class styleable {
         /** Attributes that can be used with a SlidingMenu.
