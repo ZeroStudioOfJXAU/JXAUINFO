@@ -160,7 +160,7 @@
                             android:textColor="#ffffff" />
 
                         <ImageButton
-                            android:id="@+id/main_imageView6"
+                            android:id="@+id/campus_imageBtn"
                             android:layout_width="150dp"
                             android:layout_height="100dp"
                             android:layout_weight="0.83"

@@ -23,7 +23,7 @@ import com.zero.goOut.GoOutInfo;
 
  /**   
  * Title: MainActivity
- * Description:ä¸»é¡µé¢
+ * Description:Ö÷Ò³Ãæ
  * @author DaiS
  * @version 1.0
  * @date 2013-12-20
@@ -31,92 +31,97 @@ import com.zero.goOut.GoOutInfo;
 public class MainActivity extends SlidingFragmentActivity implements
 		OnClickListener {
 	
-	private ImageButton sideMenuExtendBtn;// ä¾§è¾¹æ æŒ‰é’®
-	private ImageButton mapImageBtn;// åœ°å›¾ImageButton
-	private ImageButton gooutImageBtn;// å‡ºè¡ŒImageButton
-	private ImageButton phoneImageBtn;//å¸¸ç”¨ç”µè¯ImageButton
+	private ImageButton sideMenuExtendBtn;// ²à±ßÀ¸°´Å¥
+	private ImageButton mapImageBtn;// µØÍ¼ImageButton
+	private ImageButton gooutImageBtn;// ³öĞĞImageButton
+	private ImageButton phoneImageBtn;//³£ÓÃµç»°ImageButton
+	private ImageButton CampusLandscapeBtn;//Ğ£Ô°¾°¹ÛBtn
 	private Fragment mContent;
 	
-	private PopupWindow mPopupWindow;// å‡ºè¡ŒæœåŠ¡ï¼Œå¼¹å‡ºèœå•
-	// popupWindowså¯¹è¯æ¡†ä¸­çš„æ§ä»¶
-	private RadioButton nongDaRadioBtn;//å†œå¤§ï¼Œå•é€‰æŒ‰é’®
-	private RadioButton caiDaRadioBtn;//è´¢å¤§ï¼Œå•é€‰æŒ‰é’®
-	private RadioButton xiaLuoRadioBtn;//ä¸‹ç½—ï¼Œå•é€‰æŒ‰é’®
-	private CheckBox line240CheckBox;//240å¤é€‰æ¡†
-	private CheckBox line704CheckBox;//704å¤é€‰æ¡†
-	private Button arrivelBtn;//åˆ°è¾¾æŒ‰é’®
-	private Button setOffBtn;//å‡ºå‘æŒ‰é’®
-	private View popupView;//å‡ºè¡ŒæœåŠ¡çš„è§†å›¾ï¼Œç”¨æ¥æ‰¾åˆ°ç»„ä»¶
+	private PopupWindow mPopupWindow;// ³öĞĞ·şÎñ£¬µ¯³ö²Ëµ¥
+	// popupWindows¶Ô»°¿òÖĞµÄ¿Ø¼ş
+	private RadioButton nongDaRadioBtn;//Å©´ó£¬µ¥Ñ¡°´Å¥
+	private RadioButton caiDaRadioBtn;//²Æ´ó£¬µ¥Ñ¡°´Å¥
+	private RadioButton xiaLuoRadioBtn;//ÏÂÂŞ£¬µ¥Ñ¡°´Å¥
+	private CheckBox line240CheckBox;//240¸´Ñ¡¿ò
+	private CheckBox line704CheckBox;//704¸´Ñ¡¿ò
+	private Button arrivelBtn;//µ½´ï°´Å¥
+	private Button setOffBtn;//³ö·¢°´Å¥
+	private View popupView;//³öĞĞ·şÎñµÄÊÓÍ¼£¬ÓÃÀ´ÕÒµ½×é¼ş
 	PhoneNumberFragment listFragment;
+	CampusLandscapeFragment campusFragment;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		// è®¾ç½®æ ‡é¢˜æ çš„æ ‡é¢˜
-		setTitle("å†œå¤§App");
-		// è®¾ç½®æ˜¯å¦èƒ½å¤Ÿä½¿ç”¨ActionBaræ¥æ»‘åŠ¨
+		// ÉèÖÃ±êÌâÀ¸µÄ±êÌâ
+		setTitle("Å©´óApp");
+		// ÉèÖÃÊÇ·ñÄÜ¹»Ê¹ÓÃActionBarÀ´»¬¶¯
 		setSlidingActionBarEnabled(true);
-		// è®¾ç½®æ˜¯å¦æ˜¾ç¤ºHomeå›¾æ ‡æŒ‰é’®
+		// ÉèÖÃÊÇ·ñÏÔÊ¾HomeÍ¼±ê°´Å¥
 		// getActionBar().setDisplayHomeAsUpEnabled(true);
-		// è®¾ç½®ä¸»ç•Œé¢è§†å›¾
+		// ÉèÖÃÖ÷½çÃæÊÓÍ¼
 		setContentView(R.layout.activity_main);
-		// åˆå§‹åŒ–æ»‘åŠ¨èœå•
+		// ³õÊ¼»¯»¬¶¯²Ëµ¥
 		initSlidingMenu(savedInstanceState);
-		// ä¸ºæŒ‰é’®è®¾ç½®ç›‘å¬å™¨ï¼Œç‚¹å‡»è§¦å‘ä¾§è¾¹èœå•ã€‚
+		// Îª°´Å¥ÉèÖÃ¼àÌıÆ÷£¬µã»÷´¥·¢²à±ß²Ëµ¥¡£
 		initBindListenerWidge();
 
 		popupView = getLayoutInflater().inflate(R.layout.pop_menu, null);
 		// popupView.setBackgroundColor(Color.BLUE);
 		mPopupWindow = new PopupWindow(popupView, LayoutParams.MATCH_PARENT,
 				LayoutParams.WRAP_CONTENT, true);
-		// è¿™ä¸‰è¡Œçš„ä½œç”¨æ˜¯ç‚¹å‡»ç©ºç™½å¤„çš„æ—¶å€™PopupWindowä¼šæ¶ˆå¤±
+		// ÕâÈıĞĞµÄ×÷ÓÃÊÇµã»÷¿Õ°×´¦µÄÊ±ºòPopupWindow»áÏûÊ§
 		mPopupWindow.setTouchable(true);
 		mPopupWindow.setOutsideTouchable(true);
 		mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),
 				(Bitmap) null));
 		listFragment= new PhoneNumberFragment();
+		campusFragment=new CampusLandscapeFragment();
 	}
 	/**
-	 * åˆå§‹åŒ–æ»‘åŠ¨èœå•
+	 * ³õÊ¼»¯»¬¶¯²Ëµ¥
 	 */
 	private void initSlidingMenu(Bundle savedInstanceState) {
 		if (savedInstanceState != null)
 			mContent = getSupportFragmentManager().getFragment(
 					savedInstanceState, "mContent");
-		// è®¾ç½®æ»‘åŠ¨èœå•çš„è§†å›¾
+		// ÉèÖÃ»¬¶¯²Ëµ¥µÄÊÓÍ¼
 		setBehindContentView(R.layout.menu_frame);
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.menu_frame, new SideManuFragment()).commit();
-		// å®ä¾‹åŒ–æ»‘åŠ¨èœå•å¯¹è±¡
+		// ÊµÀı»¯»¬¶¯²Ëµ¥¶ÔÏó
 		SlidingMenu sm = getSlidingMenu();
-		// è®¾ç½®æ»‘åŠ¨é˜´å½±çš„å®½åº¦
+		// ÉèÖÃ»¬¶¯ÒõÓ°µÄ¿í¶È
 		sm.setShadowWidthRes(R.dimen.shadow_width);
-		// è®¾ç½®æ»‘åŠ¨é˜´å½±çš„å›¾åƒèµ„æº
+		// ÉèÖÃ»¬¶¯ÒõÓ°µÄÍ¼Ïñ×ÊÔ´
 		sm.setShadowDrawable(R.drawable.slid_menu_shadow);
-		// è®¾ç½®æ»‘åŠ¨èœå•è§†å›¾çš„å®½åº¦
+		// ÉèÖÃ»¬¶¯²Ëµ¥ÊÓÍ¼µÄ¿í¶È
 		sm.setBehindOffsetRes(R.dimen.slid_menu_offset);
-		// è®¾ç½®æ¸å…¥æ¸å‡ºæ•ˆæœçš„å€¼
+		// ÉèÖÃ½¥Èë½¥³öĞ§¹ûµÄÖµ
 		sm.setFadeDegree(0.35f);
-		// è®¾ç½®è§¦æ‘¸å±å¹•çš„æ¨¡å¼
+		// ÉèÖÃ´¥ÃşÆÁÄ»µÄÄ£Ê½
 		sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 	}
 	
 	/**
-	 * ä¸ºä¸»ç•Œé¢ä¸­çš„ç»„ä»¶æ·»åŠ ç›‘å¬
+	 * ÎªÖ÷½çÃæÖĞµÄ×é¼şÌí¼Ó¼àÌı
 	 */
 	public void initBindListenerWidge() {
 		sideMenuExtendBtn = (ImageButton) findViewById(R.id.side_menu_extend_btn);
 		mapImageBtn = (ImageButton) findViewById(R.id.map_imageBtn);
 		gooutImageBtn = (ImageButton) findViewById(R.id.goout_imageBtn);
 		phoneImageBtn=(ImageButton) findViewById(R.id.phone_imageBtn);
+		CampusLandscapeBtn=(ImageButton) findViewById(R.id.campus_imageBtn);
 		mapImageBtn.setOnClickListener(this);
 		phoneImageBtn.setOnClickListener(this);
 		sideMenuExtendBtn.setOnClickListener(this);
 		gooutImageBtn.setOnClickListener(this);
+		CampusLandscapeBtn.setOnClickListener(this);
 	}
 	
 	/**
-	 * å‡ºè¡ŒæœåŠ¡å¼¹å‡ºèœå•
+	 * ³öĞĞ·şÎñµ¯³ö²Ëµ¥
 	 */
 	public void runPopWindow() {
 		nongDaRadioBtn = (RadioButton) popupView
@@ -137,14 +142,14 @@ public class MainActivity extends SlidingFragmentActivity implements
 	}
 	
 	 /**   
-	 * Description:å‡ºè¡ŒæœåŠ¡ï¼Œå¼¹å‡ºèœå•ä¸­çš„æŒ‰é’®ç›‘å¬å™¨
+	 * Description:³öĞĞ·şÎñ£¬µ¯³ö²Ëµ¥ÖĞµÄ°´Å¥¼àÌıÆ÷
 	 */   
 	class PopMenuBtnListener implements OnClickListener{
-		//çº¿è·¯
+		//ÏßÂ·
 		String line;
-		//å½“å‰ä½ç½®
+		//µ±Ç°Î»ÖÃ
 		String currentLocation;
-		//æ–¹å‘
+		//·½Ïò
 		boolean dir;
 		/* (non-Javadoc)
 		 * @see android.view.View.OnClickListener#onClick(android.view.View)
@@ -163,11 +168,11 @@ public class MainActivity extends SlidingFragmentActivity implements
 			}
 			
 			if (caiDaRadioBtn.isChecked()) {
-				currentLocation="è´¢å¤§";
+				currentLocation="²Æ´ó";
 			} else if (xiaLuoRadioBtn.isChecked()) {
-				currentLocation="ä¸‹ç½—";
+				currentLocation="ÏÂÂŞ";
 			}else{
-				currentLocation="å†œå¤§";
+				currentLocation="Å©´ó";
 			}
 			
 			if(ItemId==R.id.set_off_btn){
@@ -181,7 +186,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 			BusTrackFragment busFragment=new BusTrackFragment();  
 	        Bundle busBundle=new Bundle();  
 	        busBundle.putSerializable("BUSTRACKINFO", info);  
-	        //å‘detailFragmentä¼ å…¥å‚æ•°  
+	        //ÏòdetailFragment´«Èë²ÎÊı  
 	        busFragment.setArguments(busBundle);
 	        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
 	        fragmentTransaction.addToBackStack(null);
@@ -192,7 +197,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		int ItemId = v.getId();// è·å–ç»„ä»¶çš„idå€¼
+		int ItemId = v.getId();// »ñÈ¡×é¼şµÄidÖµ
 		switch (ItemId) {
 		case R.id.side_menu_extend_btn:
 			toggle();
@@ -202,12 +207,12 @@ public class MainActivity extends SlidingFragmentActivity implements
 					jxauMapAct.class));
 			break;
 		case R.id.goout_imageBtn:
-			// å¼¹å‡ºPopWindows
+			// µ¯³öPopWindows
 			 mPopupWindow.showAsDropDown(v);
 			 runPopWindow();
 			break;
 		case R.id.phone_imageBtn:
-			//åˆ‡æ¢åˆ°å¸¸ç”¨ç”µè¯é¡µé¢
+			//ÇĞ»»µ½³£ÓÃµç»°Ò³Ãæ
 			FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
 			if(listFragment.isAdded()){
 				fragmentTransaction.show(listFragment).commit();
@@ -216,14 +221,22 @@ public class MainActivity extends SlidingFragmentActivity implements
 				fragmentTransaction.add(android.R.id.content, listFragment).commit(); 
 			}
 	         break;
+		case R.id.campus_imageBtn:
+			FragmentTransaction campusTransaction=getSupportFragmentManager().beginTransaction();
+			if(campusFragment.isAdded()){
+				campusTransaction.show(campusFragment).commit();
+			}else{
+				campusTransaction.addToBackStack(null);
+				campusTransaction.add(android.R.id.content, campusFragment).commit(); 
+			}
 		default:
 			break;
 		}
 	}
 	
 	/**
-	 * åˆ‡æ¢Fragmentï¼Œä¹Ÿæ˜¯åˆ‡æ¢è§†å›¾çš„å†…å®¹ã€‚
-	 * å¯ä»¥å°†Activity ä¼˜åŒ–ä¸ºFragment...
+	 * ÇĞ»»Fragment£¬Ò²ÊÇÇĞ»»ÊÓÍ¼µÄÄÚÈİ¡£
+	 * ¿ÉÒÔ½«Activity ÓÅ»¯ÎªFragment...
 	 */
 	public void switchContent(Fragment fragment) {
 		mContent = fragment;
@@ -233,7 +246,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 	}
 
 	/**
-	 * èœå•æŒ‰é’®ç‚¹å‡»äº‹ä»¶ï¼Œé€šè¿‡ç‚¹å‡»ActionBarçš„Homeå›¾æ ‡æŒ‰é’®æ¥æ‰“å¼€æ»‘åŠ¨èœå•
+	 * ²Ëµ¥°´Å¥µã»÷ÊÂ¼ş£¬Í¨¹ıµã»÷ActionBarµÄHomeÍ¼±ê°´Å¥À´´ò¿ª»¬¶¯²Ëµ¥
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -247,7 +260,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 
 	@Override
 	public void onBackPressed() {
-		// ç‚¹å‡»è¿”å›é”®å…³é—­æ»‘åŠ¨èœå•
+		// µã»÷·µ»Ø¼ü¹Ø±Õ»¬¶¯²Ëµ¥
 		super.onBackPressed();
 	}
 }

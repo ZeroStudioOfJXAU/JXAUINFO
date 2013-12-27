@@ -6,7 +6,7 @@
         <LBlongtitude>115843061</LBlongtitude>
         <RTlatitude>28762565</RTlatitude>
         <RTlongtitude>115843780</RTlongtitude>
-        <ImageResId>0x7f02001e</ImageResId>
+        <ImageResId>0x7f020031</ImageResId>
     </groundItem>
      <!-- 北区体育场 -->
      <groundItem>
@@ -14,7 +14,7 @@
         <LBlongtitude>115841116</LBlongtitude>
         <RTlatitude>28767742</RTlatitude>
         <RTlongtitude>115842329</RTlongtitude>
-        <ImageResId>0x7f02001e</ImageResId>
+        <ImageResId>0x7f020031</ImageResId>
     </groundItem>
      <!-- 商业街-->
      <groundItem>
@@ -22,6 +22,6 @@
         <LBlongtitude>115845527</LBlongtitude>
         <RTlatitude>28764038</RTlatitude>
         <RTlongtitude>115846066</RTlongtitude>
-        <ImageResId>0x7f020002</ImageResId>
+        <ImageResId>0x7f020003</ImageResId>
     </groundItem>
 </groundItems>
