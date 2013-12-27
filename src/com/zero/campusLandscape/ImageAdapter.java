@@ -40,9 +40,9 @@ public class ImageAdapter extends BaseAdapter implements ListAdapter {
 		if (convertView == null) {
 			iv = new ImageView(mContext);
 			iv.setAdjustViewBounds(true);
-			iv.setLayoutParams(new Gallery.LayoutParams(300, 300));
+			iv.setLayoutParams(new Gallery.LayoutParams(250, 250));
 			iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-			iv.setPadding(8, 8, 8, 8);
+			iv.setPadding(10, 10, 10, 10);
 		} else {
 			iv = (ImageView) convertView;
 		}

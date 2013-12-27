@@ -9,10 +9,14 @@
         android:id="@+id/campus_imageView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="4dip"
+        android:layout_marginRight="4dip"
+        android:scaleType="center"
+        android:layout_gravity="center" 
         android:src="@drawable/s1" />
-
-	<Gallery 
-    android:id="@+id/campus_gallery"
-    android:layout_width="fill_parent"
-     android:layout_height="fill_parent"/>
+	<com.zero.campusLandscape.GalleryFlow   
+	   android:id="@+id/campus_gallery"
+	   android:layout_width="fill_parent"   
+	   android:layout_height="wrap_content"   
+	   />  
 </LinearLayout>

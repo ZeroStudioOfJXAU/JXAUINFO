@@ -12,6 +12,7 @@ package com.zero.jxauapp;
  */
 
 
+import com.zero.campusLandscape.GalleryFlow;
 import com.zero.campusLandscape.IConfig;
 import com.zero.campusLandscape.ImageAdapter;
 
@@ -27,7 +28,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
        
 public class CampusLandscapeFragment extends Fragment{
-	Gallery gallery;
+	GalleryFlow gallery;
 	ImageView imageView;  
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class CampusLandscapeFragment extends Fragment{
 		super.onActivityCreated(savedInstanceState);
 		try {
 			ImageAdapter adapter = new ImageAdapter(getActivity());
-			 gallery = (Gallery)getActivity().findViewById(R.id.campus_gallery);
+			 gallery = (GalleryFlow)getActivity().findViewById(R.id.campus_gallery);
 		     imageView=(ImageView)getActivity().findViewById(R.id.campus_imageView);
 		     //…Ë÷√ª≠¿» ”Õº  ≈‰∆˜
 		     gallery.setAdapter(adapter);
