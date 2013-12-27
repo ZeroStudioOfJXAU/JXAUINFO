@@ -57,7 +57,31 @@ class HtmlDeal {
 		}
 		return s;
 	}
-
+	public static int getPages(String info)
+	{
+		Document doc = Jsoup.parse(info);
+		Elements div = doc.getElementsByClass("apps_page");
+		String s = null;
+		for (Element e : div) {
+			s = e.getElementsByClass("apps_page").text();
+		}
+		char ch[] = s.toCharArray();
+		String num="";
+		for(int i=0; i < ch.length; i++)
+		{
+			if(ch[i]=='/'){
+				for(int j=i+1; j < ch.length; j++){
+					if(ch[j]>='0' && ch[j]<='9'){
+						num += ch[j];
+					}else
+						break;
+				}
+				break;
+			}			
+		}		
+		return Integer.parseInt(num);
+	}
+	
 	public static List<BusInfo> SolveCase(String s, String location, int dire) {
 		String str1 = "";
 		// 站点名称和号码
@@ -65,55 +89,43 @@ class HtmlDeal {
 		List<BusInfo> list = new ArrayList<BusInfo>();
 		char data[] = s.toCharArray();
 		
-	
 		for (int i = 0; i < data.length; i++) {
 			if (isChinese(data[i]) || Character.isDigit(data[i])) {
 				str1 += data[i];
 			} else if (data[i] == '>') {
-				System.out.println(str1);
 				AddBus(str1, map, list);
 				str1 = "";				
 			}			
 		}
 		
 		int num = map.get(location);
-		System.out.println("num == "+num);
-		for(int i=0; i < list.size(); i++)
-		{
-			BusInfo busInfo = list.get(i);
-			System.out.println(busInfo.station+busInfo.number+busInfo.flag);
-		}
 		removeListElement3(list, num, map, dire);
-		System.out.println("移除后");
-		for(int i=0; i < list.size(); i++)
-		{
-			BusInfo busInfo = list.get(i);
-			System.out.println(busInfo.station+busInfo.number+busInfo.flag);
-		}
 		return list;
 	}
 	
 	public static void removeListElement3(List<BusInfo> list, int num, Map<String, Integer> map, int dire) {  
         
-		for(int i=0; i < list.size(); i++)
+		if(dire==1)
+		{
+		for(int i=0; i < list.size();i++)
          {
         	 BusInfo busInfo = list.get(i);
-        	 if(map.get(busInfo.station) < num){
+        	 if(map.get(busInfo.station) > num){
         		 list.remove(i);
         		 --i;
         	 }
          }
-        
-//        else if(dire==2){
-//        	for(int i=0; i < list.size(); i++)
-//            {
-//           	 BusInfo busInfo = list.get(i);
-//           	 if(map.get(busInfo.station) < num){
-//           		 list.remove(i);
-//           		 --i;
-//           	 }
-//            }       	        
-//        }
+		}else if(dire==2){
+			
+			for(int i=0; i < list.size(); i++)
+	         {
+	        	 BusInfo busInfo = list.get(i);
+	        	 if(map.get(busInfo.station) < num){
+	        		 list.remove(i);
+	        		 --i;
+	        	 }
+	         }
+		}
      }
 
 	/*
@@ -134,7 +146,6 @@ class HtmlDeal {
 				else break;
 				str = str.substring(1);
 			}
-			System.out.println("得到站台的编号"+stationNumber);
 			// 得到站台的名称
 			int i = 0;
 			while (true) {
@@ -143,18 +154,13 @@ class HtmlDeal {
 				else break;
 				i++;
 			}
-			System.out.println("得到站台的名称"+station);
 			// 得到前往或者到达当前站台的车辆数量
 			while (Character.isDigit(str.charAt(i))) {
 				count += str.charAt(i);
 				i++;
 			}
-			System.out.println("得到前往或者到达当前站台的车辆数量"+count);
 			if (str.indexOf("到达") >= 0)
 				flag = true;
-			System.out.println("station:"+station);
-			System.out.println("stationNumber:"+stationNumber);
-			System.out.println("count:"+count);
 			int num = Integer.parseInt(stationNumber);
 			map.put(station, num);
 			int c = Integer.parseInt(count);
@@ -169,8 +175,6 @@ class HtmlDeal {
 				else if(isChinese(ch[i]))
 					station += ch[i];
 			}
-			System.out.println("else station:"+station);
-			System.out.println("else stationNumber:"+stationNum);
 			int num = Integer.parseInt(stationNum);
 			map.put(station, num);
 		}
