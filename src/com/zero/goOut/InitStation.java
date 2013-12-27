@@ -6,6 +6,14 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 
+/**
+ * 初始化站点查询
+ * @param 站点， handler
+ * @return List<String>
+ * @author king
+ * @data 13/12/27
+ * @hind 最下面模拟运行
+ */
 class InitStation extends AsyncTask<Void, Void, List<String>> {
 	private String station;
 	private Handler handler;
@@ -84,3 +92,28 @@ class InitStation extends AsyncTask<Void, Void, List<String>> {
 		handler.sendMessage(msg);
 	}
 }
+
+/*
+ * public class MainActivity extends Activity {
+	TextView text;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		text =  (TextView) findViewById(R.id.text);
+		text.setText("");
+		new InitStation("下罗站",handler).execute();
+	}
+	
+	Handler handler = new Handler(){
+		@Override
+		public void handleMessage(Message msg){
+			List<String> list = (List<String>)msg.obj;
+			text.setText("");
+			for(int i=0;i < list.size(); i++)
+			{
+				text.append(list.get(i)+"\n");				
+			}
+		}
+	};
+}*/

@@ -32,8 +32,8 @@ class HtmlDeal {
 			client.getConnectionManager().shutdown();
 			return result;
 		} catch (Exception e) {
-			System.out.println("NetHelper"+"______________读取数据失败" + e.toString()
-					+ "_____________");
+			System.out.println("NetHelper" + "______________读取数据失败"
+					+ e.toString() + "_____________");
 			return "";
 		}
 	}
@@ -57,8 +57,8 @@ class HtmlDeal {
 		}
 		return s;
 	}
-	public static int getPages(String info)
-	{
+
+	public static int getPages(String info) {
 		Document doc = Jsoup.parse(info);
 		Elements div = doc.getElementsByClass("apps_page");
 		String s = null;
@@ -66,74 +66,72 @@ class HtmlDeal {
 			s = e.getElementsByClass("apps_page").text();
 		}
 		char ch[] = s.toCharArray();
-		String num="";
-		for(int i=0; i < ch.length; i++)
-		{
-			if(ch[i]=='/'){
-				for(int j=i+1; j < ch.length; j++){
-					if(ch[j]>='0' && ch[j]<='9'){
+		String num = "";
+		for (int i = 0; i < ch.length; i++) {
+			if (ch[i] == '/') {
+				for (int j = i + 1; j < ch.length; j++) {
+					if (ch[j] >= '0' && ch[j] <= '9') {
 						num += ch[j];
-					}else
+					} else
 						break;
 				}
 				break;
-			}			
-		}		
+			}
+		}
 		return Integer.parseInt(num);
 	}
-	
+
 	public static List<BusInfo> SolveCase(String s, String location, int dire) {
 		String str1 = "";
 		// 站点名称和号码
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		List<BusInfo> list = new ArrayList<BusInfo>();
-		char data[] = s.toCharArray();
-		
-		for (int i = 0; i < data.length; i++) {
-			if (isChinese(data[i]) || Character.isDigit(data[i])) {
-				str1 += data[i];
-			} else if (data[i] == '>') {
-				AddBus(str1, map, list);
-				str1 = "";				
-			}			
-		}
-		
-		int num = map.get(location);
-		removeListElement3(list, num, map, dire);
-		return list;
+		if (s != "" && s != null) {
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			List<BusInfo> list = new ArrayList<BusInfo>();
+			char data[] = s.toCharArray();
+			for (int i = 0; i < data.length; i++) {
+				if (isChinese(data[i]) || Character.isDigit(data[i])) {
+					str1 += data[i];
+				} else if (data[i] == '>') {
+					AddBus(str1, map, list);
+					str1 = "";
+				}
+			}
+
+			int num = map.get(location);
+			removeListElement3(list, num, map, dire);
+			return list;
+		} else
+			return null;
 	}
-	
-	public static void removeListElement3(List<BusInfo> list, int num, Map<String, Integer> map, int dire) {  
-        
-		if(dire==1)
-		{
-		for(int i=0; i < list.size();i++)
-         {
-        	 BusInfo busInfo = list.get(i);
-        	 if(map.get(busInfo.station) > num){
-        		 list.remove(i);
-        		 --i;
-        	 }
-         }
-		}else if(dire==2){
-			
-			for(int i=0; i < list.size(); i++)
-	         {
-	        	 BusInfo busInfo = list.get(i);
-	        	 if(map.get(busInfo.station) < num){
-	        		 list.remove(i);
-	        		 --i;
-	        	 }
-	         }
+
+	public static void removeListElement3(List<BusInfo> list, int num,
+			Map<String, Integer> map, int dire) {
+
+		if (dire == 1) {
+			for (int i = 0; i < list.size(); i++) {
+				BusInfo busInfo = list.get(i);
+				if (map.get(busInfo.station) > num) {
+					list.remove(i);
+					--i;
+				}
+			}
+		} else if (dire == 2) {
+			for (int i = 0; i < list.size(); i++) {
+				BusInfo busInfo = list.get(i);
+				if (map.get(busInfo.station) > num) {
+					list.remove(i);
+					--i;
+				}
+			}
 		}
-     }
+	}
 
 	/*
 	 * 处理逻辑： 无论当前站点是否有车辆到来，都将其前部的编号和名称拆解，添加到map， 如果当前 站点有车辆到来，那么就将其添加到List
 	 */
 	public static void AddBus(String str, Map<String, Integer> map,
 			List<BusInfo> list) {
-		if (str == "" || str==null)
+		if (str == "" || str == null)
 			return;
 		if (str.indexOf("开往") >= 0 || str.indexOf("到达") >= 0) {
 			String station = "", stationNumber = "";
@@ -143,7 +141,8 @@ class HtmlDeal {
 			while (true) {
 				if (Character.isDigit(str.charAt(0)))
 					stationNumber += str.charAt(0);
-				else break;
+				else
+					break;
 				str = str.substring(1);
 			}
 			// 得到站台的名称
@@ -151,7 +150,8 @@ class HtmlDeal {
 			while (true) {
 				if (isChinese(str.charAt(i)))
 					station += str.charAt(i);
-				else break;
+				else
+					break;
 				i++;
 			}
 			// 得到前往或者到达当前站台的车辆数量
@@ -172,7 +172,7 @@ class HtmlDeal {
 			for (int i = 0; i < ch.length; i++) {
 				if (ch[i] >= '0' && ch[i] <= '9')
 					stationNum += ch[i];
-				else if(isChinese(ch[i]))
+				else if (isChinese(ch[i]))
 					station += ch[i];
 			}
 			int num = Integer.parseInt(stationNum);
