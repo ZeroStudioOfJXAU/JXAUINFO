@@ -23,13 +23,15 @@ public class getDataAsyncTask extends AsyncTask<Void, Void, List<BusInfo>> {
 
 	@Override
 	protected List<BusInfo> doInBackground(Void... params) {
+		int realDire;
+		if(dire==1) realDire=2;
+		else realDire=1;
 		// deal data in here
 		List<BusInfo> list = new ArrayList<BusInfo>();
-		
 		String url3 = "http://mybus.jx139.com/LineDetailQuery?lineId="+
-				line+"&direction="+dire+"&";
+				line+"&direction="+realDire+"&";
 		String info3 = HtmlDeal.GetContentFromUrl(url3);
-		System.out.println("info3:"+info3);
+//		System.out.println("info3:"+info3);
 		if(info3!=""){ 
 			String mainInfo = HtmlDeal.getDivContentByJsoup(info3);
 			if(mainInfo!="")
@@ -40,7 +42,7 @@ public class getDataAsyncTask extends AsyncTask<Void, Void, List<BusInfo>> {
 		}
 		
 		String url = "http://mybus.jx139.com/LineDetailQuery?lineId=1"+
-				line+"&direction="+dire+"&";
+				line+"&direction="+realDire+"&";
 		String info = HtmlDeal.GetContentFromUrl(url);
 		if(info!=""){ 
 			String mainInfo = HtmlDeal.getDivContentByJsoup(info);
@@ -52,7 +54,7 @@ public class getDataAsyncTask extends AsyncTask<Void, Void, List<BusInfo>> {
 		}
 		
 		String url2 = "http://mybus.jx139.com/LineDetailQuery?lineId=2"+
-				line+"&direction="+dire+"&";
+				line+"&direction="+realDire+"&";
 		String info2 = HtmlDeal.GetContentFromUrl(url2);
 		if(info2!=""){ 
 			String mainInfo = HtmlDeal.getDivContentByJsoup(info2);
