@@ -106,21 +106,25 @@ class HtmlDeal {
 
 	public static void removeListElement3(List<BusInfo> list, int num,
 			Map<String, Integer> map, int dire) {
-
+		int size;
 		if (dire == 1) {
 			for (int i = 0; i < list.size(); i++) {
 				BusInfo busInfo = list.get(i);
-				if (map.get(busInfo.station) > num) {
+				if ((size=map.get(busInfo.station)) > num) {
 					list.remove(i);
 					--i;
+				}else{
+					busInfo.distance = num - size;					
 				}
 			}
 		} else if (dire == 2) {
 			for (int i = 0; i < list.size(); i++) {
 				BusInfo busInfo = list.get(i);
-				if (map.get(busInfo.station) > num) {
+				if ((size=map.get(busInfo.station)) > num) {
 					list.remove(i);
 					--i;
+				}else{
+					busInfo.distance = num - size;					
 				}
 			}
 		}

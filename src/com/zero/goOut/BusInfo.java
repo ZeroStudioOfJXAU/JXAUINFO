@@ -6,13 +6,11 @@ package com.zero.goOut;
 /* flag—— true 表示到达 ， false 表示前往*/
 /* dire  表示方向， true表示正方向， false 表示反方向*/
 public class BusInfo {
-	
 	public String station;
 	public int number;
 	public boolean flag;
-	/*fix it 离本站还有多远*/
-	public boolean dire; 
-	
+	public boolean dire;
+	public int distance;
 	public boolean getDirection(){
 		return dire;
 	}
@@ -22,4 +20,3 @@ public class BusInfo {
 		flag = f;
 	}
 }
-
