@@ -34,14 +34,14 @@
                             android:background="@drawable/side_menu_extend_bg"
                             android:drawableLeft="@drawable/function_menu_left"
                             android:gravity="center_vertical"
-                            android:text="农大地图"
+                            android:text="@string/frame_main_school_map"
                             android:textAppearance="?android:attr/textAppearance"
                             android:textColor="#ffffff" />
 
                         <ImageButton
                             android:id="@+id/map_imageBtn"
-                            android:layout_width="150dp"
-                            android:layout_height="100dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="0.83"
                             android:scaleType="fitXY"
                             android:src="@drawable/function_menu_jxau_map" />
@@ -62,15 +62,16 @@
                             android:background="@drawable/side_menu_extend_bg"
                             android:drawableLeft="@drawable/function_menu_left"
                             android:gravity="center_vertical"
-                            android:text="出行服务"
+                            android:text="@string/frame_main_bus_track"
                             android:textAppearance="?android:attr/textAppearance"
                             android:textColor="#ffffff" />
 
                         <ImageButton
                             android:id="@+id/goout_imageBtn"
-                            android:layout_width="150dp"
-                            android:layout_height="100dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
                             android:layout_weight="0.83"
+                            android:scaleType="fitXY"
                             android:src="@drawable/function_menu_goout" />
                     </LinearLayout>
                 </TableRow>
@@ -95,7 +96,7 @@
                             android:background="@drawable/side_menu_extend_bg"
                             android:drawableLeft="@drawable/function_menu_left"
                             android:gravity="center_vertical"
-                            android:text="常用电话"
+                            android:text="@string/frame_main_common_phone"
                             android:textAppearance="?android:attr/textAppearance"
                             android:textColor="#ffffff" />
 
@@ -122,12 +123,12 @@
                             android:background="@drawable/side_menu_extend_bg"
                             android:drawableLeft="@drawable/function_menu_left"
                             android:gravity="center_vertical"
-                            android:text="活动通知"
+                            android:text="@string/frame_main_news_and_noticle"
                             android:textAppearance="?android:attr/textAppearance"
                             android:textColor="#ffffff" />
 
                         <ImageButton
-                            android:id="@+id/main_imageView5"
+                            android:id="@+id/news_and_noticle_imageBtn"
                             android:layout_width="150dp"
                             android:layout_height="100dp"
                             android:layout_weight="0.83"
@@ -155,7 +156,7 @@
                             android:background="@drawable/side_menu_extend_bg"
                             android:drawableLeft="@drawable/function_menu_left"
                             android:gravity="center_vertical"
-                            android:text="校园景观"
+                            android:text="@string/frame_main_school_landscape"
                             android:textAppearance="?android:attr/textAppearance"
                             android:textColor="#ffffff" />
 
@@ -182,7 +183,7 @@
                             android:background="@drawable/side_menu_extend_bg"
                             android:drawableLeft="@drawable/function_menu_left"
                             android:gravity="center_vertical"
-                            android:text="校园资讯"
+                            android:text="@string/frame_main_school_news"
                             android:textAppearance="?android:attr/textAppearance"
                             android:textColor="#ffffff" />
 
@@ -215,7 +216,7 @@
                             android:background="@drawable/side_menu_extend_bg"
                             android:drawableLeft="@drawable/function_menu_left"
                             android:gravity="center_vertical"
-                            android:text="电费查询"
+                            android:text="@string/frame_main_electricity_query"
                             android:textAppearance="?android:attr/textAppearance"
                             android:textColor="#ffffff" />
 
@@ -242,7 +243,7 @@
                             android:background="@drawable/side_menu_extend_bg"
                             android:drawableLeft="@drawable/function_menu_left"
                             android:gravity="center_vertical"
-                            android:text="教务助手"
+                            android:text="@string/frame_main_educational_admin_assist"
                             android:textAppearance="?android:attr/textAppearance"
                             android:textColor="#ffffff" />
 

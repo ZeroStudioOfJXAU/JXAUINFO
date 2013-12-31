@@ -35,7 +35,8 @@ public class MainActivity extends SlidingFragmentActivity implements
 	private ImageButton mapImageBtn;// 地图ImageButton
 	private ImageButton gooutImageBtn;// 出行ImageButton
 	private ImageButton phoneImageBtn;//常用电话ImageButton
-	private ImageButton CampusLandscapeBtn;//校园景观Btn
+	private ImageButton campusLandscapeBtn;//校园景观Btn
+	private ImageButton newsImageBtn;
 	private Fragment mContent;
 	
 	private PopupWindow mPopupWindow;// 出行服务，弹出菜单
@@ -112,12 +113,14 @@ public class MainActivity extends SlidingFragmentActivity implements
 		mapImageBtn = (ImageButton) findViewById(R.id.map_imageBtn);
 		gooutImageBtn = (ImageButton) findViewById(R.id.goout_imageBtn);
 		phoneImageBtn=(ImageButton) findViewById(R.id.phone_imageBtn);
-		CampusLandscapeBtn=(ImageButton) findViewById(R.id.campus_imageBtn);
+		campusLandscapeBtn=(ImageButton) findViewById(R.id.campus_imageBtn);
+		newsImageBtn=(ImageButton) findViewById(R.id.news_and_noticle_imageBtn);
 		mapImageBtn.setOnClickListener(this);
 		phoneImageBtn.setOnClickListener(this);
 		sideMenuExtendBtn.setOnClickListener(this);
 		gooutImageBtn.setOnClickListener(this);
-		CampusLandscapeBtn.setOnClickListener(this);
+		campusLandscapeBtn.setOnClickListener(this);
+		newsImageBtn.setOnClickListener(this);
 	}
 	
 	/**
@@ -229,6 +232,10 @@ public class MainActivity extends SlidingFragmentActivity implements
 				campusTransaction.addToBackStack(null);
 				campusTransaction.add(android.R.id.content, campusFragment).commit(); 
 			}
+			break;
+		case R.id.news_and_noticle_imageBtn:
+			startActivity(new Intent().setClass(MainActivity.this,
+					NewsAct.class));
 		default:
 			break;
 		}

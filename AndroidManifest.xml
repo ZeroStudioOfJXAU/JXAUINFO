@@ -67,6 +67,8 @@
                   android:screenOrientation="sensor"  
             	  android:configChanges="orientation|keyboardHidden">
         </activity>
+        <activity android:name="com.zero.jxauapp.NewsAct"></activity>
+        <activity android:name="com.zero.jxauapp.NewsDetailsAct"></activity>
         <service  
             android:name="com.baidu.location.f"  
             android:enabled="true"  
