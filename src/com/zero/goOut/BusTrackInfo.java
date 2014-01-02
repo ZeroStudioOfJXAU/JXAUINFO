@@ -3,51 +3,84 @@
  */
 package com.zero.goOut;
 
- /**   
- * Title: BusTrackInfo
- * Description:
- * @author DaiS
- * @version 1.0
- * @date 2013-12-26
- */
-
 public class BusTrackInfo {
 	
-	private String line; //线路
-	private String number;//车数
+	private String arrived;//线路
+	private int number;//车数
 	private String station;//开往的站点
-	private String distance;//离本站还有多远
+	private int distance;//离本站还有多远
 	
-	public BusTrackInfo(String line,String number,String station,String distance){
-		this.line=line;
+	
+	public BusTrackInfo(String line,int number,String station,int distance){
+		this.arrived=line;
 		this.distance=distance;
 		this.number=number;
 		this.station=station;
 	}
-	public String getLine(){
-		return line;
+
+
+	/**
+	 * @return the arrived
+	 */
+	public String getArrived() {
+		return arrived;
 	}
-	public void setLine(String line){
-		this.line=line;
+
+
+	/**
+	 * @param arrived the arrived to set
+	 */
+	public void setArrived(String arrived) {
+		this.arrived = arrived;
 	}
-	
-	public String getNumber(){
+
+
+	/**
+	 * @return the number
+	 */
+	public int getNumber() {
 		return number;
 	}
-	public void setNumber(String number){
-		this.number=number;
+
+
+	/**
+	 * @param number the number to set
+	 */
+	public void setNumber(int number) {
+		this.number = number;
 	}
-	public String getStation(){
+
+
+	/**
+	 * @return the station
+	 */
+	public String getStation() {
 		return station;
 	}
-	public void setStation(String station){
-		this.station=station;
+
+
+	/**
+	 * @param station the station to set
+	 */
+	public void setStation(String station) {
+		this.station = station;
 	}
-	public String getDistance(){
+
+
+	/**
+	 * @return the distance
+	 */
+	public int getDistance() {
 		return distance;
 	}
-	public void setDistance(String distance){
-		this.distance=distance;
+
+
+	/**
+	 * @param distance the distance to set
+	 */
+	public void setDistance(int distance) {
+		this.distance = distance;
 	}
+
 	
 }

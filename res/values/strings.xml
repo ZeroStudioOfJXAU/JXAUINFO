@@ -14,6 +14,7 @@
     <string name="frame_main_electricity_query">电费查询</string>
     <string name="frame_main_educational_admin_assist">教务助手</string>
     
+    <string name="frame_bus_track_header_title">公交去哪了</string>
     <string name="frame_news_school_news">学校新闻</string>
     <string name="frame_news_school_notice">通知公告</string>
     

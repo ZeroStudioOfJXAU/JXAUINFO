@@ -11,7 +11,6 @@ package com.zero.jxauapp;
  * @date 2013-12-27
  */
 
-
 import com.zero.campusLandscape.GalleryFlow;
 import com.zero.campusLandscape.IConfig;
 import com.zero.campusLandscape.ImageAdapter;

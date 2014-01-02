@@ -5,14 +5,12 @@ package com.zero.goOut;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.zero.jxauapp.R;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
  /**   
@@ -22,16 +20,27 @@ import android.widget.TextView;
  * @version 1.0
  * @date 2013-12-26
  */
-public class BusTrackInfoAdapter extends BaseAdapter {
-    private LayoutInflater mInflater;
+
+public class BusTrackInfoAdapter extends ArrayAdapter {
+    
+	
+
+	private LayoutInflater mInflater;
     public Context context;
     public List<BusTrackInfo> busList = new ArrayList<BusTrackInfo>();
 
-    public BusTrackInfoAdapter(Context context,List<BusTrackInfo> busList) {
-        this.context = context;
-        this.mInflater = LayoutInflater.from(this.context);
-        this.busList=busList;
-    }
+    /**
+	 * @param context
+	 * @param resource
+	 * @param objects
+	 */
+	public BusTrackInfoAdapter(Context context, List<BusTrackInfo> objects) {
+		super(context, R.layout.bus_track_unit, objects);
+		// TODO Auto-generated constructor stub
+	     this.context = context;
+         this.mInflater = LayoutInflater.from(this.context);
+         this.busList=objects;
+	}
 
     @Override
     public int getCount() {
@@ -65,44 +74,38 @@ public class BusTrackInfoAdapter extends BaseAdapter {
         // TODO Auto-generated method stub
         Holder holder = null;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.bus_track_unit,
-                    null);
+            convertView =mInflater.inflate(R.layout.bus_track_unit, parent, false);
             holder = new Holder();
-            holder.detail_project1_tv = (TextView) convertView
-                    .findViewById(R.id.detail_project1_tv);
-            holder.detail_params1_tv = (TextView) convertView
-                    .findViewById(R.id.detail_params1_tv);
-            holder.detail_project2_tv = (TextView) convertView
-                    .findViewById(R.id.detail_project2_tv);
-            holder.detail_params2_tv = (TextView) convertView
-                    .findViewById(R.id.detail_params2_tv);
+            holder.carNumber = (TextView) convertView
+                    .findViewById(R.id.car_number_textView);
+            holder.nextStation = (TextView) convertView
+                    .findViewById(R.id.next_station_textView);
+            holder.arrived = (TextView) convertView
+                    .findViewById(R.id.arrived_textView);
+            holder.distance = (TextView) convertView
+                    .findViewById(R.id.distance_textView);
             convertView.setTag(holder);
         } else {
             holder = (Holder) convertView.getTag();
         }
 
-        //换行进行横向数据填充
-            holder.detail_project1_tv
-                    .setText(busList.get(position).getLine());
-            holder.detail_params1_tv
-                    .setText(busList.get(position).getNumber());
-            holder.detail_project1_tv.setVisibility(View.VISIBLE);
-            holder.detail_params1_tv.setVisibility(View.VISIBLE);
-            //填充一行中后两个元素
-            holder.detail_project2_tv.setText(busList
-                    .get(position).getStation());
-            holder.detail_params2_tv
-                    .setText(busList.get(position).getDistance());
-            holder.detail_project2_tv.setVisibility(View.VISIBLE);
-            holder.detail_params2_tv.setVisibility(View.VISIBLE);
+            holder.carNumber
+                    .setText(String.valueOf(busList.get(position).getNumber()));
+            holder.nextStation
+                    .setText(busList.get(position).getStation());
+            holder.arrived
+            		.setText(busList.get(position).getArrived());
+            holder.distance
+                    .setText(String.valueOf(busList.get(position).getDistance()));
+           
         return convertView;
     }
 
     class Holder {
-        TextView detail_project1_tv; // 项目1
-        TextView detail_params1_tv; // 参数1
-        TextView detail_project2_tv;
-        TextView detail_params2_tv;
+        TextView carNumber; // 项目1
+        TextView nextStation; // 参数1
+        TextView arrived;
+        TextView distance;
     }
     
     // 退出

@@ -172,6 +172,7 @@ public class InternetDataCatcher {
 			if(index!=-1){
 				String origin=title.substring(0, index);
 				String subTitle=title.substring(index+1);
+				
 				newsList.add(new NewsBean(subTitle,origin,"之前",abs+news_url));
 			}else{
 				newsList.add(new NewsBean(title,"农大官网","之前",abs+news_url));

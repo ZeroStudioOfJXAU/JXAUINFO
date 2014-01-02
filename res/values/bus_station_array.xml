@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="bus_station_array">
+        <item>农大生活区站</item>
+        <item>财大站</item>
+        <item>下罗站</item>
+    </string-array>
+</resources>
