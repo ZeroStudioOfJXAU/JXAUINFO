@@ -10,10 +10,10 @@ import com.zero.goOut.BusRequestBean;
 import com.zero.goOut.BusResultBean;
 import com.zero.goOut.BusStationBean;
 import com.zero.goOut.BusTrackInfo;
-import com.zero.goOut.BusTrackInfoAdapter;
 import com.zero.goOut.BusTrackResultListAdapter;
 import com.zero.goOut.BusTimeBean;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -50,7 +50,6 @@ public class BusTrackFragment extends Fragment{
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
 		listView=(ListView)getActivity().findViewById(R.id.bus_track_ListView);
 		processBar=(ProgressBar) getActivity().findViewById(R.id.bus_track_head_progress);
 		refresh=(ImageView) getActivity().findViewById(R.id.bus_track_refresh);
@@ -71,7 +70,7 @@ public class BusTrackFragment extends Fragment{
 			
 		});
 	}
-	
+
 	public void getBusInfo(BusRequestBean requset) {
 		List<BusResultBean> busList=getResult(busRequest);
 		

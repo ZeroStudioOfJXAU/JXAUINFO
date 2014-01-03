@@ -154,7 +154,6 @@ public class MainActivity extends SlidingFragmentActivity implements
 	 */
 	
 	public void runPopWindow() {
-
 		List<String> stationList = Arrays.asList(stationArray);
 		RadioButonListAdapter radioButtonAdapter = new RadioButonListAdapter(
 				this, stationList);

@@ -3,7 +3,6 @@
     android:layout_height="fill_parent"
     android:background="@drawable/list_bg"
     android:orientation="vertical" >
-	"
     <include layout="@layout/bus_track_header" />
 	
     <com.zero.goOut.ParentListView

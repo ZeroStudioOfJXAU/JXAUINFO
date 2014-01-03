@@ -16,8 +16,11 @@ public final class R {
     public static final class array {
         public static final int bus_line_array=0x7f060000;
         public static final int bus_station_array=0x7f060001;
-        public static final int numbers=0x7f060002;
-        public static final int side_menu_item_array=0x7f060003;
+        public static final int college_number=0x7f060005;
+        public static final int common_number=0x7f060003;
+        public static final int number_category=0x7f060002;
+        public static final int organization_number=0x7f060004;
+        public static final int side_menu_item_array=0x7f060006;
     }
     public static final class attr {
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
@@ -331,13 +334,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int slid_menu_shadow=0x7f020056;
         public static final int ss=0x7f020057;
         public static final int stadium=0x7f020058;
-        public static final int textviewborder=0x7f020059;
-        public static final int titlebar_lightgray_bg=0x7f02005a;
-        public static final int top_bar=0x7f02005b;
-        public static final int top_bar_1=0x7f02005c;
-        public static final int widget_comment_count_icon=0x7f02005d;
-        public static final int widget_head_bg=0x7f02005e;
-        public static final int widget_today_icon=0x7f02005f;
+        public static final int stat_sys_phone_call=0x7f020059;
+        public static final int textviewborder=0x7f02005a;
+        public static final int titlebar_lightgray_bg=0x7f02005b;
+        public static final int top_bar=0x7f02005c;
+        public static final int top_bar_1=0x7f02005d;
+        public static final int widget_comment_count_icon=0x7f02005e;
+        public static final int widget_head_bg=0x7f02005f;
+        public static final int widget_today_icon=0x7f020060;
     }
     public static final class id {
         public static final int BR_end_station_textView=0x7f050024;
@@ -346,7 +350,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int BR_listView=0x7f05002a;
         public static final int BR_start_station_textView=0x7f050022;
         public static final int BR_start_time_textView=0x7f050027;
-        public static final int action_settings=0x7f050086;
+        public static final int ListHeader=0x7f05007a;
+        public static final int action_settings=0x7f05008d;
         public static final int arrive_btn=0x7f05003b;
         public static final int arrived_textView=0x7f05003f;
         public static final int auto_loc_button=0x7f050050;
@@ -365,14 +370,15 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int checkbox_list_checkbox_item=0x7f05002b;
         public static final int checkbox_list_textView_item=0x7f05002c;
         public static final int content_frame=0x7f050043;
-        public static final int current_location_radioBtn1=0x7f050079;
-        public static final int current_location_radioBtn2=0x7f05007a;
-        public static final int current_location_radioBtn3=0x7f05007b;
-        public static final int current_location_radiogroup=0x7f050078;
+        public static final int current_location_radioBtn1=0x7f050080;
+        public static final int current_location_radioBtn2=0x7f050081;
+        public static final int current_location_radioBtn3=0x7f050082;
+        public static final int current_location_radiogroup=0x7f05007f;
         public static final int current_location_textView=0x7f050036;
         public static final int distance_textView=0x7f050040;
         public static final int drive_btn=0x7f050056;
         public static final int end_ACTextView=0x7f050055;
+        public static final int enum_listView=0x7f050079;
         public static final int etPWD=0x7f05005f;
         public static final int etuserName=0x7f05005d;
         public static final int fragment=0x7f050006;
@@ -381,18 +387,18 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int fullscreen=0x7f050003;
         public static final int go_out_textView=0x7f05004d;
         public static final int goout_imageBtn=0x7f050010;
-        public static final int head_arrowImageView=0x7f05007f;
-        public static final int head_contentLayout=0x7f05007e;
-        public static final int head_lastUpdatedTextView=0x7f050082;
-        public static final int head_progressBar=0x7f050080;
-        public static final int head_tipsTextView=0x7f050081;
+        public static final int head_arrowImageView=0x7f050086;
+        public static final int head_contentLayout=0x7f050085;
+        public static final int head_lastUpdatedTextView=0x7f050089;
+        public static final int head_progressBar=0x7f050087;
+        public static final int head_tipsTextView=0x7f050088;
         public static final int included1=0x7f05000b;
         public static final int layout_main=0x7f050005;
         public static final int left=0x7f050000;
         public static final int lin1=0x7f050035;
-        public static final int line240_checkBox=0x7f05007c;
-        public static final int line704_checkBox=0x7f05007d;
-        public static final int linearLayout1=0x7f050077;
+        public static final int line240_checkBox=0x7f050083;
+        public static final int line704_checkBox=0x7f050084;
+        public static final int linearLayout1=0x7f05007e;
         public static final int listView1=0x7f05004b;
         public static final int listView2=0x7f05004c;
         public static final int main_TextView1=0x7f050008;
@@ -439,7 +445,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int news_listitem_title=0x7f050074;
         public static final int next=0x7f05005b;
         public static final int next_station_textView=0x7f05003e;
+        public static final int phone_call_imageButton=0x7f05007c;
+        public static final int phone_expandableListView=0x7f050078;
+        public static final int phone_head_title=0x7f050077;
         public static final int phone_imageBtn=0x7f050013;
+        public static final int phone_name_textView=0x7f05007b;
+        public static final int phone_number_textView=0x7f05007d;
         public static final int popdown=0x7f050047;
         public static final int popinfo=0x7f050045;
         public static final int popleft=0x7f050044;
@@ -448,8 +459,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int radio_btn=0x7f050033;
         public static final int relativeLayout1=0x7f05003c;
         public static final int right=0x7f050001;
-        public static final int route_end=0x7f050084;
-        public static final int route_start=0x7f050083;
+        public static final int route_end=0x7f05008b;
+        public static final int route_start=0x7f05008a;
         public static final int route_textView1=0x7f050051;
         public static final int route_textView2=0x7f050054;
         public static final int screen_hit_btn=0x7f050053;
@@ -457,7 +468,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int selected_view=0x7f050004;
         public static final int set_off_btn=0x7f05003a;
         public static final int side_menu_extend_btn=0x7f050007;
-        public static final int slidingmenumain=0x7f050085;
+        public static final int slidingmenumain=0x7f05008c;
         public static final int start_ACTextView=0x7f050052;
         public static final int tableRow2=0x7f050011;
         public static final int tableRow3=0x7f050016;
@@ -500,11 +511,15 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int news_detail=0x7f030014;
         public static final int news_detail_header=0x7f030015;
         public static final int news_listitem=0x7f030016;
-        public static final int phone_list=0x7f030017;
-        public static final int pop_menu=0x7f030018;
-        public static final int pull_to_refresh_head=0x7f030019;
-        public static final int routeplan=0x7f03001a;
-        public static final int slidingmenumain=0x7f03001b;
+        public static final int phone_header=0x7f030017;
+        public static final int phone_layout=0x7f030018;
+        public static final int phone_list=0x7f030019;
+        public static final int phone_list_group=0x7f03001a;
+        public static final int phone_list_item=0x7f03001b;
+        public static final int pop_menu=0x7f03001c;
+        public static final int pull_to_refresh_head=0x7f03001d;
+        public static final int routeplan=0x7f03001e;
+        public static final int slidingmenumain=0x7f03001f;
     }
     public static final class menu {
         public static final int main=0x7f0b0000;
