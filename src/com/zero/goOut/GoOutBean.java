@@ -1,8 +1,12 @@
 package com.zero.goOut;
 
+import java.util.List;
+
 public class GoOutBean {
+	
+	
 	private String location;
-	private String line;//list<string>
+	private List<String> listLine;
 	private boolean direction;
 	
 	public String getLocation() {
@@ -11,11 +15,12 @@ public class GoOutBean {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public String getLine() {
-		return line;
+	
+	public List<String> getListLine() {
+		return listLine;
 	}
-	public void setLine(String line) {
-		this.line = line;
+	public void setListLine(List<String> listLine) {
+		this.listLine = listLine;
 	}
 	public boolean isDirection() {
 		return direction;

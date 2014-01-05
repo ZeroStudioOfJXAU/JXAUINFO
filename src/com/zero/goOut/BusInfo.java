@@ -1,5 +1,7 @@
 package com.zero.goOut;
 
+import java.util.List;
+
 /* 车辆信息  */
 /* station 表示前往或者到达的站点名称*/
 /* number 表示前往或者到达的公交数量 */
@@ -7,63 +9,31 @@ package com.zero.goOut;
 /* dire  表示方向， true表示正方向， false 表示反方向*/
 /* distance 表示离当前位置的距离*/
 public class BusInfo {
-	private String station;
-	private int number;
-	// 前往 到达
-	private boolean arrived;
-	private int distance;
+	
+	private List<SubBusInfo> listSubBusInfo;
 	
 	private String currentLine;
-	private boolean dire;
+	private String dire;
 	
-//	public static final int NOCARARRIVEDSIGN = -1;
-//	private static BusInfo noCarArrivedBusInfo;
-//	public static BusInfo getTerminatorBusInfo(){
-//		if(noCarArrivedBusInfo == null){
-//			noCarArrivedBusInfo = new BusInfo();
-//			noCarArrivedBusInfo.setDistance(NOCARARRIVEDSIGN);
-//		}
-//    		return noCarArrivedBusInfo;
-//	}
-	
-	public String getStation() {
-		return station;
+	public List<SubBusInfo> getListSubBusInfo() {
+		return listSubBusInfo;
 	}
-
-	public void setStation(String station) {
-		this.station = station;
+	public void setListSubBusInfo(List<SubBusInfo> listSubBusInfo) {
+		this.listSubBusInfo = listSubBusInfo;
 	}
-
-	public int getNumber() {
-		return number;
+	public String getCurrentLine() {
+		return currentLine;
 	}
-
-	public void setNumber(int number) {
-		this.number = number;
+	public void setCurrentLine(String currentLine) {
+		this.currentLine = currentLine;
 	}
-
-	public boolean isFlag() {
-		return arrived;
-	}
-
-	public void setFlag(boolean flag) {
-		this.arrived = flag;
-	}
-
-	public boolean isDire() {
+	public String getDire() {
 		return dire;
 	}
-
-	public void setDire(boolean dire) {
+	public void setDire(String dire) {
 		this.dire = dire;
 	}
-
-	public int getDistance() {
-		return distance;
-	}
-
-	public void setDistance(int distance) {
-		this.distance = distance;
-	}
+	
+	
 }
 
