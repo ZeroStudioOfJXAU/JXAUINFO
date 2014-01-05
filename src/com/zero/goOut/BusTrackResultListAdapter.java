@@ -120,19 +120,19 @@ public class BusTrackResultListAdapter extends BaseAdapter{
 	            holder = (Holder) convertView.getTag();
 	        }
 	        
-	        BusTimeBean timeBean=new BusTimeBean("6:00","18:00","240");
-	        BusStationBean stationBean=new BusStationBean("²Æ´ó","ÏÂÂä");
+	        CurrentLineBean timeBean = null;
+	        CurrentLineAndDireBean stationBean = null;
 	    		
             holder.line
-                    .setText(timeBean.getLine());
+                    .setText(timeBean.getRealName());
             holder.startStation
-                    .setText(stationBean.getStartStation());
+                    .setText(stationBean.getFirstStation());
             holder.endStation
-            		.setText(stationBean.getEndStation());
+            		.setText(stationBean.getLastStation());
             holder.startTime
-                    .setText(timeBean.getStartTime());
+                    .setText(timeBean.getFirstTime());
             holder.endTime
-            		.setText(timeBean.getEndTime());
+            		.setText(timeBean.getLastTime());
             
             BusTrackInfoAdapter adapter=new BusTrackInfoAdapter(convertView.getContext(),
             		busList.get(position).getResultList());

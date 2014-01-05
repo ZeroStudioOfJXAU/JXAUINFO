@@ -37,7 +37,25 @@ class HtmlDeal {
 			return "";
 		}
 	}
-
+	public static String getDivContentByJsoup_LineDeal(String content) {
+		Document doc = Jsoup.parse(content);
+		Elements div2 = doc.getElementsByClass("cmode");
+		String s = null;
+		for (Element e : div2) {
+			s = e.text();
+		}
+		return s;
+	}
+	public static String getDivContentByJsoup_Line(String content) {
+		Document doc = Jsoup.parse(content);
+		Elements div2 = doc.getElementsByClass("apps_main");
+		String s = null;
+		for (Element e : div2) {
+			s = e.getElementsByTag("a").text();
+		}
+		return s;
+	}
+	
 	public static String getDivContentByJsoup(String content) {
 		Document doc = Jsoup.parse(content);
 		Elements div2 = doc.getElementsByClass("apps_main");
@@ -107,27 +125,17 @@ class HtmlDeal {
 	public static void removeListElement3(List<BusInfo> list, int num,
 			Map<String, Integer> map, int dire) {
 		int size;
-		if (dire == 1) {
-			for (int i = 0; i < list.size(); i++) {
-				BusInfo busInfo = list.get(i);
-				if ((size=map.get(busInfo.station)) > num) {
-					list.remove(i);
-					--i;
-				}else{
-					busInfo.distance = num - size;					
-				}
-			}
-		} else if (dire == 2) {
-			for (int i = 0; i < list.size(); i++) {
-				BusInfo busInfo = list.get(i);
-				if ((size=map.get(busInfo.station)) > num) {
-					list.remove(i);
-					--i;
-				}else{
-					busInfo.distance = num - size;					
-				}
+
+		for (int i = 0; i < list.size(); i++) {
+			BusInfo busInfo = list.get(i);
+			if ((size = map.get(busInfo.getStation())) > num) {
+				list.remove(i);
+				--i;
+			} else {
+				busInfo.setDistance(num - size);
 			}
 		}
+
 	}
 
 	/*
@@ -168,7 +176,11 @@ class HtmlDeal {
 			int num = Integer.parseInt(stationNumber);
 			map.put(station, num);
 			int c = Integer.parseInt(count);
-			list.add(new BusInfo(station, c, flag));
+			BusInfo busInfo = new BusInfo();
+			busInfo.setStation(station);
+			busInfo.setNumber(c);
+			busInfo.setFlag(flag);
+			list.add(busInfo);
 		} else {
 			/* 将当前线路所经过的所有站点信息添加到map, 以便做过滤 */
 			String station = "", stationNum = "";

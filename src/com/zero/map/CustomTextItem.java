@@ -3,6 +3,7 @@ package com.zero.map;
 import com.baidu.mapapi.map.Symbol;
 import com.baidu.mapapi.map.TextItem;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
+import com.zero.jxauapp.R.color;
 
  /**   
  * Title: CustomTextItem
@@ -15,8 +16,10 @@ public class CustomTextItem extends TextItem{
 	
 	//文字大小和颜色，以及背景颜色的配置属性
 	private  int FONTSIZE=25;
-	private final Symbol.Color FONTCOLOR = new Symbol().new Color(255,0,255,0);    
-	private final Symbol.Color BGCOLOR = new Symbol().new Color(150,80,80,80);
+//	private final Symbol.Color FONTCOLOR = new Symbol().new Color(255,0,255,0); 
+	private final Symbol.Color FONTCOLOR = new Symbol().new Color(color.black); 
+//	private final Symbol.Color BGCOLOR = new Symbol().new Color(150,80,80,80);
+	private final Symbol.Color BGCOLOR = new Symbol().new Color(android.R.color.white);
 	
 	public CustomTextItem(int latitude,int longtitude,String name){
 		super();

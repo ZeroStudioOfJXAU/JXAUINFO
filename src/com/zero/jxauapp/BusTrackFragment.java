@@ -8,10 +8,8 @@ import java.util.List;
 
 import com.zero.goOut.BusRequestBean;
 import com.zero.goOut.BusResultBean;
-import com.zero.goOut.BusStationBean;
 import com.zero.goOut.BusTrackInfo;
 import com.zero.goOut.BusTrackResultListAdapter;
-import com.zero.goOut.BusTimeBean;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -92,16 +90,16 @@ public class BusTrackFragment extends Fragment{
 		list.add(new BusResultBean(resultList,2,true));
 		return list;
 	}
-	public static BusTimeBean getTimeAndLine(int surrentLine){
-		BusTimeBean bb=new BusTimeBean("asdf","sdaf","fasdf");
-		if(surrentLine==1){
-			return bb;
-		}
-		BusTimeBean cc=new BusTimeBean("assg","sfgds","fadgdga");
-		return cc;
-	}
-	public static BusStationBean getStation(int surrentLine,boolean dir){
-		BusStationBean dd=new BusStationBean("财大","下落");
-		return dd;
-	}
+//	public static BusTimeBean getTimeAndLine(int surrentLine){
+//		BusTimeBean bb=new BusTimeBean("asdf","sdaf","fasdf");
+//		if(surrentLine==1){
+//			return bb;
+//		}
+//		BusTimeBean cc=new BusTimeBean("assg","sfgds","fadgdga");
+//		return cc;
+//	}
+//	public static BusStationBean getStation(int surrentLine,boolean dir){
+//		BusStationBean dd=new BusStationBean("财大","下落");
+//		return dd;
+//	}
 }
