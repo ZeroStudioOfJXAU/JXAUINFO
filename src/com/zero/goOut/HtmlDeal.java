@@ -182,7 +182,11 @@ class HtmlDeal {
 			SubBusInfo info = new SubBusInfo();
 			info.setStation(station);
 			info.setNumber(c);
-			info.setArrived(flag);
+			
+			if(flag)
+				info.setArrived("Ç°Íù");
+			else 
+				info.setArrived("µ½´ï");
 			
 			list.add(info);
 		} else {

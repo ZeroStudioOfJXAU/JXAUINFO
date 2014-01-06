@@ -4,7 +4,7 @@ public class SubBusInfo {
 	
 	private String station;
 	private int number;
-	private boolean arrived;
+	private String arrived;
 	private int distance;
 	
 	public String getStation() {
@@ -19,10 +19,11 @@ public class SubBusInfo {
 	public void setNumber(int number) {
 		this.number = number;
 	}
-	public boolean isArrived() {
+	
+	public String getArrived() {
 		return arrived;
 	}
-	public void setArrived(boolean arrived) {
+	public void setArrived(String arrived) {
 		this.arrived = arrived;
 	}
 	public int getDistance() {
