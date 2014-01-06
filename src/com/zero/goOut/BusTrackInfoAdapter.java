@@ -27,14 +27,14 @@ public class BusTrackInfoAdapter extends ArrayAdapter {
 
 	private LayoutInflater mInflater;
     public Context context;
-    public List<BusTrackInfo> busList = new ArrayList<BusTrackInfo>();
+    public List<SubBusInfo> busList = new ArrayList<SubBusInfo>();
 
     /**
 	 * @param context
 	 * @param resource
 	 * @param objects
 	 */
-	public BusTrackInfoAdapter(Context context, List<BusTrackInfo> objects) {
+	public BusTrackInfoAdapter(Context context, List<SubBusInfo> objects) {
 		super(context, R.layout.bus_track_unit, objects);
 		// TODO Auto-generated constructor stub
 	     this.context = context;
@@ -93,8 +93,8 @@ public class BusTrackInfoAdapter extends ArrayAdapter {
                     .setText(String.valueOf(busList.get(position).getNumber()));
             holder.nextStation
                     .setText(busList.get(position).getStation());
-            holder.arrived
-            		.setText(busList.get(position).getArrived());
+//            holder.arrived
+//            		.setText(busList.get(position).isArrived());
             holder.distance
                     .setText(String.valueOf(busList.get(position).getDistance()));
            

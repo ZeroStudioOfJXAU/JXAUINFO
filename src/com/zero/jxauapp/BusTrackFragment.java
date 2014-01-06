@@ -6,10 +6,11 @@ package com.zero.jxauapp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.zero.goOut.BusRequestBean;
-import com.zero.goOut.BusResultBean;
+import com.zero.goOut.BusInfo;
 import com.zero.goOut.BusTrackInfo;
 import com.zero.goOut.BusTrackResultListAdapter;
+import com.zero.goOut.GoOut;
+import com.zero.goOut.GoOutBean;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,7 +39,7 @@ public class BusTrackFragment extends Fragment{
 	private ImageView refresh;
 	private BusTrackResultListAdapter adapter;
 	
-	private BusRequestBean busRequest;//接收到的用户请求
+	private GoOutBean busRequest;//接收到的用户请求
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,9 +53,10 @@ public class BusTrackFragment extends Fragment{
 		processBar=(ProgressBar) getActivity().findViewById(R.id.bus_track_head_progress);
 		refresh=(ImageView) getActivity().findViewById(R.id.bus_track_refresh);
 		
-		busRequest=(BusRequestBean) getArguments().getSerializable("BUSTRACKINFO");
-		String s=busRequest.getCurrentLocation()+" "+busRequest.getLine()+" "+busRequest.isDirection();
-		Toast.makeText(getActivity(), s,Toast.LENGTH_LONG).show();
+		busRequest=(GoOutBean) getArguments().getSerializable("BUSTRACKINFO");
+		
+//		String s=busRequest.getLocation()+" "+busRequest.getListLine()+" "+busRequest.isDirection();
+//		Toast.makeText(getActivity(), s,Toast.LENGTH_LONG).show();
 		getBusInfo(busRequest);
 		refresh.setOnClickListener(new OnClickListener(){
 
@@ -69,26 +71,28 @@ public class BusTrackFragment extends Fragment{
 		});
 	}
 
-	public void getBusInfo(BusRequestBean requset) {
-		List<BusResultBean> busList=getResult(busRequest);
+	public void getBusInfo(GoOutBean requset) {
+		GoOut goOut = new GoOut();
+		List<BusInfo> busList=goOut.getBusInfo(requset);
+		
 		
 		/*Accept the info from Internet,
 		 * get a BusTrackInfo,put it to listView*/
 		adapter = new BusTrackResultListAdapter(getActivity(),busList);
 	    listView.setAdapter(adapter);
 //	    processBar.setVisibility(View.GONE);
-	}
+//	}
 	/*Test*/
-	public List<BusResultBean> getResult(BusRequestBean busRequest){
-		
-		List<BusResultBean> list=new ArrayList<BusResultBean>();
-		List<BusTrackInfo> resultList=new ArrayList<BusTrackInfo>();
-		resultList.add(new BusTrackInfo("hell0",2,"skh",1));
-		resultList.add(new BusTrackInfo("hell0",3,"skh",3));
-		resultList.add(new BusTrackInfo("hell0",5,"skh",4));
-		list.add(new BusResultBean(resultList,1,true));
-		list.add(new BusResultBean(resultList,2,true));
-		return list;
+//	public List<BusResultBean> getResult(GoOutBean busRequest){
+//		
+//		List<BusResultBean> list=new ArrayList<BusResultBean>();
+//		List<BusTrackInfo> resultList=new ArrayList<BusTrackInfo>();
+//		resultList.add(new BusTrackInfo("hell0",2,"skh",1));
+//		resultList.add(new BusTrackInfo("hell0",3,"skh",3));
+//		resultList.add(new BusTrackInfo("hell0",5,"skh",4));
+//		list.add(new BusResultBean(resultList,1,true));
+//		list.add(new BusResultBean(resultList,2,true));
+//		return list;''
 	}
 //	public static BusTimeBean getTimeAndLine(int surrentLine){
 //		BusTimeBean bb=new BusTimeBean("asdf","sdaf","fasdf");

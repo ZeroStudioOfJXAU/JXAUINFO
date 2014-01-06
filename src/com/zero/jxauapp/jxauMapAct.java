@@ -11,6 +11,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import com.baidu.mapapi.map.Ground;
 import com.baidu.mapapi.map.GroundOverlay;
 import com.baidu.mapapi.map.LocationData;
 import com.baidu.mapapi.map.MKEvent;
+import com.baidu.mapapi.map.MKMapStatus;
 import com.baidu.mapapi.map.MKMapTouchListener;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
@@ -59,6 +61,7 @@ import com.baidu.mapapi.search.MKSuggestionResult;
 import com.baidu.mapapi.search.MKTransitRouteResult;
 import com.baidu.mapapi.search.MKWalkingRouteResult;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
+import com.baidu.mapapi.map.MKMapStatusChangeListener;
 import com.zero.map.BMapUtil;
 import com.zero.map.CustomGround;
 import com.zero.map.CustomItem;
@@ -179,8 +182,50 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 		InfoFromAssetsXML();
 		initAutoCompleteTextView();
 		initNode();
+		mMapView.regMapStatusChangeListener(listener); 
 	}
 	
+	boolean isClear=false;
+	int fontSize=26;
+	public int fun(int a){
+		return 2*a-8;
+	}
+	MKMapStatusChangeListener listener = new MKMapStatusChangeListener() {  
+        public void onMapStatusChange(MKMapStatus mapStatus) {  
+           float zoom = mapStatus.zoom;  //地图缩放等级  
+           //字体跟随地图缩放变化
+           if(mapStatus.zoom>=17){
+        	   
+        	   if(fun((int)mapStatus.zoom)!=fontSize){
+	               	 fontSize=fun((int)mapStatus.zoom);
+	               	 mMapView.getOverlays().clear();
+	               	 getCustomInfoFromAssetsXML();
+	               	 getGroundInfoFromAssetsXML();
+	               	 isClear=false;
+	               	 mMapView.refresh();
+                }else if(fun((int)mapStatus.zoom)==fontSize && isClear){
+                	getCustomInfoFromAssetsXML();
+    	   			getGroundInfoFromAssetsXML();
+    	   			isClear=false;
+    	   			mMapView.refresh();
+                }
+           }else {
+        	    mMapView.getOverlays().clear();
+        	    mMapView.refresh();
+        	    isClear=true;
+           }
+//            if(mapStatus.zoom<17){
+//            	 mMapView.getOverlays().clear();
+//            	 flag=true;
+//            }
+//            if(flag && mapStatus.zoom>=17){
+//            	flag=false;
+//            	getCustomInfoFromAssetsXML();
+//    			getGroundInfoFromAssetsXML();
+//            }
+            // TODO add your process  
+        } 
+    };    
 	MKMapTouchListener MymapTouchListener=new MKMapTouchListener(){
 		@Override
 		public void onMapClick(GeoPoint point){
@@ -729,6 +774,7 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener{
 		mMapView.getOverlays().add(textOverlay);
 		// 用OverlayItem准备Overlay数据
 		for (CustomItem c : items) {
+			c.getTextItem().fontSize=fontSize;
 			textOverlay.addText(c.getTextItem());
 			itemOverlay.addItem(c.getOverlayItem());
 		}

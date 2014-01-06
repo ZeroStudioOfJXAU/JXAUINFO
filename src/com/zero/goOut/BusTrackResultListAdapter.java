@@ -35,9 +35,9 @@ public class BusTrackResultListAdapter extends BaseAdapter{
 	 */
 	private LayoutInflater mInflater;
     public Context context;
-    public List<BusResultBean> busList = new ArrayList<BusResultBean>();
+    public List<BusInfo> busList = new ArrayList<BusInfo>();
 
-    public BusTrackResultListAdapter(Context context,List<BusResultBean> busList) {
+    public BusTrackResultListAdapter(Context context,List<BusInfo> busList) {
         this.context = context;
         this.mInflater = LayoutInflater.from(this.context);
         this.busList=busList;
@@ -135,7 +135,7 @@ public class BusTrackResultListAdapter extends BaseAdapter{
             		.setText(timeBean.getLastTime());
             
             BusTrackInfoAdapter adapter=new BusTrackInfoAdapter(convertView.getContext(),
-            		busList.get(position).getResultList());
+            		busList.get(position).getListSubBusInfo());
             
             holder.listView.setAdapter(adapter);
             setListViewHeight(holder.listView);

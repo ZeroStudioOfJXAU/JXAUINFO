@@ -99,12 +99,12 @@ class HtmlDeal {
 		return Integer.parseInt(num);
 	}
 
-	public static List<BusInfo> SolveCase(String s, String location, int dire) {
+	public static List<SubBusInfo> SolveCase(String s, String location) {
 		String str1 = "";
 		// 站点名称和号码
 		if (s != "" && s != null) {
 			Map<String, Integer> map = new HashMap<String, Integer>();
-			List<BusInfo> list = new ArrayList<BusInfo>();
+			List<SubBusInfo> list = new ArrayList<SubBusInfo>();
 			char data[] = s.toCharArray();
 			for (int i = 0; i < data.length; i++) {
 				if (isChinese(data[i]) || Character.isDigit(data[i])) {
@@ -116,23 +116,25 @@ class HtmlDeal {
 			}
 
 			int num = map.get(location);
-			removeListElement3(list, num, map, dire);
+			removeListElement3(list, num, map);
 			return list;
 		} else
 			return null;
 	}
 
-	public static void removeListElement3(List<BusInfo> list, int num,
-			Map<String, Integer> map, int dire) {
+	public static void removeListElement3(List<SubBusInfo> list, int num,
+			Map<String, Integer> map) {
 		int size;
 
 		for (int i = 0; i < list.size(); i++) {
-			BusInfo busInfo = list.get(i);
-			if ((size = map.get(busInfo.getStation())) > num) {
+			SubBusInfo subBusInfo = list.get(i);
+			if ((size = map.get(subBusInfo.getStation())) > num) {
 				list.remove(i);
 				--i;
 			} else {
-				busInfo.setDistance(num - size);
+				int dis =num-size;
+				if(dis==0) dis++;
+				subBusInfo.setDistance(dis);
 			}
 		}
 
@@ -142,7 +144,7 @@ class HtmlDeal {
 	 * 处理逻辑： 无论当前站点是否有车辆到来，都将其前部的编号和名称拆解，添加到map， 如果当前 站点有车辆到来，那么就将其添加到List
 	 */
 	public static void AddBus(String str, Map<String, Integer> map,
-			List<BusInfo> list) {
+			List<SubBusInfo> list) {
 		if (str == "" || str == null)
 			return;
 		if (str.indexOf("开往") >= 0 || str.indexOf("到达") >= 0) {
@@ -176,11 +178,13 @@ class HtmlDeal {
 			int num = Integer.parseInt(stationNumber);
 			map.put(station, num);
 			int c = Integer.parseInt(count);
-			BusInfo busInfo = new BusInfo();
-			busInfo.setStation(station);
-			busInfo.setNumber(c);
-			busInfo.setFlag(flag);
-			list.add(busInfo);
+			
+			SubBusInfo info = new SubBusInfo();
+			info.setStation(station);
+			info.setNumber(c);
+			info.setArrived(flag);
+			
+			list.add(info);
 		} else {
 			/* 将当前线路所经过的所有站点信息添加到map, 以便做过滤 */
 			String station = "", stationNum = "";

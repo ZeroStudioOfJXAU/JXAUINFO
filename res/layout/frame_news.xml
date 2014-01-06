@@ -22,17 +22,15 @@
      	
 
     </LinearLayout>
-    <!--  
-	<com.example.com.daisong.test.PullToRefreshListView
+	<com.zero.news.PullToRefreshListView
 	  	android:id="@+id/frame_listview_news"
 	    style="@style/widget_listview"/>
 	
-	<com.example.com.daisong.test.PullToRefreshListView
-	  	android:id="@+id/frame_listview_blog"
+	<com.zero.news.PullToRefreshListView
+	  	android:id="@+id/frame_listview_noticle"
 	    style="@style/widget_listview"
 	    android:visibility="gone"/>
-	    -->
-
+	<!--  
 	<ListView
 	    android:id="@+id/listView1"
 	    style="@style/widget_listview"
@@ -44,5 +42,5 @@
 	    style="@style/widget_listview"
 	    android:visibility="gone" >
 	</ListView>
-	
+	-->
 </LinearLayout>

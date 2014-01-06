@@ -29,8 +29,8 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
-import com.zero.goOut.BusRequestBean;
 import com.zero.goOut.CheckBoxAdapter;
+import com.zero.goOut.GoOutBean;
 import com.zero.goOut.RadioButonListAdapter;
 import com.zero.goOut.ViewHolder;
 
@@ -95,6 +95,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 		initWidge();
 		listFragment = new PhoneNumberFragment();
 		campusFragment = new CampusLandscapeFragment();
+		
 	}
 
 	/**
@@ -220,7 +221,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 				return;
 			}
 			mPopupWindow.dismiss();
-			BusRequestBean info = new BusRequestBean(currentStation, listStr, dir);
+			GoOutBean info = new GoOutBean(currentStation, listStr, dir);
 			BusTrackFragment busFragment = new BusTrackFragment();
 			Bundle busBundle = new Bundle();
 			busBundle.putSerializable("BUSTRACKINFO", info);
