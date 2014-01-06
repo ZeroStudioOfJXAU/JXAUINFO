@@ -13,7 +13,7 @@ public class BusInfo {
 	private List<SubBusInfo> listSubBusInfo;
 	
 	private String currentLine;
-	private String dire;
+	private boolean dire;
 	
 	public List<SubBusInfo> getListSubBusInfo() {
 		return listSubBusInfo;
@@ -27,12 +27,13 @@ public class BusInfo {
 	public void setCurrentLine(String currentLine) {
 		this.currentLine = currentLine;
 	}
-	public String getDire() {
+	public boolean isDire() {
 		return dire;
 	}
-	public void setDire(String dire) {
+	public void setDire(boolean dire) {
 		this.dire = dire;
 	}
+	
 	
 	
 }

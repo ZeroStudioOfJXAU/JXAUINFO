@@ -54,8 +54,8 @@ public class GoOut {
 						
 						busInfo.setCurrentLine(lineName);
 						busInfo.setListSubBusInfo(subBusInfo);
-						if(dire==1) busInfo.setDire("Ç°Íù");
-						else busInfo.setDire("µ½´ï");
+						if(dire==1) busInfo.setDire(true);
+						else busInfo.setDire(false);
 						
 						list.add(busInfo);
 						return true;
