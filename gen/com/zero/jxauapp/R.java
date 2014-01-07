@@ -16,11 +16,12 @@ public final class R {
     public static final class array {
         public static final int bus_line_array=0x7f060000;
         public static final int bus_station_array=0x7f060001;
-        public static final int college_number=0x7f060005;
-        public static final int common_number=0x7f060003;
-        public static final int number_category=0x7f060002;
-        public static final int organization_number=0x7f060004;
-        public static final int side_menu_item_array=0x7f060006;
+        public static final int college_number=0x7f060006;
+        public static final int common_number=0x7f060004;
+        public static final int number_category=0x7f060003;
+        public static final int organization_number=0x7f060005;
+        public static final int side_menu_item_array=0x7f060007;
+        public static final int stations_240=0x7f060002;
     }
     public static final class attr {
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".

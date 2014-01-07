@@ -93,8 +93,8 @@ public class BusTrackInfoAdapter extends ArrayAdapter {
                     .setText(String.valueOf(busList.get(position).getNumber()));
             holder.nextStation
                     .setText(busList.get(position).getStation());
-//            holder.arrived
-//            		.setText(busList.get(position).isArrived());
+            holder.arrived
+            		.setText(busList.get(position).getArrived());
             holder.distance
                     .setText(String.valueOf(busList.get(position).getDistance()));
            

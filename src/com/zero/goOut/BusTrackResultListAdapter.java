@@ -122,7 +122,18 @@ public class BusTrackResultListAdapter extends BaseAdapter{
 	        
 	        CurrentLineBean timeBean = null;
 	        CurrentLineAndDireBean stationBean = null;
-	    		
+	        
+	        LineHelp lineHelp = new LineHelp();
+	        
+	        LineBean lineBean = new LineBean();
+			lineBean.setLine(busList.get(position).getCurrentLine());
+//			lineBean.setStatus(busList.get(position).getDire());
+			
+			List<CurrentLineBean> listCurrentLineBean = lineHelp
+					.getRealNameAndFirstbusAndLastbusOfTime(lineBean);
+			List<CurrentLineAndDireBean> listCurrentLineAndDireBeans = lineHelp
+					.getFirstAndLastStation(lineBean);
+			
             holder.line
                     .setText(timeBean.getRealName());
             holder.startStation
