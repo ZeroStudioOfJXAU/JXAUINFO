@@ -120,14 +120,11 @@ public class BusTrackResultListAdapter extends BaseAdapter{
 	            holder = (Holder) convertView.getTag();
 	        }
 	        
-	        CurrentLineBean timeBean = null;
-	        CurrentLineAndDireBean stationBean = null;
-	        
 	        LineHelp lineHelp = new LineHelp();
 	        
 	        LineBean lineBean = new LineBean();
 			lineBean.setLine(busList.get(position).getCurrentLine());
-//			lineBean.setStatus(busList.get(position).getDire());
+			lineBean.setStatus(busList.get(position).isDire());
 			
 			List<CurrentLineBean> listCurrentLineBean = lineHelp
 					.getRealNameAndFirstbusAndLastbusOfTime(lineBean);
@@ -135,15 +132,15 @@ public class BusTrackResultListAdapter extends BaseAdapter{
 					.getFirstAndLastStation(lineBean);
 			
             holder.line
-                    .setText(timeBean.getRealName());
+                    .setText(listCurrentLineBean.get(0).getRealName());
             holder.startStation
-                    .setText(stationBean.getFirstStation());
+                    .setText(listCurrentLineAndDireBeans.get(0).getFirstStation());
             holder.endStation
-            		.setText(stationBean.getLastStation());
+            		.setText(listCurrentLineAndDireBeans.get(0).getLastStation());
             holder.startTime
-                    .setText(timeBean.getFirstTime());
+                    .setText(listCurrentLineBean.get(0).getFirstTime());
             holder.endTime
-            		.setText(timeBean.getLastTime());
+            		.setText(listCurrentLineBean.get(0).getLastTime());
             
             BusTrackInfoAdapter adapter=new BusTrackInfoAdapter(convertView.getContext(),
             		busList.get(position).getListSubBusInfo());
