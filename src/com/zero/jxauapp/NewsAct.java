@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class NewsAct extends Activity{
 	
@@ -75,8 +76,15 @@ public class NewsAct extends Activity{
             switch (msg.what) {  
             case 0:
             	proBar.setVisibility(View.GONE);
+            	if(noticleResultList.size()==0){
+            		Toast.makeText(getApplicationContext(), "农大官网通告数据出错！", Toast.LENGTH_LONG).show();
+                }
+            	if(newsResultList.size()==0){
+            		Toast.makeText(getApplicationContext(), "农大官网新闻数据出错！", Toast.LENGTH_LONG).show();
+            	}
                 adapter1=new NewsListAdapter(NewsAct.this,newsResultList);
                 adapter2=new NewsListAdapter(NewsAct.this,noticleResultList);
+                
                 lvNews.setAdapter(adapter1);
                 lvNoticle.setAdapter(adapter2);
                 lvNews.onRefreshComplete();

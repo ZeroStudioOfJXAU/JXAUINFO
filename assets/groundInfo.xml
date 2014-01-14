@@ -16,7 +16,7 @@
         <RTlongtitude>115842329</RTlongtitude>
         <ImageResId>0x7f020058</ImageResId>
     </groundItem>
-     <!-- 商业街-->
+     <!-- 商业街
      <groundItem>
         <LBlatitude>28762431</LBlatitude>
         <LBlongtitude>115845527</LBlongtitude>
@@ -24,4 +24,5 @@
         <RTlongtitude>115846066</RTlongtitude>
         <ImageResId>0x7f020003</ImageResId>
     </groundItem>
+    -->
 </groundItems>

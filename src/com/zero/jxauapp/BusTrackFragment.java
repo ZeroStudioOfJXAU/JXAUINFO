@@ -68,10 +68,14 @@ public class BusTrackFragment extends Fragment{
 
 	public void getBusInfo(GoOutBean requset) {
 		GoOut goOut = new GoOut();
+		System.out.println(requset.getLocation()+" "
+				+requset.getListLine().size() + " "
+				+requset.isDirection());
 		List<BusInfo> busList=goOut.getBusInfo(requset);
+		System.out.println(busList.size());
 		Toast.makeText(getActivity(), ""+busList.size(),Toast.LENGTH_LONG).show();
 		adapter = new BusTrackResultListAdapter(getActivity(),busList);
 	    listView.setAdapter(adapter);
-	    //processBar.setVisibility(View.GONE);
+	    processBar.setVisibility(View.GONE);
 	}
 }

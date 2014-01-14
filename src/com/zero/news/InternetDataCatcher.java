@@ -14,6 +14,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import android.widget.Toast;
+
 import com.zero.app.AppConfigue;
 
  /**   
@@ -178,9 +180,10 @@ public class InternetDataCatcher {
 				newsList.add(new NewsBean(title,"农大官网","之前",abs+news_url));
 			}
 		}
-		
-		for(int i=8;i<dateList.size();i++){
-			newsList.get(i-8).setPubDate(dateList.get(i));
+		if(newsList.size()!=0){
+			for(int i=8;i<dateList.size();i++){
+				newsList.get(i-8).setPubDate(dateList.get(i));
+			}
 		}
 		return newsList;
 	}    

@@ -4,22 +4,28 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
-import android.app.ActionBar.LayoutParams;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Gravity;
+import android.support.v4.widget.StaggeredGridView;
+import android.support.v4.widget.StaggeredGridView.LayoutParams;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -45,11 +51,11 @@ public class MainActivity extends SlidingFragmentActivity implements
 		OnClickListener {
 
 	private ImageButton sideMenuExtendBtn;// 侧边栏按钮
-	private ImageButton mapImageBtn;// 地图ImageButton
-	private ImageButton gooutImageBtn;// 出行ImageButton
-	private ImageButton phoneImageBtn;// 常用电话ImageButton
-	private ImageButton campusLandscapeBtn;// 校园景观Btn
-	private ImageButton newsImageBtn;
+	private ImageView mapImageBtn;// 地图ImageButton
+	private ImageView gooutImageBtn;// 出行ImageButton
+	private ImageView phoneImageBtn;// 常用电话ImageButton
+	private ImageView campusLandscapeBtn;// 校园景观Btn
+	private ImageView newsImageBtn;
 	private TextView functionTextView;
 	private Fragment mContent;
 
@@ -72,6 +78,9 @@ public class MainActivity extends SlidingFragmentActivity implements
 	private PhoneNumberFragment listFragment;
 	private CampusLandscapeFragment campusFragment;
 
+	
+//	private StaggeredGridView mSGV;
+//	private SGVAdapter mAdapter;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -95,9 +104,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 		initWidge();
 		listFragment = new PhoneNumberFragment();
 		campusFragment = new CampusLandscapeFragment();
-		
 	}
-
 	/**
 	 * 初始化滑动菜单
 	 */
@@ -122,12 +129,12 @@ public class MainActivity extends SlidingFragmentActivity implements
 	public void initWidge() {
 
 		sideMenuExtendBtn = (ImageButton) findViewById(R.id.side_menu_extend_btn);
-		mapImageBtn = (ImageButton) findViewById(R.id.map_imageBtn);
-		gooutImageBtn = (ImageButton) findViewById(R.id.goout_imageBtn);
-		phoneImageBtn = (ImageButton) findViewById(R.id.phone_imageBtn);
-		campusLandscapeBtn = (ImageButton) findViewById(R.id.campus_imageBtn);
-		newsImageBtn = (ImageButton) findViewById(R.id.news_and_noticle_imageBtn);
-		functionTextView = (TextView) findViewById(R.id.main_function_textView);
+		mapImageBtn = (ImageView) findViewById(R.id.map_imageBtn);
+		gooutImageBtn = (ImageView) findViewById(R.id.goout_imageBtn);
+		phoneImageBtn = (ImageView) findViewById(R.id.phone_imageBtn);
+		campusLandscapeBtn = (ImageView) findViewById(R.id.campus_imageBtn);
+		newsImageBtn = (ImageView) findViewById(R.id.news_and_noticle_imageBtn);
+		//functionTextView = (TextView) findViewById(R.id.main_function_textView);
 
 		radioButtonListView = (ListView) popupView
 				.findViewById(R.id.user_current_location_listView);
@@ -220,17 +227,22 @@ public class MainActivity extends SlidingFragmentActivity implements
 				Toast.makeText(getApplicationContext(), "请选择线路和当前位置！", Toast.LENGTH_SHORT).show();
 				return;
 			}
-			mPopupWindow.dismiss();
+//			mPopupWindow.dismiss();
 			GoOutBean info = new GoOutBean(currentStation, listStr, dir);
 			BusTrackFragment busFragment = new BusTrackFragment();
 			Bundle busBundle = new Bundle();
 			busBundle.putSerializable("BUSTRACKINFO", info);
+//			Intent intent=new Intent();
+//			intent.putExtras(busBundle);
+//			intent.setClass(MainActivity.this,BusTrackAct.class);
+//			startActivity(intent);
 			/*向BusTrackFragment传入参数*/
 			busFragment.setArguments(busBundle);
 			FragmentTransaction fragmentTransaction = getSupportFragmentManager()
 					.beginTransaction();
 			fragmentTransaction.addToBackStack(null);
 			fragmentTransaction.add(android.R.id.content, busFragment).commit();
+			mPopupWindow.dismiss();
 		}
 	}
 

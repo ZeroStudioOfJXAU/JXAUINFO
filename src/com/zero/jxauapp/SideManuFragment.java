@@ -40,12 +40,7 @@ public class SideManuFragment extends ListFragment {
 		case 1:
 			break;
 		case 2:
-			break;
-		case 3:
-			getActivity().startActivity(new Intent().setClass(getActivity(), jxauMapAct.class));
-			break;
-		case 4:
-			
+			getActivity().startActivity(new Intent().setClass(getActivity(), AdminSystemAct.class));
 			break;
 		}
 		if (newContent != null)

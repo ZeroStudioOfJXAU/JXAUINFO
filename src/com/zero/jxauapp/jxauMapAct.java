@@ -804,10 +804,12 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 		} catch (Exception e) {
 		}
 		CustomGroundOverlay mGroundOverlay = new CustomGroundOverlay(mMapView);
+		Drawable d = getResources().getDrawable(R.drawable.stadium);
+		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
 		mMapView.getOverlays().add(mGroundOverlay);
 		for (CustomGround cg : grounds) {
-			Drawable d = getResources().getDrawable(cg.getbitMapId());
-			Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+//			Drawable d = getResources().getDrawable(cg.getbitMapId());
+//			Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
 			Ground mGround = new Ground(bitmap, cg.getLBPoint(),
 					cg.getRTPoint());
 			mGroundOverlay.addGround(mGround);

@@ -146,7 +146,7 @@ public class BusTrackResultListAdapter extends BaseAdapter{
             		busList.get(position).getListSubBusInfo());
             
             holder.listView.setAdapter(adapter);
-            setListViewHeight(holder.listView);
+          //  setListViewHeight(holder.listView);
 	    	return convertView;
 	}
 	

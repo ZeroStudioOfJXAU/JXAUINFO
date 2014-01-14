@@ -46,19 +46,20 @@ import android.content.res.Resources;
 public class LineHelp {
 	private final String packageName = "com.zero.jxauapp";
 	private final String lineName = "/data/data/" + packageName
-			+ "/lineName11.xml";
+			+ "/lineName.xml";
 
 	public List<String> getCurrentLine(String stationName) {
-
 		return readNameInXml(lineName, stationName);
 	}
 
 	public List<CurrentLineBean> getRealNameAndFirstbusAndLastbusOfTime(
 			LineBean lineBean) {
+		
 		String currentLine = lineBean.getLine();
 		boolean dire = lineBean.isStatus();
 		String fileName = "/data/data/" + packageName + "/" + currentLine
 				+ ".xml";
+		
 		List<CurrentLineBean> list = new ArrayList<CurrentLineBean>();
 		if (!XMLReadDataInLineForGetTime(fileName, list)) {
 			XMLWriteLineDataAppendForTime(fileName, list, currentLine, dire);
@@ -67,6 +68,7 @@ public class LineHelp {
 	}
 
 	public List<CurrentLineAndDireBean> getFirstAndLastStation(LineBean lineBean) {
+		
 		List<CurrentLineAndDireBean> list = new ArrayList<CurrentLineAndDireBean>();
 		if(!XMLReadStation(lineBean, list))
 			XMLStationAdd(lineBean, list);
