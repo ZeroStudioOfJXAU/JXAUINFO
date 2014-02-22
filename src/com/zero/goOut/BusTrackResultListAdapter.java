@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.zero.jxauapp.R;
+import com.zero.widget.MyListView;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -68,28 +69,7 @@ public class BusTrackResultListAdapter extends BaseAdapter{
 		// TODO Auto-generated method stub
 		return arg0;
 	}
-	/** 
-
-     * 设置Listview的高度 
-
-     */  
-
-    public void setListViewHeight(ListView listView) {   
-
-        ListAdapter listAdapter = listView.getAdapter();    
-        if (listAdapter == null) {   
-            return;   
-        }   
-        int totalHeight = 0;   
-        for (int i = 0; i < listAdapter.getCount(); i++) {   
-            View listItem = listAdapter.getView(i, null, listView);   
-            listItem.measure(0, 0);   
-            totalHeight += listItem.getMeasuredHeight();   
-        }   
-        ViewGroup.LayoutParams params = listView.getLayoutParams();   
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));   
-        listView.setLayoutParams(params);  
-    }  
+	
 	/* (non-Javadoc)
 	 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
 	 */
@@ -112,7 +92,7 @@ public class BusTrackResultListAdapter extends BaseAdapter{
 	                    .findViewById(R.id.BR_start_time_textView);
 	            holder.endTime = (TextView) convertView
 	                    .findViewById(R.id.BR_end_time_textView);
-	            holder.listView=(ListView) convertView.findViewById(R.id.BR_listView);
+	            holder.listView=(MyListView) convertView.findViewById(R.id.BR_listView);
 	            
 	            convertView.setTag(holder);
 	            
@@ -146,7 +126,7 @@ public class BusTrackResultListAdapter extends BaseAdapter{
             		busList.get(position).getListSubBusInfo());
             
             holder.listView.setAdapter(adapter);
-          //  setListViewHeight(holder.listView);
+            BusUnit.setListViewHeightBasedOnChildren(holder.listView);
 	    	return convertView;
 	}
 	
@@ -156,6 +136,6 @@ public class BusTrackResultListAdapter extends BaseAdapter{
         TextView endStation;
         TextView startTime;
         TextView endTime;
-        ListView listView;
+        MyListView listView;
     }
 }

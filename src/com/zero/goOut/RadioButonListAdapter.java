@@ -26,11 +26,7 @@ import android.widget.TextView;
  * @date 2014-1-1
  */   
 public class RadioButonListAdapter extends BaseAdapter {  
-	 static class ViewHolder {  
-	        LinearLayout background;  
-	               TextView userName;  
-	               RadioButton rdBtn;  
-	     }     
+	  
     private Context context;  
     private List<String> stationList;  
     HashMap<String,Boolean> states=new HashMap<String,Boolean>();//用于记录每个RadioButton的状态，并保证只可选一个  
@@ -54,27 +50,33 @@ public class RadioButonListAdapter extends BaseAdapter {
     public long getItemId(int position) {  
         return position;  
     }  
-   
+   public void set(int position,RadioButton radio){
+	   for(String key:states.keySet()){  
+           states.put(key, false);  
+       }  
+       states.put(String.valueOf(position), radio.isChecked());  
+       RadioButonListAdapter.this.notifyDataSetChanged();  
+   }
     @Override  
     public View getView(final int position, View convertView, ViewGroup parent) {  
-        ViewHolder holder;  
+        RadioListViewHolder holder;  
         
         if (convertView == null) {  
             convertView = LayoutInflater.from(context).inflate(R.layout.bus_track_radio_list_item, null);  
-            holder = new ViewHolder();  
+            holder = new RadioListViewHolder();  
             holder.background = (LinearLayout) convertView.findViewById(R.id.bus_track_radiolist_item);  
-            holder.userName = (TextView) convertView.findViewById(R.id.search_user_name);  
+            holder.tv = (TextView) convertView.findViewById(R.id.search_user_name);  
             convertView.setTag(holder);  
         }else{  
-            holder=(ViewHolder) convertView.getTag();  
+            holder=(RadioListViewHolder) convertView.getTag();  
         }  
         
         final RadioButton radio=(RadioButton) convertView.findViewById(R.id.radio_btn);  
-        holder.rdBtn = radio;  
-        holder.userName.setText(stationList.get(position));  
+        holder.rb = radio;  
+        holder.tv.setText(stationList.get(position));  
   
         //当RadioButton被选中时，将其状态记录进States中，并更新其他RadioButton的状态使它们不被选中      
-        holder.rdBtn.setOnClickListener(new View.OnClickListener() {  
+        holder.rb.setOnClickListener(new View.OnClickListener() {  
                  
                public void onClick(View v) {  
                    //重置，确保最多只有一项被选中  
@@ -94,7 +96,7 @@ public class RadioButonListAdapter extends BaseAdapter {
            else  
                res = true;  
              
-           holder.rdBtn.setChecked(res);  
+           holder.rb.setChecked(res);  
       
         return convertView;  
     }

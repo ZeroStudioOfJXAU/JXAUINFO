@@ -94,17 +94,20 @@ public class NewsListAdapter extends BaseAdapter {
 		listItemView.title.setTag(news);// 设置隐藏参数(实体类)
 		listItemView.author.setText(news.getAuthor());
 //		listItemView.date.setText(news.getPubDate());
-		try {
-			listItemView.date.setText(DateTransformer.friendly_time(news.getPubDate()));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(news.getPubDate().equals("之前")){
+			listItemView.date.setText("之前");
+		}else{
+			try {
+				listItemView.date.setText(DateTransformer.friendly_time(news.getPubDate()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (DateTransformer.isToday(news.getPubDate()))
+				listItemView.flag.setVisibility(View.VISIBLE);
+			else
+				listItemView.flag.setVisibility(View.GONE);
 		}
-		if (DateTransformer.isToday(news.getPubDate()))
-			listItemView.flag.setVisibility(View.VISIBLE);
-		else
-			listItemView.flag.setVisibility(View.GONE);
-
 		return convertView;
     }
     // 退出

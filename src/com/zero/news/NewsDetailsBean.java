@@ -3,6 +3,8 @@
  */
 package com.zero.news;
 
+import java.util.List;
+
  /**   
  * Title: NewsDetailsBean
  * Description:
@@ -18,12 +20,14 @@ public class NewsDetailsBean {
 	private String author;
 	private String date;
 	private String origin;
+	private List<String> pictures;
 	
-	public NewsDetailsBean(String title,String context,String date,String author){
+	public NewsDetailsBean(String title,String context,String date,String author,List<String> pictures){
 		this.context=context;
 		this.title=title;
 		this.date=date;
 		this.author=author;
+		this.pictures=pictures;
 	}
 	public String getOrigin(){
 		return this.origin;
@@ -56,5 +60,11 @@ public class NewsDetailsBean {
 	}
 	public void setAuthor(String author){
 		this.author=author;
+	}
+	public List<String> getPictures() {
+		return pictures;
+	}
+	public void setPictures(List<String> pictures) {
+		this.pictures = pictures;
 	}
 }

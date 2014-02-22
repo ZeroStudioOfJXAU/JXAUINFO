@@ -11,13 +11,15 @@
         android:id="@+id/radio_btn"  
         android:layout_width="wrap_content"  
         android:layout_height="wrap_content" 
-         android:gravity="left"   
-        android:layout_marginLeft="5dp" />  
+        android:gravity="left"
+        android:focusable="false"    
+         />  
     <TextView  
         android:id="@+id/search_user_name"  
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"  
         android:textColor="@android:color/black"  
-        android:textSize="16sp"
+        android:textSize="18sp"
+        android:text="农大"
         />  
 </LinearLayout>  

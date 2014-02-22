@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:background="@drawable/side_menu_extend_bg"
-                android:drawableLeft="@drawable/function_menu_left"
+                android:drawableLeft="@drawable/presence_online"
                 android:gravity="center_vertical"
                 android:text="@string/frame_main_school_map"
                 android:textAppearance="?android:attr/textAppearance"
@@ -37,7 +37,7 @@
                 android:layout_height="120dp"
                 android:layout_margin="2dp"
                 android:scaleType="fitXY"
-                android:background="@drawable/ic_bg"
+                
                 android:src="@drawable/ic_map" />
         </LinearLayout>
 
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:background="@drawable/side_menu_extend_bg"
-                android:drawableLeft="@drawable/function_menu_left"
+                android:drawableLeft="@drawable/presence_online"
                 android:gravity="center_vertical"
                 android:text="@string/frame_main_bus_track"
                 android:textAppearance="?android:attr/textAppearance"
@@ -64,7 +64,7 @@
                 android:layout_height="120dp"
                 android:layout_margin="2dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/function_menu_goout" />
+                android:src="@drawable/ic_bus" />
 
         </LinearLayout>
     </LinearLayout>
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:background="@drawable/side_menu_extend_bg"
-                android:drawableLeft="@drawable/function_menu_left"
+                android:drawableLeft="@drawable/presence_online"
                 android:gravity="center_vertical"
                 android:text="@string/frame_main_common_phone"
                 android:textAppearance="?android:attr/textAppearance"
@@ -97,7 +97,7 @@
                 android:layout_height="120dp"
                 android:layout_margin="2dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_phone_4" />
+                android:src="@drawable/ic_phone" />
         </LinearLayout>
 
         <LinearLayout
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:background="@drawable/side_menu_extend_bg"
-                android:drawableLeft="@drawable/function_menu_left"
+                android:drawableLeft="@drawable/presence_online"
                 android:gravity="center_vertical"
                  android:text="@string/frame_main_news_and_noticle"
                 android:textAppearance="?android:attr/textAppearance"
@@ -138,7 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:background="@drawable/side_menu_extend_bg"
-            android:drawableLeft="@drawable/function_menu_left"
+            android:drawableLeft="@drawable/presence_online"
             android:gravity="center_vertical"
              android:text="@string/frame_main_school_landscape"
             android:textAppearance="?android:attr/textAppearance"
@@ -150,7 +150,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:scaleType="fitXY"
-            android:src="@drawable/s5" />
+            android:src="@drawable/landscape" />
     </LinearLayout>
 
 </LinearLayout>

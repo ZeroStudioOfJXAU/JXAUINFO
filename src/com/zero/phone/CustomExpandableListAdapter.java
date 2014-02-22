@@ -56,21 +56,25 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
-		final String childText = (String) getChild(groupPosition, childPosition);
-
-		int index = childText.indexOf(":");
-		String name = childText.substring(0, index + 1);
-		number = childText.substring(index + 1, childText.length());
-		
-		if (convertView == null) {
+		PhoneListViewHolder holder = null;
+		if (convertView == null) {  
 			LayoutInflater layoutInflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = layoutInflater
 					.inflate(R.layout.phone_list_item, null);
-		}
-		ImageButton call = (ImageButton) convertView
-				.findViewById(R.id.phone_call_imageButton);
-		call.setOnClickListener(new OnClickListener() {
+            holder = new PhoneListViewHolder();  
+            holder.pButton = (ImageButton) convertView
+    				.findViewById(R.id.phone_call_imageButton); 
+            holder.name = (TextView) convertView
+    				.findViewById(R.id.phone_name_textView);
+            holder.number = (TextView) convertView
+    				.findViewById(R.id.phone_number_textView);
+            convertView.setTag(holder);  
+        }else{  
+            holder=(PhoneListViewHolder) convertView.getTag();  
+        }  
+
+		holder.pButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -80,12 +84,12 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 				context.startActivity(intent);
 			}
 		});
-		TextView nameView = (TextView) convertView
-				.findViewById(R.id.phone_name_textView);
-		TextView numberView = (TextView) convertView
-				.findViewById(R.id.phone_number_textView);
-		nameView.setText(name);
-		numberView.setText(number);
+		final String childText = (String) getChild(groupPosition, childPosition);
+		int index = childText.indexOf(":");
+		String name = childText.substring(0, index + 1);
+		number = childText.substring(index + 1, childText.length());
+		holder.name.setText(name);
+		holder.number.setText(number);
 		return convertView;
 	}
 

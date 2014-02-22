@@ -3,7 +3,6 @@ package com.zero.jxauapp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -12,16 +11,14 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -33,7 +30,6 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.BMapManager;
-import com.baidu.mapapi.map.Ground;
 import com.baidu.mapapi.map.LocationData;
 import com.baidu.mapapi.map.MKEvent;
 import com.baidu.mapapi.map.MKMapStatus;
@@ -41,7 +37,6 @@ import com.baidu.mapapi.map.MKMapTouchListener;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationOverlay;
-import com.baidu.mapapi.map.Overlay;
 import com.baidu.mapapi.map.PopupClickListener;
 import com.baidu.mapapi.map.PopupOverlay;
 import com.baidu.mapapi.map.RouteOverlay;
@@ -61,12 +56,10 @@ import com.baidu.mapapi.search.MKTransitRouteResult;
 import com.baidu.mapapi.search.MKWalkingRouteResult;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.baidu.mapapi.map.MKMapStatusChangeListener;
+import com.zero.map.ArrayAdapter;
 import com.zero.map.BMapUtil;
-import com.zero.map.CustomGround;
-import com.zero.map.CustomGroundOverlay;
 import com.zero.map.CustomItem;
 import com.zero.map.CustomIconOverlay;
-import com.zero.map.CustomOverlay;
 import com.zero.map.CustomTextOverlay;
 import com.zero.map.readXml.XmlReader;
 
@@ -88,6 +81,8 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 	LinearLayout linear; // 对话框
 	AutoCompleteTextView editStart;// 起点输入自动补全框
 	AutoCompleteTextView editEnd;// 终点输入自动补全框
+	AutoCompleteTextView searchACTV;
+	Button searchBtn;
 	Button mBtnDrive = null; // 驾车搜索
 	Button mBtnTransit = null; // 公交搜索
 	Button mBtnWalk = null; // 步行搜索
@@ -103,7 +98,7 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 
 	MyLocationOverlay myLocationOverlay = null;// 定位图层
 	LocationData locData = null;// 位置数据
-
+	MapController mMapController ;
 	ArrayAdapter<String> adapter;// 自动补全监听器
 	Map<String, GeoPoint> map = new HashMap<String, GeoPoint>();// 存放从xml文件中添加的补全数据
 	// 表示输入框的状态
@@ -118,10 +113,11 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 	private static final int UPDATE_TIME = 100000;// 定时定位的时间间隔。单位毫秒
 	// 是否响应屏幕点击
 	private boolean enClickAble = false;
-
 	// 浏览路线节点相关
 	private View viewCache = null;
 	private TextView popupText = null;// 泡泡view
+	private TextView  popleftText = null;
+	private TextView  poprightText = null;
 	int searchType = -1;// 记录搜索的类型，区分驾车/步行和公交
 	int nodeIndex = -2;// 节点索引,供浏览节点时使用
 	MKRoute route = null;// 保存驾车/步行路线数据的变量，供浏览节点时使用
@@ -135,6 +131,7 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		mBMapManager = new BMapManager(getApplication());
 		mBMapManager.init(baiDuMapKey, null);
 
@@ -144,16 +141,19 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 		// 设置启用内置的缩放控件
 		mMapView.setBuiltInZoomControls(true);
 		// 得到mMapView的控制权,可以用它控制和驱动平移和缩放
-		MapController mMapController = mMapView.getController();
+		mMapController= mMapView.getController();
+		mMapController.setCompassMargin(20,110);
 		// 用给定的经纬度构造一个中心点
 		GeoPoint point = new GeoPoint((int) (28.768217 * 1E6),
 				(int) (115.839311 * 1E6));
 		mMapController.setCenter(point);// 设置地图中心点
-		mMapController.setZoom(17);// 设置地图zoom级别
+		mMapController.setZoom(18);// 设置地图zoom级别
 		mMapController.enableClick(false);
 		// 渲染覆盖点和覆盖面
+		mMapView.setSatellite(true);
+		mMapView.setTraffic(true);
 		getCustomInfoFromAssetsXML();
-		getGroundInfoFromAssetsXML();
+//		getGroundInfoFromAssetsXML();
 		// 初始化mSearch，添加监听器
 		mSearch = new MKSearch();
 		mSearch.init(mBMapManager, myMKSearchListener);
@@ -163,12 +163,22 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 		mBtnDrive = (Button) findViewById(R.id.drive_btn);
 		mBtnTransit = (Button) findViewById(R.id.transit_btn);
 		mBtnWalk = (Button) findViewById(R.id.walk_btn);
+		searchBtn = (Button) findViewById(R.id.search_btn);
 		editStart = (AutoCompleteTextView) findViewById(R.id.start_ACTextView);
 		editEnd = (AutoCompleteTextView) findViewById(R.id.end_ACTextView);
+		searchACTV = (AutoCompleteTextView) findViewById(R.id.search_ACTextView);
 		mbtnLoc = (Button) findViewById(R.id.auto_loc_button);
 		mBtnHit = (Button) findViewById(R.id.screen_hit_btn);
 		routeBtn = (Button) findViewById(R.id.map_route_btn);
-
+		
+		viewCache = getLayoutInflater()
+				.inflate(R.layout.custom_text_view, null);
+		popupText = (TextView) viewCache.findViewById(R.id.textcache);
+		
+	    popleftText = (TextView) viewCache.findViewById(R.id.popleft);
+		poprightText = (TextView) viewCache.findViewById(R.id.popright);
+		
+		searchBtn.setOnClickListener(this);
 		// 线路按钮，添加监听，单击显示线路规划对话框
 		routeBtn.setOnClickListener(this);
 		// 为定位按钮添加监听
@@ -193,37 +203,37 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 	public int fun(int a) {
 		return 2 * a - 8;
 	}
-
+	boolean flag;
 	MKMapStatusChangeListener listener = new MKMapStatusChangeListener() {
 		public void onMapStatusChange(MKMapStatus mapStatus) {
-			// 字体跟随地图缩放变化
-			if (mapStatus.zoom >= 17) {
-
-				if (fun((int) mapStatus.zoom) != fontSize) {
-					fontSize = fun((int) mapStatus.zoom);
-					BMapUtil.removeCustomTextOverlay(mMapView);
-					getCustomInfoFromAssetsXML();
-					isClear = false;
-					mMapView.refresh();
-				} else if (fun((int) mapStatus.zoom) == fontSize && isClear) {
-					getCustomInfoFromAssetsXML();
-					isClear = false;
-					mMapView.refresh();
-				}
-			} else {
-				mMapView.getOverlays().clear();
-				mMapView.refresh();
-				isClear = true;
-			}
-			// if(mapStatus.zoom<17){
-			// mMapView.getOverlays().clear();
-			// flag=true;
-			// }
-			// if(flag && mapStatus.zoom>=17){
-			// flag=false;
-			// getCustomInfoFromAssetsXML();
-			// getGroundInfoFromAssetsXML();
-			// }
+			//字体跟随地图缩放变化
+//			if (mapStatus.zoom >= 17) {
+//
+//				if (fun((int) mapStatus.zoom) != fontSize) {
+//					fontSize = fun((int) mapStatus.zoom);
+//					BMapUtil.removeCustomTextOverlay(mMapView);
+//					getCustomInfoFromAssetsXML();
+//					isClear = false;
+//					mMapView.refresh();
+//				} else if (fun((int) mapStatus.zoom) == fontSize && isClear) {
+//					getCustomInfoFromAssetsXML();
+//					isClear = false;
+//					mMapView.refresh();
+//				}
+//			} else {
+//				mMapView.getOverlays().clear();
+//				mMapView.refresh();
+//				isClear = true;
+//			}
+			 if(mapStatus.zoom<17){
+				 BMapUtil.removeCustomTextOverlay(mMapView);
+			 //mMapView.getOverlays().clear();
+			 flag=true;
+			 }
+			 if(flag && mapStatus.zoom>=17){
+			 flag=false;
+			 	getCustomInfoFromAssetsXML();
+			 }
 		}
 	};
 	MKMapTouchListener MymapTouchListener = new MKMapTouchListener() {
@@ -240,7 +250,6 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 						Toast.LENGTH_LONG).show();
 				mMapView.getController().enableClick(false);
 				enClickAble = false;
-				mBtnHit.setText("屏幕取点");
 			}
 		}
 
@@ -295,9 +304,11 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 		// 设置AutoCompleteTextView的Adapter
 		editStart.setAdapter(adapter);
 		editEnd.setAdapter(adapter);
-		getCustomInfoFromAssetsXML();
+		searchACTV.setAdapter(adapter);
+		//getCustomInfoFromAssetsXML();
 		editStart.addTextChangedListener(watcher);
 		editEnd.addTextChangedListener(watcher);
+		searchACTV.addTextChangedListener(watcher);
 	}
 
 	/**
@@ -351,8 +362,10 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 								.getLongitude() * 1E6));
 				editStart.setText("当前位置");
 				//
+				locationClient.stop();
 				Toast.makeText(jxauMapAct.this, "定位成功", Toast.LENGTH_SHORT)
 						.show();
+				
 			}
 
 			@Override
@@ -431,8 +444,8 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 		route = null;
 		routeOverlay = null;
 		transitOverlay = null;
-		mBtnPre.setVisibility(View.INVISIBLE);
-		mBtnNext.setVisibility(View.INVISIBLE);
+//		mBtnPre.setVisibility(View.INVISIBLE);
+//		mBtnNext.setVisibility(View.INVISIBLE);
 		// 发起搜索
 		String start = editStart.getText().toString().trim();
 		MKPlanNode stNode = new MKPlanNode();
@@ -651,8 +664,6 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 	public void initNode() {
 		mBtnPre = (Button) findViewById(R.id.pre);
 		mBtnNext = (Button) findViewById(R.id.next);
-		mBtnPre.setVisibility(View.INVISIBLE);
-		mBtnNext.setVisibility(View.INVISIBLE);
 		mBtnPre.setOnClickListener(nodeClickListener);
 		mBtnNext.setOnClickListener(nodeClickListener);
 		createPaopao();
@@ -667,16 +678,32 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 		PopupClickListener popListener = new PopupClickListener() {
 			@Override
 			public void onClickedPopup(int index) {
-				Log.v("click", "clickapoapo");
+				if(index == 0 || index == 2){
+					if (routeBtn.getText().equals("线路")) {
+						linear.setVisibility(View.VISIBLE);
+						
+						editStart.setText("");
+						editEnd.setText("");
+						
+						routeBtn.setText("返回");
+					} else if (routeBtn.getText().equals("返回")) {
+						linear.setVisibility(View.GONE);
+						routeBtn.setText("线路");
+						// 清楚线路层
+						BMapUtil.removeNotCustomOverlay(mMapView);
+					}
+				}
+				if(index == 0){
+					editStart.setText(popupText.getText());
+				}else if(index == 2){
+					editEnd.setText(popupText.getText());
+				}
 			}
 		};
 		pop = new PopupOverlay(mMapView, popListener);
 	}
 
 	public void nodeClick(View v) {
-		viewCache = getLayoutInflater()
-				.inflate(R.layout.custom_text_view, null);
-		popupText = (TextView) viewCache.findViewById(R.id.textcache);
 		if (searchType == 0 || searchType == 2) {
 			// 驾车、步行使用的数据结构相同，因此类型为驾车或步行，节点浏览方法相同
 			if (nodeIndex < -1 || route == null
@@ -770,7 +797,7 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 			factory.setNamespaceAware(true);
 			XmlPullParser xpp = factory.newPullParser();
-			xpp.setInput(getResources().getAssets().open("pointInfo.xml"), null);
+			xpp.setInput(getResources().getAssets().open("point_db.xml"), null);
 			items = XmlReader.getCustomItemInfo(xpp);
 		} catch (Exception e) {
 		}
@@ -792,30 +819,30 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 	/**
 	 * 读取XML中的矩形坐标信息，用图片覆盖
 	 */
-	public void getGroundInfoFromAssetsXML() {
-		ArrayList<CustomGround> grounds = null;
-		try {
-			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-			factory.setNamespaceAware(true);
-			XmlPullParser xpp = factory.newPullParser();
-			xpp.setInput(getResources().getAssets().open("groundInfo.xml"),
-					null);
-			grounds = XmlReader.getGroundInfo(xpp);
-		} catch (Exception e) {
-		}
-		CustomGroundOverlay mGroundOverlay = new CustomGroundOverlay(mMapView);
-		Drawable d = getResources().getDrawable(R.drawable.stadium);
-		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
-		mMapView.getOverlays().add(mGroundOverlay);
-		for (CustomGround cg : grounds) {
-//			Drawable d = getResources().getDrawable(cg.getbitMapId());
-//			Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
-			Ground mGround = new Ground(bitmap, cg.getLBPoint(),
-					cg.getRTPoint());
-			mGroundOverlay.addGround(mGround);
-		}
-		mMapView.refresh();
-	}
+//	public void getGroundInfoFromAssetsXML() {
+//		ArrayList<CustomGround> grounds = null;
+//		try {
+//			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+//			factory.setNamespaceAware(true);
+//			XmlPullParser xpp = factory.newPullParser();
+//			xpp.setInput(getResources().getAssets().open("groundInfo.xml"),
+//					null);
+//			grounds = XmlReader.getGroundInfo(xpp);
+//		} catch (Exception e) {
+//		}
+//		CustomGroundOverlay mGroundOverlay = new CustomGroundOverlay(mMapView);
+//		Drawable d = getResources().getDrawable(R.drawable.stadium);
+//		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+//		mMapView.getOverlays().add(mGroundOverlay);
+//		for (CustomGround cg : grounds) {
+////			Drawable d = getResources().getDrawable(cg.getbitMapId());
+////			Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+//			Ground mGround = new Ground(bitmap, cg.getLBPoint(),
+//					cg.getRTPoint());
+//			mGroundOverlay.addGround(mGround);
+//		}
+//		mMapView.refresh();
+//	}
 
 	@Override
 	public void onClick(View v) {
@@ -828,6 +855,11 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 			} else if (routeBtn.getText().equals("返回")) {
 				linear.setVisibility(View.GONE);
 				routeBtn.setText("线路");
+				mBtnPre.setVisibility(View.GONE);
+				mBtnNext.setVisibility(View.GONE);
+				
+				editEnd.setText("");
+				editStart.setText("");
 				// 清楚线路层
 				BMapUtil.removeNotCustomOverlay(mMapView);
 			}
@@ -836,25 +868,20 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 			if (locationClient == null) {
 				return;
 			}
-			if (locationClient.isStarted()) {
-				mbtnLoc.setText("自动定位");
-				locationClient.stop();
-			} else {
-				mbtnLoc.setText("停止定位");
-				locationClient.start();
-				locationClient.requestLocation();
-			}
+			locationClient.start();
+			locationClient.requestLocation();
+			
+//			if (locationClient.isStarted()) {
+//				mbtnLoc.setText("自动定位");
+//				locationClient.stop();
+//			} else {
+//				mbtnLoc.setText("停止定位");
+//				
+//			}
 			break;
 		case R.id.screen_hit_btn:
-			if (mBtnHit.getText().equals("屏幕取点")) {
-				enClickAble = true;
-				mMapView.getController().enableClick(true);
-				mBtnHit.setText("停止取点");
-			} else if (mBtnHit.getText().equals("停止取点")) {
-				enClickAble = false;
-				mMapView.getController().enableClick(false);
-				mBtnHit.setText("屏幕取点");
-			}
+			enClickAble = true;
+			mMapView.getController().enableClick(true);
 			break;
 		case R.id.drive_btn:
 			searchRoute(VEHICLE_DRIVE);
@@ -863,7 +890,34 @@ public class jxauMapAct extends FragmentActivity implements OnClickListener {
 			searchRoute(VEHICLE_TRANSIT);
 			break;
 		case R.id.walk_btn:
-			searchRoute(VEHICLE_WALK);
+			if(editStart.getText().toString().trim()==null || 
+				editEnd.getText().toString().trim()==null){
+				Toast.makeText(getApplicationContext(), "请输入始终点",
+						Toast.LENGTH_SHORT).show();
+				break;
+			}else{
+				searchRoute(VEHICLE_WALK);
+			}
+			break;
+		case R.id.search_btn:
+			String place=searchACTV.getText().toString().trim();
+			if(place == null){
+				Toast.makeText(getApplicationContext(), "请输入搜索地点",
+						Toast.LENGTH_SHORT).show();
+			}else{
+				mMapController.setCenter(map.get(place));
+				popleftText.setBackgroundResource(R.drawable.map_popup_side);
+				popleftText.setText("从这出发");
+				poprightText.setBackgroundResource(R.drawable.map_popup_side);
+				poprightText.setText("到这来");
+				popupText.setBackgroundResource(R.drawable.map_popup);
+				popupText.setText(place);
+				Bitmap[] b = new Bitmap[3];
+				b[0]=BMapUtil.getBitmapFromView(popleftText);
+				b[1]=BMapUtil.getBitmapFromView(popupText);
+				b[2]=BMapUtil.getBitmapFromView(poprightText);
+				pop.showPopup(b,map.get(place), 5);
+			}
 			break;
 		default:
 			break;

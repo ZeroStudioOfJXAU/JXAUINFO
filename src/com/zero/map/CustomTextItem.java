@@ -17,10 +17,10 @@ import com.baidu.platform.comapi.basestruct.GeoPoint;
 public class CustomTextItem extends TextItem{
 	private int latOffset=100;//纬度偏移量100,使文字层在图标下方
 	//文字大小和颜色，以及背景颜色的配置属性
-	private  int FONTSIZE=26;
+	private  int FONTSIZE=23;
 //	private final Symbol.Color FONTCOLOR = new Symbol().new Color(255,0,255,0); 
 //	private final Symbol.Color BGCOLOR = new Symbol().new Color(150,80,80,80);
-	private final Symbol.Color FONTCOLOR = new Symbol().new Color(Color.BLACK);
+	private final Symbol.Color FONTCOLOR = new Symbol().new Color(Color.WHITE);
 	private final Symbol.Color BGCOLOR = new Symbol().new Color(color.holo_orange_light);
 	
 	public CustomTextItem(int latitude,int longtitude,String name){

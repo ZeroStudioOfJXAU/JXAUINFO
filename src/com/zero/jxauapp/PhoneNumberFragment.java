@@ -9,17 +9,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.zero.goOut.RadioListViewHolder;
 import com.zero.phone.CustomExpandableListAdapter;
 import com.zero.phone.CustomListAdapter;
+import com.zero.phone.PhoneListViewHolder;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
  /**   
  * Title: PhoneNumberFragment
@@ -57,6 +64,22 @@ public class PhoneNumberFragment extends Fragment{
 		commonListView.setAdapter(listAdapter);
 		expandableListView.setAdapter(expandableListAdapter);
 		
+		commonListView.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Toast.makeText(getActivity(), "Hit me £¡", Toast.LENGTH_SHORT).show();
+				PhoneListViewHolder holder = (PhoneListViewHolder) arg1.getTag();
+				String number=(String) holder.number.getText(); 
+				Uri uri = Uri.parse("tel:" + number);
+				Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+				startActivity(intent);
+				
+			}
+			
+		});
        
 	}
 	private void fillDataToList(){
@@ -64,6 +87,7 @@ public class PhoneNumberFragment extends Fragment{
 		String[] category = getResources().getStringArray(R.array.number_category);
 		String[] organizationNumber = getResources().getStringArray(R.array.organization_number);
 		String[] collegeNumber = getResources().getStringArray(R.array.college_number);
+		
 		listDataHeader=new ArrayList<String>();
 		commonNumberList = new ArrayList<String>();
 	    listDataHeader = Arrays.asList(category);

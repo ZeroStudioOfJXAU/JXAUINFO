@@ -19,8 +19,6 @@
      		android:id="@+id/frame_btn_news_blog"
      		style="@style/frame_button"
          	android:text="@string/frame_news_school_notice"/>
-     	
-
     </LinearLayout>
 	<com.zero.news.PullToRefreshListView
 	  	android:id="@+id/frame_listview_news"

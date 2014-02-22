@@ -32,7 +32,8 @@ public class XmlReader {
 	 */
 	public static ArrayList<CustomItem> getCustomItemInfo(XmlPullParser xpp){
 		try {
-			int lat=0,lon=0,ID=0;
+			int lat=0,lon=0;
+//			int ID=0;
 			String name="";
 			int eventType = xpp.getEventType();
 			while (eventType != XmlPullParser.END_DOCUMENT) {
@@ -55,14 +56,14 @@ public class XmlReader {
 		            if (tagName != null && tagName.equals("name")) {
 		                    name=xpp.nextText();
 		            }
-		            if (tagName != null && tagName.equals("ImageResId")) {
-		                	ID = Integer.parseInt(xpp.nextText().replace("0x",""), 16);
-		            }
+//		            if (tagName != null && tagName.equals("ImageResId")) {
+//		                	ID = Integer.parseInt(xpp.nextText().replace("0x",""), 16);
+//		            }
 		        }
 		        break;
 		        case XmlPullParser.END_TAG: {
 		        	 if (xpp.getName().equals("pointItem")) {
-	                       items.add(new CustomItem(lat,lon,name,ID));
+	                       items.add(new CustomItem(lat,lon,name));
 	                   }
 		        }
 		            break;
@@ -84,7 +85,8 @@ public class XmlReader {
 	 * @return 存放覆盖点信息的ArrayList<CustomGround>
 	 */
 	public static ArrayList<CustomGround> getGroundInfo(XmlPullParser xpp){
-		int lbLat=0,lbLon=0,id=0,rtLat=0,rtLon=0;
+		int lbLat=0,lbLon=0,rtLat=0,rtLon=0;
+//		int id=0;
 		try {
 			int eventType = xpp.getEventType();
 			while (eventType != XmlPullParser.END_DOCUMENT) {
@@ -109,14 +111,14 @@ public class XmlReader {
 		            if (tagName != null && tagName.equals("RTlongtitude")) {
 		            	    rtLon=Integer.parseInt(xpp.nextText());
 	            }
-		            if (tagName != null && tagName.equals("ImageResId")) {
-		                	id = Integer.parseInt(xpp.nextText().replace("0x",""), 16);
-		            }
+//		            if (tagName != null && tagName.equals("ImageResId")) {
+//		                	id = Integer.parseInt(xpp.nextText().replace("0x",""), 16);
+//		            }
 		        }
 		        break;
 		        case XmlPullParser.END_TAG: {
 		        	 if (xpp.getName().equals("groundItem")) {
-	                       grounds.add(new CustomGround(lbLat,lbLon,rtLat,rtLon,id));
+	                       grounds.add(new CustomGround(lbLat,lbLon,rtLat,rtLon));
 	                   }
 		        }
 		            break;

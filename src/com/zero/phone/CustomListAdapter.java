@@ -5,6 +5,8 @@ package com.zero.phone;
 
 import java.util.List;
 
+import com.zero.goOut.RadioListViewHolder;
+import com.zero.goOut.ViewHolder;
 import com.zero.jxauapp.R;
 
 import android.content.Context;
@@ -15,7 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
  /**   
@@ -59,21 +63,28 @@ public class CustomListAdapter extends BaseAdapter{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		
-		final String childText = (String) getItem(position);
-		int index = childText.indexOf(":");
-		String name = childText.substring(0, index + 1);
-		number = childText.substring(index + 1, childText.length());
-		
-		if (convertView == null) {
+		PhoneListViewHolder holder = null;
+		if (convertView == null) {  
 			LayoutInflater layoutInflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = layoutInflater
 					.inflate(R.layout.phone_list_item, null);
-		}
-		ImageButton call = (ImageButton) convertView
-				.findViewById(R.id.phone_call_imageButton);
-		call.setOnClickListener(new OnClickListener() {
+            holder = new PhoneListViewHolder();  
+            holder.pButton = (ImageButton) convertView
+    				.findViewById(R.id.phone_call_imageButton); 
+            holder.name = (TextView) convertView
+    				.findViewById(R.id.phone_name_textView);
+            holder.number = (TextView) convertView
+    				.findViewById(R.id.phone_number_textView);
+            convertView.setTag(holder);  
+        }else{  
+            holder=(PhoneListViewHolder) convertView.getTag();  
+        }  
+		final String childText = (String) getItem(position);
+		int index = childText.indexOf(":");
+		String name = childText.substring(0, index + 1);
+		number = childText.substring(index + 1, childText.length());
+		holder.pButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -82,12 +93,9 @@ public class CustomListAdapter extends BaseAdapter{
 				context.startActivity(intent);
 			}
 		});
-		TextView nameView = (TextView) convertView
-				.findViewById(R.id.phone_name_textView);
-		TextView numberView = (TextView) convertView
-				.findViewById(R.id.phone_number_textView);
-		nameView.setText(name);
-		numberView.setText(number);
+		
+		holder.name.setText(name);
+		holder.number.setText(number);
 		return convertView;
 	}
 }

@@ -4,41 +4,42 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.StaggeredGridView;
 import android.support.v4.widget.StaggeredGridView.LayoutParams;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.zero.campusLandscape.PictureUnit;
 import com.zero.goOut.CheckBoxAdapter;
 import com.zero.goOut.GoOutBean;
 import com.zero.goOut.RadioButonListAdapter;
+import com.zero.goOut.RadioListViewHolder;
 import com.zero.goOut.ViewHolder;
+import com.zero.news.InternetDataCatcher;
+import com.zero.news.NewsListAdapter;
 
 /**
  * Title: MainActivity Description:主页面
@@ -51,14 +52,13 @@ public class MainActivity extends SlidingFragmentActivity implements
 		OnClickListener {
 
 	private ImageButton sideMenuExtendBtn;// 侧边栏按钮
-	private ImageView mapImageBtn;// 地图ImageButton
+	private ImageView mapImageBtn;  // 地图ImageButton
 	private ImageView gooutImageBtn;// 出行ImageButton
 	private ImageView phoneImageBtn;// 常用电话ImageButton
 	private ImageView campusLandscapeBtn;// 校园景观Btn
 	private ImageView newsImageBtn;
-	private TextView functionTextView;
 	private Fragment mContent;
-
+	
 	/* popupWindows对话框中的控件 */
 	private PopupWindow mPopupWindow;// 出行服务，弹出菜单
 	private Button arrivelBtn;// 到达按钮
@@ -75,9 +75,8 @@ public class MainActivity extends SlidingFragmentActivity implements
 
 	private View popupView;// 出行服务的视图，用来找到组件
 
-	private PhoneNumberFragment listFragment;
-	private CampusLandscapeFragment campusFragment;
-
+	
+	private LinearLayout intentDelayLayout;
 	
 //	private StaggeredGridView mSGV;
 //	private SGVAdapter mAdapter;
@@ -94,16 +93,53 @@ public class MainActivity extends SlidingFragmentActivity implements
 		popupView = getLayoutInflater().inflate(
 				R.layout.bus_track_select_layout, null);
 		// popupView.setBackgroundColor(Color.BLUE);
-		mPopupWindow = new PopupWindow(popupView, LayoutParams.MATCH_PARENT,
+		mPopupWindow = new PopupWindow(popupView, LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT, true);
+		mPopupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
+		mPopupWindow.update(); 
 		/* 这三行的作用是点击空白处的时候PopupWindow会消失 */
 		mPopupWindow.setTouchable(true);
 		mPopupWindow.setOutsideTouchable(true);
 		mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),
 				(Bitmap) null));
 		initWidge();
-		listFragment = new PhoneNumberFragment();
-		campusFragment = new CampusLandscapeFragment();
+		new Thread(getDataRunable).start();
+	}
+	ArrayList<String> plist = new ArrayList<String>();
+	 private SharedPreferences sharedPreferences;  
+	 private SharedPreferences.Editor editor; 
+	 private Runnable getDataRunable = new Runnable() {
+	    	@Override
+	    	public void run() {
+	    		// TODO Auto-generated method stub
+	    		getPictureUrls();
+	    		handler.sendEmptyMessage(0);
+	    	}
+	    };
+	    private Handler handler = new Handler() {  
+	        public void handleMessage(Message msg) {  
+	            switch (msg.what) {  
+	            case 0:
+	            	Toast.makeText(getApplicationContext(),  plist.size()+" ", Toast.LENGTH_SHORT).show();
+	            	Toast.makeText(getApplicationContext(),  sharedPreferences.getString("20", "0"), Toast.LENGTH_SHORT).show();
+	                break;  
+	            }  
+	        };  
+	    };  
+	public void getPictureUrls(){
+		 sharedPreferences = this.getSharedPreferences("test",Context.MODE_PRIVATE);  
+	     editor = sharedPreferences.edit();
+	     
+	     plist=PictureUnit.catchUrls("http://blog.csdn.net/u013677570/article/details/19290151");
+	     if(sharedPreferences.getInt("size",0) != plist.size()){
+	    	 int i=1;
+		     for(String s:plist){
+		    	 editor.putString(""+i, s); 
+		    	 i++;
+		     }
+		     editor.putInt("size", plist.size());
+		     editor.commit();
+	     }
 	}
 	/**
 	 * 初始化滑动菜单
@@ -135,7 +171,8 @@ public class MainActivity extends SlidingFragmentActivity implements
 		campusLandscapeBtn = (ImageView) findViewById(R.id.campus_imageBtn);
 		newsImageBtn = (ImageView) findViewById(R.id.news_and_noticle_imageBtn);
 		//functionTextView = (TextView) findViewById(R.id.main_function_textView);
-
+		intentDelayLayout=(LinearLayout) findViewById(R.id.main_bus_wait);
+		
 		radioButtonListView = (ListView) popupView
 				.findViewById(R.id.user_current_location_listView);
 		checkboxListView = (ListView) popupView
@@ -182,7 +219,28 @@ public class MainActivity extends SlidingFragmentActivity implements
 			checkboxListView.setAdapter(checkBoxadapter);
 			radioButtonListView.setAdapter(radioButtonAdapter);
 			
+			
 			listStr = new ArrayList<String>();
+			
+			radioButtonListView.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View view,
+						int position, long arg3) {
+					for (int i = 0, j = radioButtonListView.getCount(); i < j; i++) {
+						View child = radioButtonListView.getChildAt(i);
+						RadioButton rdoBtn = (RadioButton) child
+								.findViewById(R.id.radio_btn);
+						if(i!=position){
+							rdoBtn.setChecked(false);
+						}else{
+							rdoBtn.setChecked(true);
+						}
+					}
+					RadioListViewHolder holder = (RadioListViewHolder) view.getTag();
+					holder.rb.toggle(); 
+				}
+			});
+			
 			checkboxListView.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View view,
@@ -224,25 +282,27 @@ public class MainActivity extends SlidingFragmentActivity implements
 				dir = false;
 			}
 			if(listStr.size()==0 || currentStation==null){
-				Toast.makeText(getApplicationContext(), "请选择线路和当前位置！", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "请选择当前位置和线路！", Toast.LENGTH_SHORT).show();
 				return;
 			}
+			//intentDelayLayout.setVisibility(View.VISIBLE);
 //			mPopupWindow.dismiss();
 			GoOutBean info = new GoOutBean(currentStation, listStr, dir);
-			BusTrackFragment busFragment = new BusTrackFragment();
+//			BusTrackFragment busFragment = new BusTrackFragment();
 			Bundle busBundle = new Bundle();
 			busBundle.putSerializable("BUSTRACKINFO", info);
-//			Intent intent=new Intent();
-//			intent.putExtras(busBundle);
-//			intent.setClass(MainActivity.this,BusTrackAct.class);
-//			startActivity(intent);
+			Intent intent=new Intent();
+			intent.putExtras(busBundle);
+			intent.setClass(MainActivity.this,BusResult.class);
+			startActivity(intent);
 			/*向BusTrackFragment传入参数*/
-			busFragment.setArguments(busBundle);
-			FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-					.beginTransaction();
-			fragmentTransaction.addToBackStack(null);
-			fragmentTransaction.add(android.R.id.content, busFragment).commit();
+//			busFragment.setArguments(busBundle);
+//			FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+//					.beginTransaction();
+//			fragmentTransaction.addToBackStack(null);
+//			fragmentTransaction.add(android.R.id.content, busFragment).commit();
 			mPopupWindow.dismiss();
+			
 		}
 	}
 
@@ -259,32 +319,17 @@ public class MainActivity extends SlidingFragmentActivity implements
 					jxauMapAct.class));
 			break;
 		case R.id.goout_imageBtn:
-			mPopupWindow.showAsDropDown(v);
-//			mPopupWindow.showAtLocation(functionTextView, Gravity.TOP, 0, 0);
+			mPopupWindow.showAsDropDown(mapImageBtn);
 			runPopWindow();
 			break;
 		case R.id.phone_imageBtn:
 			// 切换到常用电话页面
-			FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-					.beginTransaction();
-			if (listFragment.isAdded()) {
-				fragmentTransaction.show(listFragment).commit();
-			} else {
-				fragmentTransaction.addToBackStack(null);
-				fragmentTransaction.add(android.R.id.content, listFragment)
-						.commit();
-			}
+			startActivity(new Intent().setClass(MainActivity.this,
+					PhoneAct.class));
 			break;
 		case R.id.campus_imageBtn:
-			FragmentTransaction campusTransaction = getSupportFragmentManager()
-					.beginTransaction();
-			if (campusFragment.isAdded()) {
-				campusTransaction.show(campusFragment).commit();
-			} else {
-				campusTransaction.addToBackStack(null);
-				campusTransaction.add(android.R.id.content, campusFragment)
-						.commit();
-			}
+			startActivity(new Intent().setClass(MainActivity.this,
+					LandScape.class));
 			break;
 		case R.id.news_and_noticle_imageBtn:
 			startActivity(new Intent().setClass(MainActivity.this,

@@ -6,6 +6,7 @@ package com.zero.news;
 
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class InternetDataCatcher {
 		Elements divs=doc.getElementsByTag("div");
 		String divContent = divs.toString();
 		Document doc2 = Jsoup.parse(divContent);
-		 Elements linkStrs=doc2.getElementsByAttributeValue("style",
+		Elements linkStrs=doc2.getElementsByAttributeValue("style",
 	        		"white-space:nowrap");
 		for (Element linkStr : linkStrs) {
 		    String date=linkStr.text();
@@ -95,11 +96,14 @@ public class InternetDataCatcher {
 	
 	/**
 	 * 获取新闻详细内容
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static NewsDetailsBean getNewDetails(String url) {
+	public static NewsDetailsBean getNewDetails(String url) throws UnsupportedEncodingException {
 		String title="";
 		String content = "";
 		String context="";
+		boolean isSpecial = false;
+		ArrayList<String> pictures=new ArrayList<String>();
 		try {
 			Document doc = Jsoup.connect(url).data("jquery", "java")
 					.userAgent("Mozilla").cookie("auth", "token")
@@ -110,30 +114,69 @@ public class InternetDataCatcher {
 			e.printStackTrace();
 		}
 		Document doc = Jsoup.parse(content);
-		Elements linkStrs = doc.getElementsByTag("p");
-		for (Element linkStr : linkStrs) {
-			context += "       "+linkStr.text().replace("?", " ")+"\r\n"+'\n';
-		}
-		Elements dateStrs = doc.getElementsByTag("div");
-		String date = dateStrs.text().substring(5,15);
-		int index1=-1,index2=-1;
-		for(int i=context.length()-1;i>=0;i--){
-			if(context.charAt(i)=='）'||context.charAt(i)==')'){
-				index1=i;
+		Elements linkStrs = doc.getElementsByAttributeValue("class", "main_table_bg");
+			Document doc2 = Jsoup.parse(linkStrs.toString());
+			Elements text = doc2.getElementsByTag("p");
+			Elements srcs = doc2.getElementsByTag("img");
+			for (Element picture : srcs) {
+				pictures.add(AppConfigue.HOST_ABS+picture.attr("src"));
 			}
-			if(context.charAt(i)=='（'||context.charAt(i)=='('){
-				index2=i;
-				break;
+			for (Element linkStr : text) {
+				String s=linkStr.text().trim();
+				context += "       "+s.replace("?", " ")+"\r\n"+'\n';
 			}
-		}
-		int index=context.lastIndexOf("。");
-		String origin=null;
-		if(index2>index){
-			origin=context.substring(index2+1, index1);
-			context=context.substring(0, index2);
-		}
+			byte[] utfspace = new byte[] { (byte) 0xc2, (byte) 0xa0 };
+			String UTFSpace;
+			try {
+				UTFSpace = new String(utfspace, "UTF-8");
+				context = context.replace(UTFSpace, "");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (context.trim().length() == 0) {
+				isSpecial=true;
+				Elements link = doc.getElementsByAttributeValue("class", "content");
+				doc2 = Jsoup.parse(link.toString());
+				text = doc2.getElementsByTag("h1");
+				for (Element linkStr : text) {
+					String s=linkStr.text().trim();
+					String s1 = "      " + s.toString();
+					context += s1 + '\n';
+				}
+				try {
+					UTFSpace = new String(utfspace, "UTF-8");
+					context = context.replace(UTFSpace, " ");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			Elements dateStrs = doc.getElementsByTag("div");
+			String date = dateStrs.text().substring(5,15);
+			int index1=-1,index2=-1;
+			for(int i=context.length()-1;i>=0;i--){
+				if(context.charAt(i)=='）'||context.charAt(i)==')'){
+					index1=i;
+				}
+				if(context.charAt(i)=='（'||context.charAt(i)=='('){
+					index2=i;
+					break;
+				}
+			}
+			int index=context.lastIndexOf("。");
+			String origin=null;
+			if(index2>index){
+				origin=context.substring(index2+1, index1);
+				if(isSpecial){
+					context = context.substring(0, index2)+context.substring(index1+1,context.length());
+				}else{
+					context = context.substring(0, index2);
+				}
+				
+			}
 		
-		return new NewsDetailsBean(title,context,date,origin);
+		return new NewsDetailsBean(title,context,date,origin,pictures);
 	}
 	
 	/**

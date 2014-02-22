@@ -44,8 +44,8 @@ public class NewsAct extends Activity{
 		setContentView(R.layout.main_news);
 		init();
 	}
+	
 	private Runnable getDataRunable = new Runnable() {
-
     	@Override
     	public void run() {
     		// TODO Auto-generated method stub
@@ -55,6 +55,7 @@ public class NewsAct extends Activity{
             handler.sendEmptyMessage(0);
     	}
     };
+    
 	public void init(){
 		framebtn_School_News = (Button) findViewById(R.id.frame_btn_news_lastest);
 		framebtn_School_Notice = (Button) findViewById(R.id.frame_btn_news_blog);
@@ -76,12 +77,9 @@ public class NewsAct extends Activity{
             switch (msg.what) {  
             case 0:
             	proBar.setVisibility(View.GONE);
-            	if(noticleResultList.size()==0){
-            		Toast.makeText(getApplicationContext(), "农大官网通告数据出错！", Toast.LENGTH_LONG).show();
+            	if(noticleResultList.size()==0 || newsResultList.size()==0){
+            		Toast.makeText(getApplicationContext(), "农大官网数据出错！", Toast.LENGTH_LONG).show();
                 }
-            	if(newsResultList.size()==0){
-            		Toast.makeText(getApplicationContext(), "农大官网新闻数据出错！", Toast.LENGTH_LONG).show();
-            	}
                 adapter1=new NewsListAdapter(NewsAct.this,newsResultList);
                 adapter2=new NewsListAdapter(NewsAct.this,noticleResultList);
                 

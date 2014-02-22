@@ -17,12 +17,10 @@ public class CustomGround {
 	
 	private GeoPoint LBPoint;
 	private GeoPoint RTPoint;
-	private int bitMapId;
 	
-	public CustomGround(int lbLa,int lbLo,int rtLa,int rtLo,int id ){
+	public CustomGround(int lbLa,int lbLo,int rtLa,int rtLo){
 		LBPoint=new GeoPoint(lbLa,lbLo);
 		RTPoint=new GeoPoint(rtLa,rtLo);
-		this.bitMapId=id;
 	}
 	public GeoPoint getLBPoint(){
 		return LBPoint;
@@ -36,12 +34,5 @@ public class CustomGround {
 	}
 	public void setRTPoint(GeoPoint RTPoint){
 		this.RTPoint=RTPoint;
-	}
-	
-	public int getbitMapId(){
-		return bitMapId;
-	}
-	public void setbitMapId(int bitMapId){
-		this.bitMapId=bitMapId;
 	}
 }

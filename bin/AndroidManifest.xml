@@ -71,6 +71,10 @@
         <activity android:name="com.zero.jxauapp.NewsDetailsAct"></activity>
         <activity android:name="com.zero.jxauapp.AdminSystemAct"></activity>
         <activity android:name="com.zero.jxauapp.BusTrackAct"></activity>
+        <activity android:name="com.zero.jxauapp.PhoneAct"></activity>
+        <activity android:name="com.zero.jxauapp.LandScape"></activity>
+        <activity android:name="com.zero.jxauapp.ImageDetailsActivity"></activity>
+        <activity android:name="com.zero.jxauapp.BusResult"></activity>
         <service  
             android:name="com.baidu.location.f"  
             android:enabled="true"  

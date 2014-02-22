@@ -26,4 +26,8 @@
     
     <string name="news_detail_head_title">新闻正文</string>
     <string name="news_detail_lable_pub">发布于</string>
+    
+    <string name="border_top">Border Top</string>
+    <string name="border_bottom">Border Bottom</string>
+    <string name="image_url">Image Url</string>
 </resources>
