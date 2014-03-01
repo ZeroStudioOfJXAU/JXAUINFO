@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zero.campusLandscape.MyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.jxau.app.widget.MyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/my_scroll_view"
     android:background="@drawable/main_bg_1"
     android:layout_width="match_parent"
@@ -35,4 +35,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</com.zero.campusLandscape.MyScrollView>
+</com.jxau.app.widget.MyScrollView>

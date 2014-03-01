@@ -43,8 +43,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView_bus_to"
         android:layout_marginLeft="2dp"
-         android:visibility="gone"
-         android:layout_toLeftOf="@+id/imageView_bus_to"
+        android:visibility="gone"
+        android:layout_toLeftOf="@+id/imageView_bus_to"
         android:text="2辆"/>
     <ImageView
         android:id="@+id/imageView_bus_way"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/imageView_cutline"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="2dp"
+        android:layout_marginLeft="4dp"
         android:visibility="gone"
         android:src="@drawable/bus_way" 
        />

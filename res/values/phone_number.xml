@@ -4,6 +4,7 @@
     <string-array name="number_category">
         <item>学校组织</item>
         <item>院系</item>
+        <item>快餐</item>
     </string-array>
     <string-array name="common_number">
         <item>教务处:83813309</item>
@@ -69,5 +70,22 @@
         <item>高教所:83828291</item>
         <item>医院:83813425</item>
         <item>附中:83813423</item>
+    </string-array>
+    <string-array name="fastFood_number">
+        <item >济之岛:15170232557</item>
+        <item >柏乐基:87695911</item>
+        <item >撒丁岛:18970881183</item>
+        <item >大食头:82230196</item>
+        <item >家常菜:13507007609</item>
+        <item >金锅饭:15079025426</item>
+        <item >华莱士:15070058536</item>
+        <item >客家维宁:15070089135</item>
+		<item >沁人酒楼:13698008759</item>
+	    <item >如意水饺 :18079176550</item>
+		<item >宜宾燃面:15979051990</item>
+		<item >好又多快餐:18779109851 </item>
+		<item >爱味奶茶店:18970969368</item>		
+		<item >螺蛳湾烧烤:15350117383</item>
+	    <item >云南过桥米线:15270020833</item>
     </string-array>
 </resources>
