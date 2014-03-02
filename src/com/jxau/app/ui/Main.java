@@ -292,14 +292,8 @@ public class Main extends SlidingFragmentActivity implements
 			busBundle.putSerializable("BUSTRACKINFO", info);
 			Intent intent=new Intent();
 			intent.putExtras(busBundle);
-			intent.setClass(Main.this,BusResult.class);
+			intent.setClass(Main.this,Bus.class);
 			startActivity(intent);
-			/*向BusTrackFragment传入参数*/
-//			busFragment.setArguments(busBundle);
-//			FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-//					.beginTransaction();
-//			fragmentTransaction.addToBackStack(null);
-//			fragmentTransaction.add(android.R.id.content, busFragment).commit();
 			mPopupWindow.dismiss();
 		}
 	}

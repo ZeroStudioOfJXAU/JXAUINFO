@@ -80,7 +80,7 @@ public class NewsDetails extends AbsListViewBaseActivity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.news_detail);
-		//配置图片加载及显示选项（还有一些其他的配置，查阅doc文档吧）
+		//配置图片加载及显示选项
 		options = new DisplayImageOptions.Builder()
 		.resetViewBeforeLoading(true)
 		.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
@@ -97,13 +97,6 @@ public class NewsDetails extends AbsListViewBaseActivity{
 
 		listView = (ListView) findViewById(android.R.id.list);
 		//绑定适配器
-		
-//		listView.setOnItemClickListener(new OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//				startImagePagerActivity(position);
-//			}
-//		});
 		newsUrl = getIntent().getStringExtra("NEWS_URL");
 		noticle= (NewsBean) getIntent().getSerializableExtra("NOTICLE_NEWS");  
 		if(newsUrl==null){

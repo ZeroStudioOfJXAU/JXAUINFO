@@ -28,7 +28,7 @@ import com.jxau.app.bean.SubBusInfo;
 import com.jxau.app.common.GoOut;
 import com.zero.jxauapp.R;
 
-public class BusResult extends Activity {
+public class Bus extends Activity {
 
 	private ListView listView240;
 	private ListView listView704;

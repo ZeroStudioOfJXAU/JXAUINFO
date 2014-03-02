@@ -74,7 +74,7 @@
         <activity android:name="com.jxau.app.ui.PhoneNumber"></activity>
         <activity android:name="com.jxau.app.ui.LandScape"></activity>
         <activity android:name="com.jxau.app.ui.ImageDetails"></activity>
-        <activity android:name="com.jxau.app.ui.BusResult"></activity>
+        <activity android:name="com.jxau.app.ui.Bus"></activity>
         <service  
             android:name="com.baidu.location.f"  
             android:enabled="true"  

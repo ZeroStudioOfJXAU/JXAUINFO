@@ -817,34 +817,6 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 		}
 	}
 
-	/**
-	 * 读取XML中的矩形坐标信息，用图片覆盖
-	 */
-//	public void getGroundInfoFromAssetsXML() {
-//		ArrayList<CustomGround> grounds = null;
-//		try {
-//			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-//			factory.setNamespaceAware(true);
-//			XmlPullParser xpp = factory.newPullParser();
-//			xpp.setInput(getResources().getAssets().open("groundInfo.xml"),
-//					null);
-//			grounds = XmlReader.getGroundInfo(xpp);
-//		} catch (Exception e) {
-//		}
-//		CustomGroundOverlay mGroundOverlay = new CustomGroundOverlay(mMapView);
-//		Drawable d = getResources().getDrawable(R.drawable.stadium);
-//		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
-//		mMapView.getOverlays().add(mGroundOverlay);
-//		for (CustomGround cg : grounds) {
-////			Drawable d = getResources().getDrawable(cg.getbitMapId());
-////			Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
-//			Ground mGround = new Ground(bitmap, cg.getLBPoint(),
-//					cg.getRTPoint());
-//			mGroundOverlay.addGround(mGround);
-//		}
-//		mMapView.refresh();
-//	}
-
 	@Override
 	public void onClick(View v) {
 		int ItemId = v.getId();// 获取组件的id值

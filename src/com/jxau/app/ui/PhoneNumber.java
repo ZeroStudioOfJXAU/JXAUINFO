@@ -53,7 +53,6 @@ public class PhoneNumber extends Activity{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-//				Toast.makeText(getApplicationContext(), "Hit me £¡", Toast.LENGTH_SHORT).show();
 				PhoneListViewHolder holder = (PhoneListViewHolder) arg1.getTag();
 				String number=(String) holder.number.getText(); 
 				Uri uri = Uri.parse("tel:" + number);
@@ -63,19 +62,6 @@ public class PhoneNumber extends Activity{
 			}
 		});
 		expandableListView.setOnChildClickListener(new OnChildClickListener(){
-
-//			@Override
-//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-//					long arg3) {
-//				// TODO Auto-generated method stub
-////				Toast.makeText(getApplicationContext(), "Hit me £¡", Toast.LENGTH_SHORT).show();
-//				PhoneListViewHolder holder = (PhoneListViewHolder) arg1.getTag();
-//				String number=(String) holder.number.getText(); 
-//				Uri uri = Uri.parse("tel:" + number);
-//				Intent intent = new Intent(Intent.ACTION_DIAL, uri);
-//				startActivity(intent);
-//				
-//			}; ]
 
 			@Override
 			public boolean onChildClick(ExpandableListView arg0, View arg1,

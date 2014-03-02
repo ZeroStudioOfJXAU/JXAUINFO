@@ -22,8 +22,6 @@ import android.widget.TextView;
 
 /**
  * 查看大图的Activity界面。
- * 
- * @author guolin
  */
 public class ImageDetails extends Activity implements
 		OnPageChangeListener {
