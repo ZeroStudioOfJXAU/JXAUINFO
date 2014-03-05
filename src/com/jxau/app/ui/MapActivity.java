@@ -99,7 +99,7 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 
 	MyLocationOverlay myLocationOverlay = null;// 定位图层
 	LocationData locData = null;// 位置数据
-	MapController mMapController ;
+	MapController mMapController;
 	ArrayAdapter<String> adapter;// 自动补全监听器
 	Map<String, GeoPoint> map = new HashMap<String, GeoPoint>();// 存放从xml文件中添加的补全数据
 	// 表示输入框的状态
@@ -117,8 +117,8 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 	// 浏览路线节点相关
 	private View viewCache = null;
 	private TextView popupText = null;// 泡泡view
-	private TextView  popleftText = null;
-	private TextView  poprightText = null;
+	private TextView popleftText = null;
+	private TextView poprightText = null;
 	int searchType = -1;// 记录搜索的类型，区分驾车/步行和公交
 	int nodeIndex = -2;// 节点索引,供浏览节点时使用
 	MKRoute route = null;// 保存驾车/步行路线数据的变量，供浏览节点时使用
@@ -142,8 +142,8 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 		// 设置启用内置的缩放控件
 		mMapView.setBuiltInZoomControls(true);
 		// 得到mMapView的控制权,可以用它控制和驱动平移和缩放
-		mMapController= mMapView.getController();
-		mMapController.setCompassMargin(20,110);
+		mMapController = mMapView.getController();
+		mMapController.setCompassMargin(20, 110);
 		// 用给定的经纬度构造一个中心点
 		GeoPoint point = new GeoPoint((int) (28.768217 * 1E6),
 				(int) (115.839311 * 1E6));
@@ -154,7 +154,7 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 		mMapView.setSatellite(true);
 		mMapView.setTraffic(true);
 		getCustomInfoFromAssetsXML();
-//		getGroundInfoFromAssetsXML();
+		// getGroundInfoFromAssetsXML();
 		// 初始化mSearch，添加监听器
 		mSearch = new MKSearch();
 		mSearch.init(mBMapManager, myMKSearchListener);
@@ -171,14 +171,14 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 		mbtnLoc = (Button) findViewById(R.id.auto_loc_button);
 		mBtnHit = (Button) findViewById(R.id.screen_hit_btn);
 		routeBtn = (Button) findViewById(R.id.map_route_btn);
-		
+
 		viewCache = getLayoutInflater()
 				.inflate(R.layout.custom_text_view, null);
 		popupText = (TextView) viewCache.findViewById(R.id.textcache);
-		
-	    popleftText = (TextView) viewCache.findViewById(R.id.popleft);
+
+		popleftText = (TextView) viewCache.findViewById(R.id.popleft);
 		poprightText = (TextView) viewCache.findViewById(R.id.popright);
-		
+
 		searchBtn.setOnClickListener(this);
 		// 线路按钮，添加监听，单击显示线路规划对话框
 		routeBtn.setOnClickListener(this);
@@ -204,37 +204,38 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 	public int fun(int a) {
 		return 2 * a - 8;
 	}
+
 	boolean flag;
 	MKMapStatusChangeListener listener = new MKMapStatusChangeListener() {
 		public void onMapStatusChange(MKMapStatus mapStatus) {
-			//字体跟随地图缩放变化
-//			if (mapStatus.zoom >= 17) {
-//
-//				if (fun((int) mapStatus.zoom) != fontSize) {
-//					fontSize = fun((int) mapStatus.zoom);
-//					BMapUtil.removeCustomTextOverlay(mMapView);
-//					getCustomInfoFromAssetsXML();
-//					isClear = false;
-//					mMapView.refresh();
-//				} else if (fun((int) mapStatus.zoom) == fontSize && isClear) {
-//					getCustomInfoFromAssetsXML();
-//					isClear = false;
-//					mMapView.refresh();
-//				}
-//			} else {
-//				mMapView.getOverlays().clear();
-//				mMapView.refresh();
-//				isClear = true;
-//			}
-			 if(mapStatus.zoom<17){
-				 MapUtil.removeCustomTextOverlay(mMapView);
-			 //mMapView.getOverlays().clear();
-			 flag=true;
-			 }
-			 if(flag && mapStatus.zoom>=17){
-			 flag=false;
-			 	getCustomInfoFromAssetsXML();
-			 }
+			// 字体跟随地图缩放变化
+			// if (mapStatus.zoom >= 17) {
+			//
+			// if (fun((int) mapStatus.zoom) != fontSize) {
+			// fontSize = fun((int) mapStatus.zoom);
+			// BMapUtil.removeCustomTextOverlay(mMapView);
+			// getCustomInfoFromAssetsXML();
+			// isClear = false;
+			// mMapView.refresh();
+			// } else if (fun((int) mapStatus.zoom) == fontSize && isClear) {
+			// getCustomInfoFromAssetsXML();
+			// isClear = false;
+			// mMapView.refresh();
+			// }
+			// } else {
+			// mMapView.getOverlays().clear();
+			// mMapView.refresh();
+			// isClear = true;
+			// }
+			if (mapStatus.zoom < 17) {
+				MapUtil.removeCustomTextOverlay(mMapView);
+				// mMapView.getOverlays().clear();
+				flag = true;
+			}
+			if (flag && mapStatus.zoom >= 17) {
+				flag = false;
+				getCustomInfoFromAssetsXML();
+			}
 		}
 	};
 	MKMapTouchListener MymapTouchListener = new MKMapTouchListener() {
@@ -306,7 +307,7 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 		editStart.setAdapter(adapter);
 		editEnd.setAdapter(adapter);
 		searchACTV.setAdapter(adapter);
-		//getCustomInfoFromAssetsXML();
+		// getCustomInfoFromAssetsXML();
 		editStart.addTextChangedListener(watcher);
 		editEnd.addTextChangedListener(watcher);
 		searchACTV.addTextChangedListener(watcher);
@@ -366,7 +367,7 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 				locationClient.stop();
 				Toast.makeText(MapActivity.this, "定位成功", Toast.LENGTH_SHORT)
 						.show();
-				
+
 			}
 
 			@Override
@@ -445,8 +446,8 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 		route = null;
 		routeOverlay = null;
 		transitOverlay = null;
-//		mBtnPre.setVisibility(View.INVISIBLE);
-//		mBtnNext.setVisibility(View.INVISIBLE);
+		// mBtnPre.setVisibility(View.INVISIBLE);
+		// mBtnNext.setVisibility(View.INVISIBLE);
 		// 发起搜索
 		String start = editStart.getText().toString().trim();
 		MKPlanNode stNode = new MKPlanNode();
@@ -458,7 +459,8 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 		} else if (start.equals("当前位置")) {
 			stNode.pt = routeStartPoint;
 		} else {
-			Toast.makeText(MapActivity.this, "请输入起点", Toast.LENGTH_SHORT).show();
+			Toast.makeText(MapActivity.this, "请输入起点", Toast.LENGTH_SHORT)
+					.show();
 			return;
 		}
 
@@ -515,7 +517,7 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 					.show();
 		}
 	}
-	
+
 	/**
 	 * 线路规划、检索POI监听器
 	 */
@@ -679,13 +681,13 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 		PopupClickListener popListener = new PopupClickListener() {
 			@Override
 			public void onClickedPopup(int index) {
-				if(index == 0 || index == 2){
+				if (index == 0 || index == 2) {
 					if (routeBtn.getText().equals("线路")) {
 						linear.setVisibility(View.VISIBLE);
-						
+
 						editStart.setText("");
 						editEnd.setText("");
-						
+
 						routeBtn.setText("返回");
 					} else if (routeBtn.getText().equals("返回")) {
 						linear.setVisibility(View.GONE);
@@ -694,9 +696,9 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 						MapUtil.removeNotCustomOverlay(mMapView);
 					}
 				}
-				if(index == 0){
+				if (index == 0) {
 					editStart.setText(popupText.getText());
-				}else if(index == 2){
+				} else if (index == 2) {
 					editEnd.setText(popupText.getText());
 				}
 			}
@@ -830,7 +832,7 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 				routeBtn.setText("线路");
 				mBtnPre.setVisibility(View.GONE);
 				mBtnNext.setVisibility(View.GONE);
-				
+
 				editEnd.setText("");
 				editStart.setText("");
 				// 清楚线路层
@@ -843,14 +845,14 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 			}
 			locationClient.start();
 			locationClient.requestLocation();
-			
-//			if (locationClient.isStarted()) {
-//				mbtnLoc.setText("自动定位");
-//				locationClient.stop();
-//			} else {
-//				mbtnLoc.setText("停止定位");
-//				
-//			}
+
+			// if (locationClient.isStarted()) {
+			// mbtnLoc.setText("自动定位");
+			// locationClient.stop();
+			// } else {
+			// mbtnLoc.setText("停止定位");
+			//
+			// }
 			break;
 		case R.id.screen_hit_btn:
 			enClickAble = true;
@@ -863,21 +865,21 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 			searchRoute(VEHICLE_TRANSIT);
 			break;
 		case R.id.walk_btn:
-			if(editStart.getText().toString().trim()==null || 
-				editEnd.getText().toString().trim()==null){
+			if (editStart.getText().toString().trim() == null
+					|| editEnd.getText().toString().trim() == null) {
 				Toast.makeText(getApplicationContext(), "请输入始终点",
 						Toast.LENGTH_SHORT).show();
 				break;
-			}else{
+			} else {
 				searchRoute(VEHICLE_WALK);
 			}
 			break;
 		case R.id.search_btn:
-			String place=searchACTV.getText().toString().trim();
-			if(place == null){
+			String place = searchACTV.getText().toString().trim();
+			if (place == null) {
 				Toast.makeText(getApplicationContext(), "请输入搜索地点",
 						Toast.LENGTH_SHORT).show();
-			}else{
+			} else {
 				mMapController.setCenter(map.get(place));
 				popleftText.setBackgroundResource(R.drawable.map_popup_side);
 				popleftText.setText("从这出发");
@@ -886,10 +888,10 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 				popupText.setBackgroundResource(R.drawable.map_popup);
 				popupText.setText(place);
 				Bitmap[] b = new Bitmap[3];
-				b[0]=MapUtil.getBitmapFromView(popleftText);
-				b[1]=MapUtil.getBitmapFromView(popupText);
-				b[2]=MapUtil.getBitmapFromView(poprightText);
-				pop.showPopup(b,map.get(place), 5);
+				b[0] = MapUtil.getBitmapFromView(popleftText);
+				b[1] = MapUtil.getBitmapFromView(popupText);
+				b[2] = MapUtil.getBitmapFromView(poprightText);
+				pop.showPopup(b, map.get(place), 5);
 			}
 			break;
 		default:
@@ -912,6 +914,7 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 
 	@Override
 	protected void onPause() {
+//		MapUtil.removeCustomTextOverlay(mMapView);
 		mMapView.onPause();
 		if (mBMapManager != null) {
 			mBMapManager.stop();
@@ -921,6 +924,7 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 
 	@Override
 	protected void onResume() {
+//		MapUtil.removeCustomTextOverlay(mMapView);
 		mMapView.onResume();
 		if (mBMapManager != null) {
 			mBMapManager.start();
@@ -928,17 +932,17 @@ public class MapActivity extends FragmentActivity implements OnClickListener {
 		super.onResume();
 	}
 
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		mMapView.onSaveInstanceState(outState);
-
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-		mMapView.onRestoreInstanceState(savedInstanceState);
-	}
+//	@Override
+//	protected void onSaveInstanceState(Bundle outState) {
+//		super.onSaveInstanceState(outState);
+//		mMapView.onSaveInstanceState(outState);
+//
+//	}
+//
+//	@Override
+//	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//		super.onRestoreInstanceState(savedInstanceState);
+//		mMapView.onRestoreInstanceState(savedInstanceState);
+//	}
 
 }

@@ -111,35 +111,35 @@ public class Main extends SlidingFragmentActivity implements
 	    	@Override
 	    	public void run() {
 	    		// TODO Auto-generated method stub
-	    		getPictureUrls();
+//	    		getPictureUrls();
 	    		handler.sendEmptyMessage(0);
 	    	}
 	    };
 	    private Handler handler = new Handler() {  
 	        public void handleMessage(Message msg) {  
-	            switch (msg.what) {  
+	        	switch (msg.what) {  
 	            case 0:
 //	            	Toast.makeText(getApplicationContext(),  plist.size()+" ", Toast.LENGTH_SHORT).show();
 //	            	Toast.makeText(getApplicationContext(),  sharedPreferences.getString("20", "0"), Toast.LENGTH_SHORT).show();
 	                break;  
-	            }  
+	            }
 	        };  
 	    };  
-	public void getPictureUrls(){
-		 sharedPreferences = this.getSharedPreferences("test",Context.MODE_PRIVATE);  
-	     editor = sharedPreferences.edit();
-	     
-	     plist=PictureUnit.catchUrls("http://blog.csdn.net/u013677570/article/details/19290151");
-	     if(sharedPreferences.getInt("size",0) != plist.size()){
-	    	 int i=1;
-		     for(String s:plist){
-		    	 editor.putString(""+i, s); 
-		    	 i++;
-		     }
-		     editor.putInt("size", plist.size());
-		     editor.commit();
-	     }
-	}
+//	public void getPictureUrls(){
+//		 sharedPreferences = this.getSharedPreferences("test",Context.MODE_PRIVATE);  
+//	     editor = sharedPreferences.edit();
+//	     
+//	     plist=PictureUnit.catchUrls("http://blog.csdn.net/u013677570/article/details/19290151");
+//	     if(sharedPreferences.getInt("size",0) != plist.size()){
+//	    	 int i=1;
+//		     for(String s:plist){
+//		    	 editor.putString(""+i, s); 
+//		    	 i++;
+//		     }
+//		     editor.putInt("size", plist.size());
+//		     editor.commit();
+//	     }
+//	}
 	/**
 	 * 初始化滑动菜单
 	 */

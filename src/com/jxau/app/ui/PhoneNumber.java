@@ -25,12 +25,14 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class PhoneNumber extends Activity{
+	
 	CustomExpandableListAdapter expandableListAdapter;
 	ExpandableListView expandableListView;
 	ListView commonListView;
 	List<String> listDataHeader;
 	Map<String, List<String>> listDataChild;
 	List<String> commonNumberList;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -83,6 +85,7 @@ public class PhoneNumber extends Activity{
 		String[] organizationNumber = getResources().getStringArray(R.array.organization_number);
 		String[] collegeNumber = getResources().getStringArray(R.array.college_number);
 		String[] fastFoodNumber = getResources().getStringArray(R.array.fastFood_number);
+		String[] expressNumber = getResources().getStringArray(R.array.express_number);
 		
 		listDataHeader=new ArrayList<String>();
 		commonNumberList = new ArrayList<String>();
@@ -91,20 +94,24 @@ public class PhoneNumber extends Activity{
 	    List<String> orgNumber=new ArrayList<String>();
 	    List<String> colNumber=new ArrayList<String>();
 	    List<String> foodNumber=new ArrayList<String>();
+	    List<String> expNumber=new ArrayList<String>();
+	    
 	    commonNumberList=Arrays.asList(common_number);
+	    
 	    orgNumber = Arrays.asList(organizationNumber);
 	    colNumber = Arrays.asList(collegeNumber);
 	    foodNumber= Arrays.asList(fastFoodNumber);
+	    expNumber = Arrays.asList(expressNumber);
+	    
 	    listDataChild = new HashMap<String, List<String>>();
 	    listDataChild.put(listDataHeader.get(0), orgNumber);
 	    listDataChild.put(listDataHeader.get(1), colNumber);
 	    listDataChild.put(listDataHeader.get(2), foodNumber);
-	   
+	    listDataChild.put(listDataHeader.get(3), expNumber);
 	    
 	}
 	 @Override
 	public void onSaveInstanceState(Bundle outState) {
 	    	super.onSaveInstanceState(outState);
 	    }
-	
 }

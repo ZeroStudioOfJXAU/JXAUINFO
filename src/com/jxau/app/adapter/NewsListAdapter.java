@@ -94,9 +94,11 @@ public class NewsListAdapter extends BaseAdapter {
 		NewsBean news = newsList.get(position);
 
 		listItemView.title.setText(news.getTitle());
-		listItemView.title.setTag(news);// 设置隐藏参数(实体类)
+		listItemView.title.setTag(news);              //设置隐藏参数(实体类)
 		listItemView.author.setText(news.getAuthor());
-		// listItemView.date.setText(news.getPubDate());
+		//listItemView.date.setText(news.getPubDate());
+		//应对缓存机制带来的滞后性问题
+		listItemView.flag.setVisibility(View.GONE);
 		if (news.getPubDate().equals("之前")) {
 			listItemView.date.setText("之前");
 		} else {

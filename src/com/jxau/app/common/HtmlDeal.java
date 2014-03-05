@@ -20,13 +20,16 @@ import org.jsoup.select.Elements;
 import com.jxau.app.bean.SubBusInfo;
 
 class HtmlDeal {
+	
 	public static String GetContentFromUrl(String url) {
 		String result = "";
 		try {
+			
 			DefaultHttpClient client = new DefaultHttpClient();
 			HttpUriRequest req = new HttpGet(url);
 			HttpResponse resp = client.execute(req);
 			HttpEntity ent = resp.getEntity();
+			
 			int status = resp.getStatusLine().getStatusCode();
 			if (status == HttpStatus.SC_OK) {
 				result = EntityUtils.toString(ent);
@@ -39,6 +42,7 @@ class HtmlDeal {
 			return "";
 		}
 	}
+
 	public static String getDivContentByJsoup_LineDeal(String content) {
 		Document doc = Jsoup.parse(content);
 		Elements div2 = doc.getElementsByClass("cmode");
@@ -48,6 +52,7 @@ class HtmlDeal {
 		}
 		return s;
 	}
+
 	public static String getDivContentByJsoup_Line(String content) {
 		Document doc = Jsoup.parse(content);
 		Elements div2 = doc.getElementsByClass("apps_main");
@@ -57,7 +62,7 @@ class HtmlDeal {
 		}
 		return s;
 	}
-	
+
 	public static String getDivContentByJsoup(String content) {
 		Document doc = Jsoup.parse(content);
 		Elements div2 = doc.getElementsByClass("apps_main");
@@ -134,8 +139,9 @@ class HtmlDeal {
 				list.remove(i);
 				--i;
 			} else {
-				int dis =num-size;
-				if(dis==0) dis++;
+				int dis = num - size;
+				if (dis == 0)
+					dis++;
 				subBusInfo.setDistance(dis);
 			}
 		}
@@ -180,16 +186,16 @@ class HtmlDeal {
 			int num = Integer.parseInt(stationNumber);
 			map.put(station, num);
 			int c = Integer.parseInt(count);
-			
+
 			SubBusInfo info = new SubBusInfo();
 			info.setStation(station);
 			info.setNumber(c);
-			
-			if(flag)
+
+			if (flag)
 				info.setArrived("前往");
-			else 
+			else
 				info.setArrived("到达");
-			
+
 			list.add(info);
 		} else {
 			/* 将当前线路所经过的所有站点信息添加到map, 以便做过滤 */

@@ -15,12 +15,12 @@ public class GoOut {
 
 	public List<BusInfo> getBusInfo(GoOutBean goOutInfo) {
 		int dire = 0;
-		
+
 		if (goOutInfo.isDirection())
 			dire = 1;
 		else
 			dire = 2;
-		
+
 		String location = goOutInfo.getLocation();
 		List<BusInfo> list = new ArrayList<BusInfo>();
 		LineHelp lineHelp = new LineHelp();

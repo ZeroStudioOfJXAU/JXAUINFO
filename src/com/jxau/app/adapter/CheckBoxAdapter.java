@@ -73,21 +73,22 @@ public class CheckBoxAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View view, ViewGroup arg2) {
 		ViewHolder holder = null;
-		if (holder == null) {
+//		if (holder == null) {
 			holder = new ViewHolder();
 			if (view == null) {
 				view = inflater.inflate(R.layout.bus_checkbox_list_item,
 						null);
+				holder.tv = (TextView) view
+						.findViewById(R.id.checkbox_list_textView_item);
+				holder.cb = (CheckBox) view
+						.findViewById(R.id.checkbox_list_checkbox_item);
+				view.setTag(holder);
+			}else {
+				holder = (ViewHolder) view.getTag();
 			}
 
-			holder.tv = (TextView) view
-					.findViewById(R.id.checkbox_list_textView_item);
-			holder.cb = (CheckBox) view
-					.findViewById(R.id.checkbox_list_checkbox_item);
-			view.setTag(holder);
-		} else {
-			holder = (ViewHolder) view.getTag();
-		}
+			
+//		} 
 
 		HashMap<String, Object> map = list.get(position);
 		if (map != null) {

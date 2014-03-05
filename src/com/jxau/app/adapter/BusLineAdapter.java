@@ -60,7 +60,7 @@ public class BusLineAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		Holder holder = null;
-		convertView = null;
+		convertView = null; //禁用缓存机制
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.bus_unit, parent, false);
 			holder = new Holder();
@@ -85,8 +85,17 @@ public class BusLineAdapter extends BaseAdapter {
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
-
+		//应对缓存机制
+		holder.cutLine.setVisibility(View.VISIBLE);
+		holder.cutLine.setImageResource(R.drawable.frame_button_cutline);
+		holder.curPosition.setVisibility(View.GONE);
+		holder.busTo.setVisibility(View.GONE);
+		holder.busWay.setVisibility(View.GONE);
+		holder.busNum.setText("");
+		holder.stationState.setImageResource(R.drawable.presence_offline);
+		
 		holder.station.setText(bean.getBusList().get(position));
+		
 		if (bean.getBusList().get(position).equals(bean.getCurrentPosition())) {
 			String text = bean.isDirection() ? "当前位置" : "目标位置";
 			holder.curPosition.setText(text);
